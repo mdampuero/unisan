@@ -1,0 +1,62 @@
+{% extends "InamikaBackOfficeBundle::Emails/layout.html.twig" %}
+{% block body %}
+<h4>Datos del pedido</h4>
+<hr>
+<div>
+    <p>
+    <b>Pedido Nº: #{{ entity.id }}</b><br/>
+    <b>CUIT/CUIL:</b> {{ entity.customer.document }}<br/>
+    <b>Email:</b> <a href="mailto:{{ entity.customer.email }}">{{ entity.customer.email }}</a><br/>
+    <b>Teléfono:</b> {{ entity.customer.phone }}<br/>
+    <b>Canal de venta:</b> {{ entity.channel }}<br/>
+    <b>Observaciones:</b> {{ entity.observations }}<br/>
+    <b>Fecha:</b> {{ entity.createdAt | date('d/m/Y H:i') }}<br/>
+    {% for total in entity.totals %}
+        <b>Total:</b> {{ total.currency.symbol}} {{ total.total | number_format(2, ',', '.')}}<br/>
+    {% endfor %}
+    </p>
+</div>
+<h4>{{ 'PRODUCTS' | trans }}</h4>
+<hr>
+<div>
+    <table width="100%">
+        <thead>
+            <tr>
+                <th align="center">{{ 'ITEM' | trans }}</th>
+                <th align="center">Código</th>
+                <th align="left">Nombre</th>
+                <th align="center">Cantidad</th>
+                <th align="right">P/U</th>
+                <th align="right">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in entity.items %}
+            <tr>
+                <td align="center">{{ loop.index }}</td>
+                <td align="center">{{ item.code}}</td>
+                <td align="left">{{ item.description }}</td>
+                <td align="center">{{ item.quantity }}</td>
+                <td align="right">{{ item.product.currency.symbol }} {{ (item.subtotal / item.quantity) | number_format(2, ',', '.')}}</td>
+                <td align="right">{{ item.product.currency.symbol }} {{ item.subtotal | number_format(2,',','.') }}</td>
+            </tr>
+            {% endfor %}
+            {% for total in entity.totals %}		
+                <tr><td colspan="6">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="5" align="right"><b>Total S/I:</b></td>
+                    <td colspan="1" align="right"><b>{{ total.currency.symbol}} {{ total.gross | number_format(2, ',', '.')}}</b></td>
+                </tr>
+                <tr>
+                    <td colspan="5" align="right"><b>IVA:</b></td>
+                    <td colspan="1" align="right"><b>{{ total.currency.symbol}} {{ total.vat | number_format(2, ',', '.')}}</b></td>
+                </tr>
+                <tr>
+                    <td colspan="5" align="right"><b>Total:</b></td>
+                    <td colspan="1" align="right"><b>{{ total.currency.symbol}} {{ total.total | number_format(2, ',', '.')}}</b></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

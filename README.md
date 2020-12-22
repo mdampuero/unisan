@@ -27,6 +27,11 @@ Este ultimo comando agrega un usuario 'Superuser' en al base para ingresar al Ba
 * Password: 123456 
 * Link: [BackOffice](http://dev.unisan.cl/app_dev.php/admin)
 
+### Instalar los assets ###
+```
+$ docker exec -ti unisan_apache php bin/console assets:install
+```
+
 ### Comandos utiles de symfony ###
 
 * Limpiar cache: $ bin/console cache:clear

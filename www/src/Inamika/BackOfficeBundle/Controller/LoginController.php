@@ -51,7 +51,7 @@ class LoginController extends Controller{
                     $em->persist($entity);
                     $em->flush();
                     $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - '.$this->get('translator')->trans('RECOVERY_PASSWORD')))
-                    ->setFrom(array($this->getParameter('mailer_user')=>$this->get('setting')->getData()->getTitle()))
+                    ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
                     ->setTo($entity->getEmail())
                     ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:Login/forgotPassword.html.twig', array('entity' => $entity)),'text/html');
                     $this->get('mailer')->send($message); 

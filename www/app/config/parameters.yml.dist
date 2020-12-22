@@ -5,13 +5,14 @@
 parameters:
     database_host: 127.0.0.1
     database_port: null
-    database_name: laomma
+    database_name: dbname
     database_user: root
     database_password: Secreta007
     mailer_transport: smtp
-    mailer_host: ''
+    mailer_host: 'smtp.mailtrap.io'
     mailer_port: 465
-    mailer_encryption: ssl
-    mailer_user: ''
-    mailer_password: ''
+    mailer_encryption: tls
+    mailer_user: 'a4140ccebccb5f'
+    mailer_from: 'test@apachecms.com.ar'
+    mailer_password: 'ad647ff494915d'
     secret: 99b2af404f070f6d849dea5705fd9375b130a628

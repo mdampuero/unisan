@@ -11,7 +11,7 @@ web_profiler:
     toolbar: true
     intercept_redirects: false
 swiftmailer:
-    delivery_addresses: ['mauricio.ampuero@inamika.com']
+    # delivery_addresses: ['mdampuero@gmail.com']
 monolog:
     handlers:
         main:
@@ -40,3 +40,4 @@ monolog:
 
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
+# 

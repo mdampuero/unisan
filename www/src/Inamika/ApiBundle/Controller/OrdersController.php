@@ -144,6 +144,24 @@ class OrdersController extends FOSRestController
         return $this->handleView($this->view($entities));
     }
     
+    public function emailAction($id){
+        if (!$entity = $this->getDoctrine()->getRepository(Orders::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+
+        //SEND EMAIL
+        $settings = $this->container->get('setting');
+        $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - Pedido #'.$entity->getId() ))
+        ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
+        ->setTo($this->getParameter('mailer_from'))
+        ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:Orders/sending.html.twig', array('entity' => $entity)),'text/html')
+        // ->setBcc([
+        //     $settings->getData()->getBillEmail()
+        // ])
+        ;
+        $this->get('mailer')->send($message);
+        return $this->handleView($this->view($entity));
+    }
+
     public function deleteAction(Request $request, $id)
     {
         if (!$entity = $this->getDoctrine()->getRepository(Orders::class)->find($id))
@@ -183,20 +201,20 @@ class OrdersController extends FOSRestController
         $em->persist($entity);
         $em->flush();
         if($content["notify"]){
-            if($entity->getCustomerId()->getToken()){
+            if($entity->getCustomer()->getToken()){
                 /** Generar notificacion */
                 $result=$this->get('FirebaseNotifications')->push(
                     [
                         "notification"=>array("title"=>"Cambios en tu pedido #".$entity->getId(),"body"=>"Tu pedido cambió de estado '".$oldStatusName."' a '".$entityStatus->getName()."'"),
-                        "to"=> $entity->getCustomerId()->getToken()
+                        "to"=> $entity->getCustomer()->getToken()
                     ]);
                 /** Fin Generar notificacion */
             }
             /** Enviar email */
             $settings = $this->container->get('setting');
             $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - Cambios en tu pedido #'.$entity->getId()))
-            ->setFrom(array($this->getParameter('mailer_user')=>$this->get('setting')->getData()->getTitle()))
-            ->setTo($entity->getCustomerId()->getEmail())
+            ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
+            ->setTo($entity->getCustomer()->getEmail())
             ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:Orders/changeStatus.html.twig', array('entity' => $entity,'status'=>$oldStatusName)),'text/html');
             $this->get('mailer')->send($message);
             /** Fin enviar email */
