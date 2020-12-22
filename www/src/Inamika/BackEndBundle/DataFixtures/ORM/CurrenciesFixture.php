@@ -23,13 +23,20 @@ class CurrenciesFixture extends AbstractFixture implements OrderedFixtureInterfa
     }
     
     public function load(ObjectManager $manager){
-        $EUR = new Currency();
-        $EUR->setId(Currency::EUR);
-        $EUR->setName("Euro");
-        $EUR->setCode(Currency::EUR);
-        $EUR->setSymbol("€");
-        $EUR->setIsDefault(true);
-        $manager->persist($EUR);        
+        // $EUR = new Currency();
+        // $EUR->setId(Currency::EUR);
+        // $EUR->setName("Euro");
+        // $EUR->setCode(Currency::EUR);
+        // $EUR->setSymbol("€");
+        // $EUR->setIsDefault(true);
+
+        $CLP = new Currency();
+        $CLP->setId(Currency::CLP);
+        $CLP->setName("Euro");
+        $CLP->setCode(Currency::CLP);
+        $CLP->setSymbol("$");
+        $CLP->setIsDefault(true);
+        $manager->persist($CLP);        
         $manager->flush();
     }
     

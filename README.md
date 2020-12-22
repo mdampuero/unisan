@@ -4,7 +4,7 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Run Dockers ###
 ```
-$ cd Unisan/docker 
+$ cd unisan/docker 
 $ docker-compose up -d
 ```
 ### Instalar dependencias ###

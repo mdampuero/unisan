@@ -16,7 +16,7 @@ use JMS\Serializer\Annotation\Expose;
 /**
  * Product
  *
- * @ORM\Table(name="menu")
+ * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"code"}, repositoryMethod="getUniqueNotDeleted")

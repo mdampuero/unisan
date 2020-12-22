@@ -21,6 +21,7 @@ class Currency
     const ARS='ARS';
     const USD='USD';
     const EUR='EUR';
+    const CLP='CLP';
 
     /**
      * @var string

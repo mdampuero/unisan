@@ -25,13 +25,13 @@ class ProductsFixture extends AbstractFixture implements OrderedFixtureInterface
     
     public function load(ObjectManager $manager){
         for ($i=1; $i<=100; $i++){
-            $menu = new Product();
-            $menu->setName("Plato - ".$i);
-            $menu->setCode("AA".$i);
-            $menu->setPrice($i*1.10);
-            $menu->setCurrency($manager->getRepository(Currency::class)->findOneByIsDefault(true));
-            $menu->setDescription("Description menu - ".$i);
-            $manager->persist($menu);
+            $product = new Product();
+            $product->setName("Producto - ".$i);
+            $product->setCode("AA".$i);
+            $product->setPrice($i*1.10);
+            $product->setCurrency($manager->getRepository(Currency::class)->findOneByIsDefault(true));
+            $product->setDescription("Description producto - ".$i);
+            $manager->persist($product);
         }
         $manager->flush();
     }

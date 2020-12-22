@@ -5,12 +5,12 @@ services:
         image: php:7.4-apache
         container_name: unisan_apache
         extra_hosts:
-            - "laomma.local:127.0.0.1"
+            - "dev.unisan.cl:127.0.0.1"
         volumes:
             - ".:/app:cached"
             - ../www/:/var/www/html
             - ./config/php.ini:/usr/local/etc/php/conf.d/php.ini
-            - ./config/laomma.local.conf:/etc/apache2/sites-enabled/laomma.local.conf
+            - ./config/dev.unisan.cl.conf:/etc/apache2/sites-enabled/dev.unisan.cl.conf
             - ../logs:/var/log/apache2
         expose:
             - 80
@@ -31,7 +31,7 @@ services:
             - ../db/working:/var/lib/mysql
             - ../db/backups:/var/db/backups
         environment:
-            - MYSQL_DATABASE=laomma
+            - MYSQL_DATABASE=unisan
             - MYSQL_ROOT_PASSWORD=Secreta007
             - MYSQL_USER=root
             - MYSQL_PASSWORD=Secreta007

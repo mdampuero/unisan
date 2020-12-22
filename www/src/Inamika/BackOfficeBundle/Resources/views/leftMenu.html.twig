@@ -12,12 +12,12 @@
                 </li> #}
                 <li class="{% if 'inamika_backoffice_orders' in app.request.get('_route') %}active{% endif %}">
                     <a href="{{ path('inamika_backoffice_orders')}}" aria-expanded="false">
-                        <i class="mdi mdi-truck-delivery"></i><span class="hide-menu">Pedidos</span>
+                        <i class="mdi mdi-truck-delivery"></i><span class="hide-menu">{{ 'ORDERS' | trans }}</span>
                     </a>
                 </li>
                 <li class="{% if 'inamika_backoffice_products' in app.request.get('_route') %}active{% endif %}">
                     <a href="{{ path('inamika_backoffice_products')}}" aria-expanded="false">
-                        <i class="mdi mdi-silverware"></i><span class="hide-menu">{{ 'PRODUCTS' | trans }}</span>
+                        <i class="mdi mdi-package"></i><span class="hide-menu">{{ 'PRODUCTS' | trans }}</span>
                     </a>
                 </li>
                 <li class="{% if 'inamika_backoffice_customers' in app.request.get('_route') %}active{% endif %}">
