@@ -4,7 +4,7 @@ inamika_backoffice_homepage:
         _controller: InamikaBackOfficeBundle:Dashboard:index
     options:
         breadcrumb:
-            label: Admin
+            label: Dashboard
 
 inamika_backoffice_change_lang:
     path:     /changeLocale
@@ -79,4 +79,6 @@ inamika_backoffice_orders:
     resource: "@InamikaBackOfficeBundle/Resources/config/orders.yml"
     prefix:   /orders
 
-
+inamika_backoffice_services:
+    resource: "@InamikaBackOfficeBundle/Resources/config/services_routing.yml"
+    prefix:   /services

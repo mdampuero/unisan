@@ -5,11 +5,11 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 {# <li class="nav-small-cap">PERSONAL</li> #}
-                {# <li class="{% if (app.request.get('_route') == 'inamika_backoffice_homepage') %}active{% endif %}">
+                <li class="{% if (app.request.get('_route') == 'inamika_backoffice_homepage') %}active{% endif %}">
                     <a href="{{ path('inamika_backoffice_homepage')}}" aria-expanded="false">
                         <i class="mdi mdi-gauge"></i><span class="hide-menu">{{ 'DASHBOARD' | trans }}</span>
                     </a>
-                </li> #}
+                </li>
                 <li class="{% if 'inamika_backoffice_orders' in app.request.get('_route') %}active{% endif %}">
                     <a href="{{ path('inamika_backoffice_orders')}}" aria-expanded="false">
                         <i class="mdi mdi-truck-delivery"></i><span class="hide-menu">{{ 'ORDERS' | trans }}</span>
@@ -17,7 +17,12 @@
                 </li>
                 <li class="{% if 'inamika_backoffice_products' in app.request.get('_route') %}active{% endif %}">
                     <a href="{{ path('inamika_backoffice_products')}}" aria-expanded="false">
-                        <i class="mdi mdi-package"></i><span class="hide-menu">{{ 'PRODUCTS' | trans }}</span>
+                        <i class="mdi mdi-barcode"></i><span class="hide-menu">{{ 'PRODUCTS' | trans }}</span>
+                    </a>
+                </li>
+                <li class="{% if 'inamika_backoffice_services' in app.request.get('_route') %}active{% endif %}">
+                    <a href="{{ path('inamika_backoffice_services')}}" aria-expanded="false">
+                        <i class="mdi mdi-package"></i><span class="hide-menu">{{ 'SERVICES' | trans }}</span>
                     </a>
                 </li>
                 <li class="{% if 'inamika_backoffice_customers' in app.request.get('_route') %}active{% endif %}">

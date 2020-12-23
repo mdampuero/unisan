@@ -1,0 +1,24 @@
+api_services:
+    path:     /services
+    defaults: { _controller: InamikaApiBundle:Services:index }
+    methods: [GET]
+
+api_services_get:
+    path:     /services/{id}
+    defaults: { _controller: InamikaApiBundle:Services:get }
+    methods: [GET]
+
+api_services_post:
+    path:     /services
+    defaults: { _controller: InamikaApiBundle:Services:post }
+    methods: [POST]
+
+api_services_put:
+    path:     /services/{id}
+    defaults: { _controller: InamikaApiBundle:Services:put }
+    methods: [PUT]
+
+api_services_delete:
+    path:     /services/{id}
+    defaults: { _controller: InamikaApiBundle:Services:delete }
+    methods: [DELETE]

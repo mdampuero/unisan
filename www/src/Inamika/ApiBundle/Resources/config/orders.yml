@@ -47,3 +47,8 @@ api_orders_delete:
     path:     /orders/{id}
     defaults: { _controller: InamikaApiBundle:Orders:delete }
     methods: [DELETE]
+
+api_orders_total:
+    path:     /orders_totals
+    defaults: { _controller: InamikaApiBundle:Orders:totals }
+    methods: [GET]

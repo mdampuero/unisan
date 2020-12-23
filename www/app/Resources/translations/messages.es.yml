@@ -146,4 +146,7 @@ OBSERVATIONS: 'Observaciones'
 PRODUCTS_ADD: 'Agregar producto'
 PRODUCTS_EDIT: 'Editar producto'
 ORDERS: 'Órdenes'
+SERVICES: 'Servicios'
+SERVICES_ADD: 'Agregar servicio'
+SERVICES_EDIT: 'Editar servicio'
 

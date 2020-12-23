@@ -21,3 +21,6 @@ api_logs:
 
 api_ordersStatus:
     resource: "@InamikaApiBundle/Resources/config/ordersStatus.yml"
+
+api_services:
+    resource: "@InamikaApiBundle/Resources/config/services_routing.yml"

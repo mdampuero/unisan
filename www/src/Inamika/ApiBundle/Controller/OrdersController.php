@@ -140,6 +140,13 @@ class OrdersController extends FOSRestController
         return $this->handleView($this->view($entity));
     }
     
+    public function totalsAction($id){
+        if (!$entity = $this->getDoctrine()->getRepository(Orders::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+           // [{"value":"5","label":"Venta","color":"#15BF20"},{"value":"1","label":"Alquilada","color":"#FF66CC"}]
+        return $this->handleView($this->view($entity));
+    }
+    
     public function logsAction($id){
         $entities = $this->getDoctrine()->getRepository(Log::class)->findByResource("order_number_${id}",array('createdAt'=>'DESC'));
         return $this->handleView($this->view($entities));
