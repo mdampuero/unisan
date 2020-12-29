@@ -32,7 +32,7 @@ class CurrenciesFixture extends AbstractFixture implements OrderedFixtureInterfa
 
         $CLP = new Currency();
         $CLP->setId(Currency::CLP);
-        $CLP->setName("Euro");
+        $CLP->setName("Peso chileno");
         $CLP->setCode(Currency::CLP);
         $CLP->setSymbol("$");
         $CLP->setIsDefault(true);

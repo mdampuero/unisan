@@ -28,9 +28,9 @@ class ProductsFixture extends AbstractFixture implements OrderedFixtureInterface
             $product = new Product();
             $product->setName("Producto - ".$i);
             $product->setCode("AA".$i);
-            $product->setPrice($i*1.10);
+            $product->setPrice($i*1000.10);
             $product->setCurrency($manager->getRepository(Currency::class)->findOneByIsDefault(true));
-            $product->setDescription("Description producto - ".$i);
+            $product->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempor rutrum urna vitae elementum. Proin et quam vel massa pellentesque mollis. Sed non vehicula urna, sed tincidunt elit. Aliquam erat volutpat. Ut tempus dictum tortor eget posuere. Vestibulum fringilla efficitur sollicitudin. Sed at porta dolor. Nam lectus metus, dictum ut volutpat sed, elementum nec erat.");
             $manager->persist($product);
         }
         $manager->flush();

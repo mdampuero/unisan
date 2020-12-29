@@ -29,7 +29,7 @@ class CustomersFixture extends AbstractFixture implements OrderedFixtureInterfac
             $customer->setName("Cliente - ".$i);
             $customer->setEmail("cliente".$i."@email.com");
             $customer->setPhone("11122225555".$i);
-            $customer->setPassword("123456");
+            $customer->setPassword(substr(md5("123456"), 0, 19));
             $manager->persist($customer);
         }
         $manager->flush();

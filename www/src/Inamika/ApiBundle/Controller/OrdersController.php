@@ -56,16 +56,16 @@ class OrdersController extends FOSRestController
                     throw new Exception("Este valor no debería estar vacío.");
                 $itemsArray=[];
                 foreach ($items as $key => $item) {
-                    if(!$menuEntity=$em->getRepository(Product::class)->find($item["id"]))
+                    if(!$productEntity=$em->getRepository(Product::class)->find($item["id"]))
                         throw new Exception("Este valor {$item['id']} no es válido.");
                     $ordersItem=new OrdersItem();
-                    $ordersItem->setProduct($menuEntity);
+                    $ordersItem->setProduct($productEntity);
                     $ordersItem->setOrder($entity);
-                    $ordersItem->setCode($item["code"]);
+                    $ordersItem->setCode($productEntity->getCode());
                     $ordersItem->setQuantity($item["quantity"]);
-                    $ordersItem->setDescription($item["name"]);
-                    $ordersItem->setPrice($item["price"]);
-                    $ordersItem->setSubtotal($item["price"]*$item["quantity"]);
+                    $ordersItem->setDescription($productEntity->getName());
+                    $ordersItem->setPrice($productEntity->getPrice());
+                    $ordersItem->setSubtotal($productEntity->getPrice()*$item["quantity"]);
                     $em->persist($ordersItem);
                     $itemsArray[]=$ordersItem;
                 }
