@@ -28,6 +28,6 @@ class OrdersController extends Controller{
     }
     
     public function viewAction($id){
-		return $this->render('InamikaBackOfficeBundle:Orders:view.html.twig',array('data'=>$this->getDoctrine()->getRepository('InamikaBackEndBundle:Orders')->find($id)));
+		  return $this->render('InamikaBackOfficeBundle:Orders:view.html.twig',array('data'=>$this->getDoctrine()->getRepository('InamikaBackEndBundle:Orders')->find($id)));
     }
 }

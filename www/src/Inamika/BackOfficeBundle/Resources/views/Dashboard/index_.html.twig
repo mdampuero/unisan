@@ -1,0 +1,477 @@
+{% extends "InamikaBackOfficeBundle::layout.html.twig" %}
+{% block stylesheet %}
+	{{ parent() }}
+    <link href="{{ asset('bundles/inamikabackoffice/css/pages/dashboard4.css') }}" id="theme" rel="stylesheet">
+{% endblock stylesheet %}
+{% block body %}
+{{ parent()}}
+<!-- ============================================================== -->
+                <!-- Stats box -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="m-r-20 align-self-center"><img src="{{ asset('bundles/inamikabackoffice') }}/assets/images/icon/income.png" alt="Income" /></div>
+                                    <div class="align-self-center">
+                                        <h6 class="text-muted m-t-10 m-b-0">Total Income</h6>
+                                        <h2 class="m-t-0">953,000</h2></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="m-r-20 align-self-center"><img src="{{ asset('bundles/inamikabackoffice') }}/assets/images/icon/expense.png" alt="Income" /></div>
+                                    <div class="align-self-center">
+                                        <h6 class="text-muted m-t-10 m-b-0">Total Expense</h6>
+                                        <h2 class="m-t-0">236,000</h2></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="m-r-20 align-self-center"><img src="{{ asset('bundles/inamikabackoffice') }}/assets/images/icon/assets.png" alt="Income" /></div>
+                                    <div class="align-self-center">
+                                        <h6 class="text-muted m-t-10 m-b-0">Total Assets</h6>
+                                        <h2 class="m-t-0">987,563</h2></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="m-r-20 align-self-center"><img src="{{ asset('bundles/inamikabackoffice') }}/assets/images/icon/staff.png" alt="Income" /></div>
+                                    <div class="align-self-center">
+                                        <h6 class="text-muted m-t-10 m-b-0">Total Staff</h6>
+                                        <h2 class="m-t-0">987,563</h2></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- Sales overview chart -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div>
+                                        <h3 class="card-title m-b-5"><span class="lstick"></span>Sales Overview </h3>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <select class="custom-select b-0">
+                                            <option selected="">January 2017</option>
+                                            <option value="1">February 2017</option>
+                                            <option value="2">March 2017</option>
+                                            <option value="3">April 2017</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="sales-overview2" class="p-relative" style="height:360px;"></div>
+                                <div class="stats-bar">
+                                    <div class="row text-center">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="p-20">
+                                                <h6 class="m-b-0">Total Sales</h6>
+                                                <h3 class="m-b-0">$10,345</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="p-20">
+                                                <h6 class="m-b-0">This Month</h6>
+                                                <h3 class="m-b-0">$7,589</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="p-20">
+                                                <h6 class="m-b-0">This Week</h6>
+                                                <h3 class="m-b-0">$1,476</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div>
+                                        <h3 class="card-title m-b-5"><span class="lstick"></span>Sales Overview </h3>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <select class="custom-select b-0">
+                                            <option selected="">January 2017</option>
+                                            <option value="1">February 2017</option>
+                                            <option value="2">March 2017</option>
+                                            <option value="3">April 2017</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="ct-sales3-chart" class="p-relative" style="height:360px;"></div>
+                                <div class="stats-bar">
+                                    <div class="row text-center">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="p-20">
+                                                <h6 class="m-b-0">Total Sales</h6>
+                                                <h3 class="m-b-0">$10,345</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="p-20">
+                                                <h6 class="m-b-0">This Month</h6>
+                                                <h3 class="m-b-0">$7,589</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="p-20">
+                                                <h6 class="m-b-0">This Week</h6>
+                                                <h3 class="m-b-0">$1,476</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div>
+                                        <h3 class="card-title m-b-5"><span class="lstick"></span>Total Visits </h3>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <select class="custom-select b-0">
+                                            <option selected="">January 2017</option>
+                                            <option value="1">February 2017</option>
+                                            <option value="2">March 2017</option>
+                                            <option value="3">April 2017</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="visitfromworld" style="width:100%!important; height:415px"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title"><span class="lstick"></span>Browser Stats</h4>
+                                <table class="table browser m-t-30 no-border">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width:40px"><img src="{{ asset('bundles/inamikabackoffice') }}/assets/images/browser/chrome-logo.png" alt=logo /></td>
+                                            <td>Google Chrome</td>
+                                            <td class="text-right">23%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="{{ asset('bundles/inamikabackoffice') }}/assets/images/browser/firefox-logo.png" alt=logo /></td>
+                                            <td>Mozila Firefox</td>
+                                            <td class="text-right">15%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="{{ asset('bundles/inamikabackoffice') }}/assets/images/browser/safari-logo.png" alt=logo /></td>
+                                            <td>Apple Safari</td>
+                                            <td class="text-right">07%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="{{ asset('bundles/inamikabackoffice') }}/assets/images/browser/internet-logo.png" alt=logo /></td>
+                                            <td>Internet Explorer</td>
+                                            <td class="text-right">09%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="{{ asset('bundles/inamikabackoffice') }}/assets/images/browser/opera-logo.png" alt=logo /></td>
+                                            <td>Opera mini</td>
+                                            <td class="text-right">23%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="{{ asset('bundles/inamikabackoffice') }}/assets/images/browser/edge-logo.png" alt=logo /></td>
+                                            <td>Microsoft edge</td>
+                                            <td class="text-right">09%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="{{ asset('bundles/inamikabackoffice') }}/assets/images/browser/netscape-logo.png" alt=logo /></td>
+                                            <td>Netscape Navigator</td>
+                                            <td class="text-right">04%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+{# <h3 class="card-title cursor-pointer" data-toggle="collapse" data-target="#collapseCharts" aria-expanded="false" aria-controls="collapseCharts">{{ 'UNIT_BY_STATUS' | trans }}</h3>
+<hr>
+<div class="collapse show" id="collapseCharts">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ 'CHART_BAR' | trans }}</h4>
+                    <div>
+                        <div class="text-center" id="spin-chartBar"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></div>
+                        <canvas id="chartBar" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ 'CHART_PIE' | trans }}</h4>
+                    <div>
+                        <div class="text-center" id="spin-chartPie"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></div>
+                        <canvas id="chartPie" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> #}
+{% endblock body %}
+{% block javascripts %}
+	{{ parent() }}
+    <script src="{{ asset('bundles/inamikabackoffice/assets/plugins/Chart.js/chartjs.init.js')}}"></script>
+    <script src="{{ asset('bundles/inamikabackoffice/assets/plugins/Chart.js/Chart.min.js')}}"></script>
+    <!-- Vector map JavaScript -->
+    <script src="{{ asset('bundles/inamikabackoffice/assets')}}/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="{{ asset('bundles/inamikabackoffice/assets')}}/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <!--sparkline JavaScript -->
+    <script src="{{ asset('bundles/inamikabackoffice/assets')}}/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!--morris JavaScript -->
+    <script src="{{ asset('bundles/inamikabackoffice/assets')}}/plugins/chartist-js/dist/chartist.min.js"></script>
+    <script src="{{ asset('bundles/inamikabackoffice/assets')}}/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+    <script>
+    $(function() {
+    "use strict";
+    // ============================================================== 
+    // Sales overview
+    // ============================================================== 
+    new Chartist.Line('#sales-overview2', {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        series: [
+            { meta: "Earning ($)", data: [10, 150, 110, 240, 200, 200, 300] }
+        ]
+    }, {
+        low: 0,
+        high: 400,
+        showArea: true,
+        divisor: 10,
+        lineSmooth: false,
+        fullWidth: true,
+        showLine: true,
+        chartPadding: 30,
+        axisX: {
+            showLabel: true,
+            showGrid: false,
+            offset: 20
+        },
+        plugins: [
+            Chartist.plugins.tooltip()
+        ],
+        // As this is axis specific we need to tell Chartist to use whole numbers only on the concerned axis
+        axisY: {
+            onlyInteger: true,
+            showLabel: true,
+            scaleMinSpace: 50,
+            showGrid: true,
+            offset: 10,
+            labelInterpolationFnc: function(value) {
+                return (value / 100) + 'k'
+            },
+
+        }
+
+    });
+    // ============================================================== 
+    // Sales overview 2
+    // ============================================================== 
+    new Chartist.Bar('#ct-sales3-chart', {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        series: [
+            [400, 120, 140, 130, 200, 150, 140, 130, 300, 120, 140, 150],
+            [200, 188, 242, 300, 200, 400, 230, 300, 200, 400, 180, 300],
+            [100, 200, 400, 600, 100, 200, 400, 370, 240, 200, 280, 330]
+        ]
+    }, {
+        stackBars: true,
+        axisX: {
+            showGrid: false
+        },
+        axisY: {
+            labelInterpolationFnc: function(value) {
+                return (value);
+            },
+            showGrid: true
+        }, plugins: [
+        	Chartist.plugins.tooltip()
+      	],
+    }).on('draw', function(data) {
+        if (data.type === 'bar') {
+            data.element.attr({
+                style: 'stroke-width: 15px'
+            });
+        }
+    });
+    // ============================================================== 
+    // world map
+    // ==============================================================
+    jQuery('#visitfromworld').vectorMap({
+        map: 'world_mill_en',
+        backgroundColor: '#fff',
+        borderColor: '#000',
+        borderOpacity: 0.9,
+        borderWidth: 1,
+        zoomOnScroll: false,
+        color: '#ddd',
+        regionStyle: {
+            initial: {
+                fill: '#fff',
+                'stroke-width': 1,
+                'stroke': '#a6b7bf'
+            }
+        },
+        markerStyle: {
+            initial: {
+                r: 5,
+                'fill': '#26c6da',
+                'fill-opacity': 1,
+                'stroke': '#fff',
+                'stroke-width': 1,
+                'stroke-opacity': 1
+            },
+        },
+        enableZoom: true,
+        hoverColor: '#79e580',
+        markers: [{
+                latLng: [21.00, 78.00],
+                name: 'India : 9347',
+                style: { fill: '#398bf7' }
+            },
+            {
+                latLng: [-33.00, 151.00],
+                name: 'Australia : 250',
+                style: { fill: '#398bf7' }
+            },
+            {
+                latLng: [36.77, -119.41],
+                name: 'USA : 250',
+                style: { fill: '#398bf7' }
+            },
+            {
+                latLng: [55.37, -3.41],
+                name: 'UK   : 250',
+                style: { fill: '#398bf7' }
+            },
+            {
+                latLng: [25.20, 55.27],
+                name: 'UAE : 250',
+                style: { fill: '#398bf7' }
+            }
+        ],
+        hoverOpacity: null,
+        normalizeFunction: 'linear',
+        scaleColors: ['#fff', '#ccc'],
+        selectedColor: '#c9dfaf',
+        selectedRegions: [],
+        showTooltip: true,
+        onRegionClick: function(element, code, region) {
+            var message = 'You clicked "' + region + '" which has the code: ' + code.toUpperCase();
+            alert(message);
+        }
+    });
+});
+</script>
+    {# <script>
+		$(function () {
+            $.ajax({
+                url: "{{ path('api_orders_total')}}",
+                type: 'GET',
+                crossDomain: true,
+                success: function(data) {
+                    if(data.length>0){
+                        $("#spin-chartPie").fadeOut('fast');
+                        $("#spin-chartBar").fadeOut('fast');
+                        var ctx3 = document.getElementById("chartPie").getContext("2d");
+                        var myPieChart = new Chart(ctx3).Pie(data, {
+                            segmentShowStroke: true,
+                            segmentStrokeColor: "#fff",
+                            segmentStrokeWidth: 0,
+                            animationSteps: 100,
+                            tooltipCornerRadius: 10,
+                            animationEasing: "easeOutBounce",
+                            animateRotate: true,
+                            animateScale: false,
+                            responsive: true,
+                            showAllTooltips: true
+                        });
+
+                        var ctx2 = document.getElementById("chartBar").getContext("2d");
+                        labels=[];
+                        values=[];
+                        colors=[];
+                        for(var i=0; i<data.length; i++){
+                            labels.push(data[i].label);
+                            values.push(data[i].value);
+                            colors.push(data[i].color);
+                        }
+                        var data2 = {
+                            labels: labels,
+                            datasets: [{
+                                    label: "Bar",
+                                    fillColor: "#009efb",
+                                    strokeColor: "#000000",
+                                    data: values
+                                }
+                            ]
+                        };
+
+                        var chartBar = new Chart(ctx2).Bar(data2, {
+                            scaleBeginAtZero: true,
+                            scaleShowGridLines: true,
+                            scaleGridLineColor: "rgba(0,0,0,.005)",
+                            scaleGridLineWidth: 0,
+                            scaleShowHorizontalLines: true,
+                            scaleShowVerticalLines: true,
+                            barShowStroke: true,
+                            barStrokeWidth: 0,
+                            tooltipCornerRadius: 2,
+                            barDatasetSpacing: 3,
+                            responsive: true
+                        });
+                        for(var i=0; i<colors.length; i++){
+                            chartBar.datasets[0].bars[i].fillColor=colors[i];
+                        }
+                        chartBar.update();
+                    }else{
+                         $("#chartPie").hide();
+                         $("#spin-chartPie").html('<p class="m-t-40">No hay datos suficientes para mostrar</p>');
+                         $("#chartBar").hide();
+                         $("#spin-chartBar").html('<p class="m-t-40">No hay datos suficientes para mostrar</p>');
+                    }
+                },  
+                complete:function(){
+                    
+                },
+                error: function(data, status, error) {
+                    
+                }
+            });   
+        });
+	</script> #}
+{% endblock javascripts %}

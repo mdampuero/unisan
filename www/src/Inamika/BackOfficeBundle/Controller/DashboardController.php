@@ -14,6 +14,8 @@ class DashboardController extends Controller
 {
     public function indexAction(){
         // return $this->redirectToRoute('inamika_backoffice_orders');
-        return $this->render('InamikaBackOfficeBundle:Dashboard:index.html.twig');
+        return $this->render('InamikaBackOfficeBundle:Dashboard:index.html.twig',array(
+            'currencies'=>$this->getDoctrine()->getRepository('InamikaBackEndBundle:Currency')->getAll()->getQuery()->getResult()
+        ));
     }
 }
