@@ -11,10 +11,16 @@
     <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Pedidos en 2020</h4>
-                <div>
-                    <canvas id="chart1" height="150"></canvas>
-                </div>
+                <h4 class="card-title">
+                    <div class="form-group">
+                        <select class="form-control" id="totalsYearSelect" tabindex="1">
+                            {% for year in yearsByOrders %} 
+                               <option value="{{ year.year }}">{{ 'ORDERS_IN' | trans }} {{ year.year }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                </h4>
+                <div id="chartTotal"></div>
             </div>
         </div>
     </div>
@@ -23,10 +29,16 @@
     <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Visitas 2020</h4>
-                <div>
-                    <canvas id="chart2" height="150"></canvas>
-                </div>
+                <h4 class="card-title">
+                    <div class="form-group">
+                        <select class="form-control" id="visitsYearSelect" tabindex="1">
+                            {% for year in yearsByVisits %} 
+                               <option value="{{ year.year }}">{{ 'VISITS_IN' | trans }} {{ year.year }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                </h4>
+                <div id="chartVisits"></div>
             </div>
         </div>
     </div>
@@ -45,8 +57,20 @@
     <script src="{{ asset('bundles/inamikabackoffice/assets/plugins/Chart.js/Chart.min.js')}}"></script>
     <script>
     $(function () {
+        loadTotals();
+        $("#totalsYearSelect").on("change",function (){
+            loadTotals();
+        });
+        loadVisits();
+        $("#visitsYearSelect").on("change",function (){
+            loadVisits();
+        });
+
+        /** BEGIN DATATABLE */
         $('#{{ pathBase }}_dataTable').DataTable({
             "searching": false,
+            "info":false,
+            "paging": false,
             order: [[ 0, 'desc' ]],
             "processing": false,
             "serverSide": true,
@@ -110,98 +134,164 @@
                 }
             ]
         });
+        /** END DATATABLE */
+
+        
     });
+
+
+    function loadTotals(){
+        $("#chartTotal").css("min-height",$("#chartTotal").css("height"));
+        $("#chartTotal").html(getSpin());
+        $.ajax({
+            url: "{{ path('api_orders_total')}}?year="+$("#totalsYearSelect").val(),
+            type: 'GET',
+            crossDomain: true,
+            success: function(data) {
+                $("#chartTotal").html('<canvas id="chart1" height="150"></canvas>');
+                labels=[];
+                values=[];
+                for(var i=0; i<data.length; i++){
+                    labels.push(translateMonth(data[i].month_label));
+                    values.push(data[i].value);
+                }
+                var ctx1 = document.getElementById("chart1").getContext("2d");
+                var data1 = {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Pedidos",
+                            fillColor: "#009efb",
+                            strokeColor: "#009efb",
+                            pointColor: "#009efb",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "#009efb",
+                            data: values
+                        }
+                    ]
+                };
+                Chart.types.Line.extend({
+                name: "LineAlt",
+                initialize: function () {
+                    Chart.types.Line.prototype.initialize.apply(this, arguments);
+                    var ctx = this.chart.ctx;
+                    var originalStroke = ctx.stroke;
+                    ctx1.stroke = function () {
+                        ctx1.save();
+                        ctx1.shadowColor = 'rgba(0, 0, 0, 0.4)';
+                        ctx1.shadowBlur = 10;
+                        ctx1.shadowOffsetX = 8;
+                        ctx1.shadowOffsetY = 8;
+                        originalStroke.apply(this, arguments)
+                        ctx1.restore();
+                    }
+                }
+                });
+                var chart1 = new Chart(ctx1).LineAlt(data1, {
+                    scaleShowGridLines : true,
+                    scaleGridLineColor : "rgba(0,0,0,.005)",
+                    scaleGridLineWidth : 0,
+                    scaleShowHorizontalLines: true,
+                    scaleShowVerticalLines: true,
+                    bezierCurve : true,
+                    bezierCurveTension : 0.4,
+                    pointDot : true,
+                    pointDotRadius : 4,
+                    pointDotStrokeWidth : 2,
+                    pointHitDetectionRadius : 2,
+                    datasetStroke : true,
+                    tooltipCornerRadius: 2,
+                    datasetStrokeWidth : 0,
+                    datasetFill : false,
+                    responsive: true
+                });
+            },
+            complete:function(){
+                
+            },
+            error: function(data, status, error) {
+                
+            }
+        });
+    }
+    
+    function loadVisits(){
+        $("#chartVisits").css("min-height",$("#chartVisits").css("height"));
+        $("#chartVisits").html(getSpin());
+        $.ajax({
+            url: "{{ path('api_visits_total')}}?year="+$("#visitsYearSelect").val(),
+            type: 'GET',
+            crossDomain: true,
+            success: function(data) {
+                $("#chartVisits").html('<canvas id="chart2" height="150"></canvas>');
+                labels=[];
+                values=[];
+                for(var i=0; i<data.length; i++){
+                    labels.push(translateMonth(data[i].month_label));
+                    values.push(data[i].value);
+                }
+                /** BEGIN CHART */        
+                var ctx2 = document.getElementById("chart2").getContext("2d");
+                var data2 = {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Visitas",
+                            fillColor: "#55ce63",
+                            strokeColor: "#55ce63",
+                            highlightFill: "#55ce63",
+                            highlightStroke: "#55ce63",
+                            data: values
+                        }
+                    ]
+                };
+                
+                var chart2 = new Chart(ctx2).Bar(data2, {
+                    scaleBeginAtZero : true,
+                    scaleShowGridLines : true,
+                    scaleGridLineColor : "rgba(0,0,0,.005)",
+                    scaleGridLineWidth : 0,
+                    scaleShowHorizontalLines: true,
+                    scaleShowVerticalLines: true,
+                    barShowStroke : true,
+                    barStrokeWidth : 0,
+                    tooltipCornerRadius: 2,
+                    barDatasetSpacing : 3,
+                    responsive: true
+                });
+                /** END CHART */
+            },
+            complete:function(){
+                
+            },
+            error: function(data, status, error) {
+                
+            }
+        });
+    }
+
     $('#{{ pathBase }}_dataTable').on('click', 'button.btn-view', function () {
         var data = $('#{{ pathBase }}_dataTable').DataTable().row( $(this).parents('tr') ).data();
         var url="{{ path(pathBase~'_view',{ id: 'ENTITY_ID' })}}";
         location.href=url.replace('ENTITY_ID',data.id);
     });
-    $( document ).ready(function() {
-        
-        var ctx1 = document.getElementById("chart1").getContext("2d");
-        var data1 = {
-            labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"],
-            datasets: [
-                {
-                    label: "Pedidos",
-                    fillColor: "#009efb",
-                    strokeColor: "#009efb",
-                    pointColor: "#009efb",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "#009efb",
-                    data: [0, 59, 80, 65, 10, 55, 40,55,60,74,89,96]
-                }
-                
-            ],
-            
-        };
-        Chart.types.Line.extend({
-        name: "LineAlt",
-        initialize: function () {
-            Chart.types.Line.prototype.initialize.apply(this, arguments);
 
-            var ctx = this.chart.ctx;
-            var originalStroke = ctx.stroke;
-            ctx1.stroke = function () {
-            ctx1.save();
-            ctx1.shadowColor = 'rgba(0, 0, 0, 0.4)';
-            ctx1.shadowBlur = 10;
-            ctx1.shadowOffsetX = 8;
-            ctx1.shadowOffsetY = 8;
-            originalStroke.apply(this, arguments)
-            ctx1.restore();
+    $.extend( true, $.fn.dataTable.defaults, {
+        dom: 'Bfrtip',
 
-            }
-        }
-        });
-        var chart1 = new Chart(ctx1).LineAlt(data1, {
-            scaleShowGridLines : true,
-            scaleGridLineColor : "rgba(0,0,0,.005)",
-            scaleGridLineWidth : 0,
-            scaleShowHorizontalLines: true,
-            scaleShowVerticalLines: true,
-            bezierCurve : true,
-            bezierCurveTension : 0.4,
-            pointDot : true,
-            pointDotRadius : 4,
-            pointDotStrokeWidth : 2,
-            pointHitDetectionRadius : 2,
-            datasetStroke : true,
-            tooltipCornerRadius: 2,
-            datasetStrokeWidth : 0,
-            datasetFill : false,
-            responsive: true
-        });
-        
-        var ctx2 = document.getElementById("chart2").getContext("2d");
-        var data2 = {
-            labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"],
-            datasets: [
-                {
-                    label: "Visitas",
-                    fillColor: "#55ce63",
-                    strokeColor: "#55ce63",
-                    highlightFill: "#55ce63",
-                    highlightStroke: "#55ce63",
-                    data: [1011, 3011, 8011, 6111, 2611, 7511, 4011,9521,10152,11524,12632,13222]
-                }
-            ]
-        };
-        
-        var chart2 = new Chart(ctx2).Bar(data2, {
-            scaleBeginAtZero : true,
-            scaleShowGridLines : true,
-            scaleGridLineColor : "rgba(0,0,0,.005)",
-            scaleGridLineWidth : 0,
-            scaleShowHorizontalLines: true,
-            scaleShowVerticalLines: true,
-            barShowStroke : true,
-            barStrokeWidth : 0,
-            tooltipCornerRadius: 2,
-            barDatasetSpacing : 3,
-            responsive: true
-        });
+        paging:false,
+        ajax: {
+            url: "{{ path('api_orders_recents')}}",
+            dataSrc: "data"
+        },
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json',
+            dataSrc: ''
+        },
+        buttons: [
+        //'excel',
+        ],
     });
     </script>  
 {% endblock javascripts %}

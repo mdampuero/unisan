@@ -73,6 +73,9 @@ doctrine:
                 DATE_FORMAT: Inamika\BackEndBundle\DQL\DateFormatFunction
             numeric_functions:
                  RAND: Inamika\BackEndBundle\DQL\Rand
+            string_functions:
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                YEAR: DoctrineExtensions\Query\Mysql\Year
         
 
 # Swiftmailer Configuration

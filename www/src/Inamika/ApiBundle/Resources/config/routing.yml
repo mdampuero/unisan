@@ -27,3 +27,6 @@ api_services:
     
 api_login:
     resource: "@InamikaApiBundle/Resources/config/login.yml"
+
+api_visits:
+    resource: "@InamikaApiBundle/Resources/config/visits.yml"

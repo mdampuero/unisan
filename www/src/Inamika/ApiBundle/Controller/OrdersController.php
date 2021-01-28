@@ -40,6 +40,17 @@ class OrdersController extends FOSRestController
         )));
     }
 
+    public function recentsAction(Request $request)
+    {
+        $date = new \DateTime();
+        $date->modify('-24 hour');
+        return $this->handleView($this->view(array(
+            'data' => $this->getDoctrine()->getRepository(Orders::class)->search(null, null, 0, 'e.createdAt', 'DESC')
+            ->andWhere('e.createdAt > :lastDay')->setParameter('lastDay',$date)
+            ->getQuery()->getResult()
+        )));
+    }
+
     public function postAction(Request $request){
         try{
             $entity = new Orders();
@@ -140,11 +151,9 @@ class OrdersController extends FOSRestController
         return $this->handleView($this->view($entity));
     }
     
-    public function totalsAction($id){
-        if (!$entity = $this->getDoctrine()->getRepository(Orders::class)->find($id))
-            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
-           // [{"value":"5","label":"Venta","color":"#15BF20"},{"value":"1","label":"Alquilada","color":"#FF66CC"}]
-        return $this->handleView($this->view($entity));
+    public function totalsAction(Request $request){
+        $year = $request->query->get('year', date("Y"));
+        return $this->handleView($this->view($this->getDoctrine()->getRepository('InamikaBackEndBundle:Orders')->getTotalByYear($year)));
     }
     
     public function logsAction($id){

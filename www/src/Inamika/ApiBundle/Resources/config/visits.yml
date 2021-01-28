@@ -1,0 +1,29 @@
+api_visits:
+    path:     /visits
+    defaults: { _controller: InamikaApiBundle:Visits:index }
+    methods: [GET]
+
+api_visits_get:
+    path:     /visits/{id}
+    defaults: { _controller: InamikaApiBundle:Visits:get }
+    methods: [GET]
+
+api_visits_post:
+    path:     /visits
+    defaults: { _controller: InamikaApiBundle:Visits:post }
+    methods: [POST]
+
+api_visits_put:
+    path:     /visits/{id}
+    defaults: { _controller: InamikaApiBundle:Visits:put }
+    methods: [PUT]
+
+api_visits_delete:
+    path:     /visits/{id}
+    defaults: { _controller: InamikaApiBundle:Visits:delete }
+    methods: [DELETE]
+
+api_visits_total:
+    path:     /visits_totals
+    defaults: { _controller: InamikaApiBundle:Visits:totals }
+    methods: [GET]

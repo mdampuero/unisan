@@ -3,6 +3,11 @@ api_orders:
     defaults: { _controller: InamikaApiBundle:Orders:index }
     methods: [GET]
 
+api_orders_recents:
+    path:     /orders_recents
+    defaults: { _controller: InamikaApiBundle:Orders:recents }
+    methods: [GET]
+
 api_orders_today:
     path:     /orders/today
     defaults: { _controller: InamikaApiBundle:Orders:today }

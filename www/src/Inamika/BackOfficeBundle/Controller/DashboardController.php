@@ -13,8 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 class DashboardController extends Controller
 {
     public function indexAction(){
-        // return $this->redirectToRoute('inamika_backoffice_orders');
         return $this->render('InamikaBackOfficeBundle:Dashboard:index.html.twig',array(
+            'yearsByOrders'=>$this->getDoctrine()->getRepository('InamikaBackEndBundle:Orders')->getDistinctYear(),
+            'yearsByVisits'=>$this->getDoctrine()->getRepository('InamikaBackEndBundle:Visit')->getDistinctYear(),
             'currencies'=>$this->getDoctrine()->getRepository('InamikaBackEndBundle:Currency')->getAll()->getQuery()->getResult()
         ));
     }

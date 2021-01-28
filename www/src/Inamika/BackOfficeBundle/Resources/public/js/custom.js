@@ -125,3 +125,34 @@ $(function() {
     });
 
 });
+
+function translateMonth(month){
+    switch(month){
+        case 'JANUARY':
+            return 'Enero';
+        case 'FEBRUARY':
+            return 'Febrero';
+        case 'MARCH':
+            return 'Marzo';
+        case 'APRIL':
+            return 'Abril';
+        case 'MAY':
+            return 'Mayo';
+        case 'JUNE':
+            return 'Junio';
+        case 'JULY':
+            return 'Julio';
+        case 'AUGUST':
+            return 'Agosto';
+        case 'SEPTEMBER':
+            return 'Septiembre';
+        case 'OCTOBER':
+            return 'Octubre';
+        case 'NOVEMBER':
+            return 'Noviembre';
+        case 'DECEMBER':
+            return 'Diciembre';
+        default:
+            return null;
+    } 
+}
