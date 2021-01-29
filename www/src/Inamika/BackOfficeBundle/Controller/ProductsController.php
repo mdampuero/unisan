@@ -57,6 +57,7 @@ class ProductsController extends BaseController{
             $action=$this->generateUrl('api_products_put',array('id'=>$entity->getId()));
         }
 		return $this->render('InamikaBackOfficeBundle:Products:_partials/form.html.twig',array(
+            'entity'=>$entity,
 			'form' => $this->createForm(ProductType::class, $entity,array(
                 'method' => $method,
                 'action' => $action

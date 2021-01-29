@@ -1,0 +1,11 @@
+{% extends "InamikaBackOfficeBundle::Emails/layout.html.twig" %}
+{% block body %}
+<h4>Solicitud</h4>
+<hr>
+<div>
+    <p><b>Servicio: {{ entity.name }}</b></p>
+    <p><b>Nombre:</b> {{ content.name }}</p>
+    <p><b>Email:</b> <a href="mailto:{{ content.email }}">{{ content.email }}</a></p>
+    <p><b>Teléfono:</b> {{ content.phone }}</p>
+</div>
+{% endblock %}

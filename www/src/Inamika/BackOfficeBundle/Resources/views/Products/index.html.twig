@@ -30,11 +30,21 @@
 <script type="text/javascript">
     $(function () {
         $('#{{ pathBase }}_dataTable').DataTable({
-            order: [[ 0, 'desc' ]],
+            order: [[ 1, 'desc' ]],
             "processing": false,
             "serverSide": true,
             columns: [
-                { title:"{{ 'CODE' | trans }}",data: "code" },
+                {
+                    title: '',
+                    orderable: false,
+                    render: function (data, type, JsonResultRow, meta) {
+                        if(JsonResultRow.picture){
+                            return '<img src="{{ asset('uploads') }}/xs/'+JsonResultRow.picture+'"  width="40"> ';
+                        }else{
+                            return '<img src="{{ asset("bundles/inamikabackoffice/assets/images/no-picture.png") }}" width="40" > ';
+                        }
+                    }
+                },
                 { title:"{{ 'NAME' | trans }}",data: "name" },
                 { 
                     title:"Precio",

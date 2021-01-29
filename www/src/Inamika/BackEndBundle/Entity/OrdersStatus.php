@@ -23,6 +23,7 @@ class OrdersStatus
     const STATUS_ON_DELIVERY='ON_DELIVERY';
     const STATUS_DELIVERED='DELIVERED';
     const STATUS_CANCELLED='CANCELLED';
+    const STATUS_INVOICED='INVOICED';
 
     /**
      * @var string
@@ -49,6 +50,15 @@ class OrdersStatus
      * @Expose
      */
     private $color;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="position", type="integer")
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $position=0;
 
     /**
      * @var bool
@@ -150,6 +160,30 @@ class OrdersStatus
     public function getColor()
     {
         return $this->color;
+    }
+    
+    /**
+     * Set position.
+     *
+     * @param float|null $position
+     *
+     * @return OrdersStatus
+     */
+    public function setPosition($position = null)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position.
+     *
+     * @return float|null
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 
     /**

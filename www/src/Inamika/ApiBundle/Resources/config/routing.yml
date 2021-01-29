@@ -30,3 +30,6 @@ api_login:
 
 api_visits:
     resource: "@InamikaApiBundle/Resources/config/visits.yml"
+
+api_cotizations:
+    resource: "@InamikaApiBundle/Resources/config/cotizations.yml"

@@ -36,8 +36,6 @@ class UsersController extends BaseController{
 
 	public function editAction($id){
         $entity=$this->getDoctrine()->getRepository(User::class)->find($id);
-        // dump($entity->getProjects());
-        // exit();
         return $this->render('InamikaBackOfficeBundle:Users:form.html.twig',array(
             'entity'=>$entity,
 			'form' => $this->createForm(UserType::class, $entity,array(

@@ -15,7 +15,7 @@ class OrdersStatusRepository extends \Doctrine\ORM\EntityRepository
         ->select('e')
         ->where('e.isDelete = :isDelete')
         ->setParameter('isDelete',false)
-        ->orderBy("e.id","DESC");
+        ->orderBy("e.position","ASC");
     }
 
     public function search($query=null,$limit=0,$offset=0){

@@ -44,6 +44,9 @@ class ServicesController extends BaseController
         $form->submit(json_decode($request->getContent(), true));
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            /** Picture */
+            if($form->get('pictureBase64')->getData())
+                $entity->setPicture($this->base64ToFile($form->get('pictureBase64')->getData(),"uploads/"));
             $em->persist($entity);
             $em->flush();
             return $this->handleView($this->view($entity, Response::HTTP_OK));
@@ -73,9 +76,15 @@ class ServicesController extends BaseController
         if(!$entity=$this->getDoctrine()->getRepository(Service::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         $form = $this->createForm(ServiceType::class, $entity);
+        $fileOld=$entity->getPicture();
         $form->submit(json_decode($request->getContent(), true));
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            /** Picture */
+            if($form->get('pictureBase64')->getData())
+                $fileOld=$this->base64ToFile($form->get('pictureBase64')->getData());
+            else if($form->get('pictureRemove')->getData()) $fileOld=null;
+            $entity->setPicture($fileOld);
             $em->persist($entity);
             $em->flush();
             return $this->handleView($this->view($entity, Response::HTTP_OK));

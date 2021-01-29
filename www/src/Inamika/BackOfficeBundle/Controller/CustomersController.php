@@ -57,6 +57,7 @@ class CustomersController extends BaseController{
             $action=$this->generateUrl('api_customers_put',array('id'=>$entity->getId()));
         }
 		return $this->render('InamikaBackOfficeBundle:Customers:_partials/form.html.twig',array(
+            'entity'=>$entity,
 			'form' => $this->createForm(CustomerType::class, $entity,array(
                 'method' => $method,
                 'action' => $action

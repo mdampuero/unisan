@@ -6,6 +6,7 @@
 {% endblock body %}
 {% block javascripts %} 
 {{ parent() }}
+{% include 'InamikaBackOfficeBundle:_partials:dropifyScripts.html.twig' %}
 <script>
     function beforeSuccess(){
         location.href="{{ path(pathBase) }}";

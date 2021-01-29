@@ -7,14 +7,33 @@
 	</div>
 	<div class="col-md-3">
 		<div class="form-group">
-			<h4 class="card-title">{{ 'CODE' | trans }}</h4>
-			<h5 class="card-subtitle">{{ entity.code }}</h5>
+			<h4 class="card-title">{{ 'MODEL' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.model | default('N/E') }}</h5>
 		</div>
 	</div>
 	<div class="col-md-12">
 		<div class="form-group">
 			<h4 class="card-title">{{ 'DESCRIPTION' | trans }}</h4>
-			<p class="card-subtitle">{{ entity.description }}</p>
+			<p class="card-subtitle">{{ entity.description | default('N/E') }}</p>
 		</div>
 	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'SPECS' | trans }}</h4>
+			<p class="card-subtitle">{{ entity.specs | default('N/E') }}</p>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'CONDITIONS' | trans }}</h4>
+			<p class="card-subtitle">{{ entity.conditions | default('N/E') }}</p>
+		</div>
+	</div>
+	{% if entity.picture %}
+	<div class="card w-100">
+		<div class="card-body">
+			<img class="card-img-top" src="{{ asset('uploads/lg/' ~ entity.picture) }}" alt="">
+		</div>
+	</div>
+	{% endif %}
 </div>

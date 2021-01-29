@@ -12,6 +12,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ServiceType extends AbstractType
 {
@@ -22,8 +24,26 @@ class ServiceType extends AbstractType
     {
         $builder
         ->add('name',TextType::class,array('label'=>'NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
-        ->add('code',TextType::class,array('label'=>'CODE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('model',TextType::class,array('label'=>'MODEL','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
         ->add('description',TextareaType::class,array('label'=>'DESCRIPTION','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
+        ->add('specs',TextareaType::class,array('label'=>'SPECS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
+        ->add('conditions',TextareaType::class,array('label'=>'CONDITIONS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
+        ->add('pictureRemove',HiddenType::class,array("mapped" => false))
+        ->add('pictureBase64',HiddenType::class,array("mapped" => false))
+        ->add('picture', FileType::class, array(
+            'label'=>'PICTURE',
+            'data_class' => null,
+            'label_attr'=>array('class'=>'control-label'),
+            'attr'=>array(
+                'onchange'=>'encodeImageFileAsURL(this)',
+                'class'=>'dropify',
+                'data-height'=>'480',
+                'data-max-file-size'=>'4M',
+                'data-allowed-file-extensions'=>'png jpg jpeg gif'
+                )
+            )
+        )
+        ;
         ;
     }
 

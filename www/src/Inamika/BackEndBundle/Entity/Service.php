@@ -51,8 +51,20 @@ class Service
     /**
      * @var string
      *
-     * @ORM\Column(name="code", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="picture", type="string", length=64, nullable=true)
+     * @Assert\File(
+     *     maxSize = "2048k",
+     *     mimeTypes = {"image/png","image/jpeg","image/jpg","image/gif"},
+     *     mimeTypesMessage = "Seleccione un formato de imagen válido"
+     * )
+     * @Expose
+     */
+    private $picture;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=255, nullable=true)
      * @Assert\Length(
      *      min = 3,
      *      max = 10
@@ -68,6 +80,34 @@ class Service
      * @Expose
      */
     private $description;
+   
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="specs", type="text", nullable=true)
+     * @Expose
+     */
+    private $specs;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="conditions", type="text", nullable=true)
+     * @Expose
+     */
+    private $conditions;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="model", type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 64
+     * )
+     * @Expose
+     */
+    private $model;
 
     /**
      * @var \DateTime
@@ -100,6 +140,30 @@ class Service
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param string $picture
+     *
+     * @return User
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return string
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 
     /**
@@ -173,7 +237,79 @@ class Service
     {
         return $this->description;
     }
+    
+    /**
+     * Set specs.
+     *
+     * @param string|null $specs
+     *
+     * @return Service
+     */
+    public function setSpecs($specs = null)
+    {
+        $this->specs = $specs;
 
+        return $this;
+    }
+
+    /**
+     * Get specs.
+     *
+     * @return string|null
+     */
+    public function getSpecs()
+    {
+        return $this->specs;
+    }
+
+    /**
+     * Set conditions.
+     *
+     * @param string|null $conditions
+     *
+     * @return Service
+     */
+    public function setConditions($conditions = null)
+    {
+        $this->conditions = $conditions;
+
+        return $this;
+    }
+
+    /**
+     * Get conditions.
+     *
+     * @return string|null
+     */
+    public function getConditions()
+    {
+        return $this->conditions;
+    }
+
+    /**
+     * Set model.
+     *
+     * @param string|null $model
+     *
+     * @return Service
+     */
+    public function setModel($model = null)
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    /**
+     * Get model.
+     *
+     * @return string|null
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+    
     /**
      * Set createdAt.
      *

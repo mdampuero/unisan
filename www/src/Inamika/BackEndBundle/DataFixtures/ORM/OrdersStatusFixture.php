@@ -30,7 +30,8 @@ class OrdersStatusFixture extends AbstractFixture implements OrderedFixtureInter
         $ordersStatus = new OrdersStatus();
         $ordersStatus->setId(OrdersStatus::STATUS_ENTERED);
         $ordersStatus->setName('Ingresado');
-        $ordersStatus->setColor("info");
+        $ordersStatus->setPosition(100);
+        $ordersStatus->setColor("warning");
         $ordersStatus->setIsDefault(true);
         $manager->persist($ordersStatus);
         
@@ -38,6 +39,7 @@ class OrdersStatusFixture extends AbstractFixture implements OrderedFixtureInter
         $ordersStatus->setId(OrdersStatus::STATUS_IN_PROCCESS);
         $ordersStatus->setName('En proceso');
         $ordersStatus->setColor("primary");
+        $ordersStatus->setPosition(200);
         $ordersStatus->setIsDefault(false);
         $manager->persist($ordersStatus);
         
@@ -45,13 +47,16 @@ class OrdersStatusFixture extends AbstractFixture implements OrderedFixtureInter
         $ordersStatus->setId(OrdersStatus::STATUS_ON_DELIVERY);
         $ordersStatus->setName('En entrega');
         $ordersStatus->setColor("warning");
+        $ordersStatus->setPosition(250);
         $ordersStatus->setIsDefault(false);
+        $ordersStatus->setIsDelete(true);
         $manager->persist($ordersStatus);
         
         $ordersStatus = new OrdersStatus();
         $ordersStatus->setId(OrdersStatus::STATUS_DELIVERED);
         $ordersStatus->setName('Entregado');
-        $ordersStatus->setColor("success");
+        $ordersStatus->setColor("info");
+        $ordersStatus->setPosition(300);
         $ordersStatus->setIsDefault(false);
         $manager->persist($ordersStatus);
         
@@ -59,6 +64,15 @@ class OrdersStatusFixture extends AbstractFixture implements OrderedFixtureInter
         $ordersStatus->setId(OrdersStatus::STATUS_CANCELLED);
         $ordersStatus->setName('Cancelado');
         $ordersStatus->setColor("danger");
+        $ordersStatus->setPosition(900);
+        $ordersStatus->setIsDefault(false);
+        $manager->persist($ordersStatus);
+        
+        $ordersStatus = new OrdersStatus();
+        $ordersStatus->setId(OrdersStatus::STATUS_INVOICED);
+        $ordersStatus->setName('Facturado');
+        $ordersStatus->setPosition(400);
+        $ordersStatus->setColor("success");
         $ordersStatus->setIsDefault(false);
         $manager->persist($ordersStatus);
 

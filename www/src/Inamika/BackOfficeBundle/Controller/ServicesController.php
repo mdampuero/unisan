@@ -57,6 +57,7 @@ class ServicesController extends BaseController{
             $action=$this->generateUrl('api_services_put',array('id'=>$entity->getId()));
         }
 		return $this->render('InamikaBackOfficeBundle:Services:_partials/form.html.twig',array(
+            'entity'=>$entity,
 			'form' => $this->createForm(ServiceType::class, $entity,array(
                 'method' => $method,
                 'action' => $action

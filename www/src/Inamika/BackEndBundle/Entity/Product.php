@@ -79,6 +79,19 @@ class Product
     private $price;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="picture", type="string", length=64, nullable=true)
+     * @Assert\File(
+     *     maxSize = "2048k",
+     *     mimeTypes = {"image/png","image/jpeg","image/jpg","image/gif"},
+     *     mimeTypesMessage = "Seleccione un formato de imagen válido"
+     * )
+     * @Expose
+     */
+    private $picture;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -143,6 +156,30 @@ class Product
         return $this->name;
     }
     
+    /**
+     * Set picture
+     *
+     * @param string $picture
+     *
+     * @return User
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return string
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
     /**
      * Set currency.
      *

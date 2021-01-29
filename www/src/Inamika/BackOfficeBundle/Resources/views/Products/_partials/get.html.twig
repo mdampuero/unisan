@@ -23,4 +23,11 @@
 			<p class="card-subtitle">{{ entity.description }}</p>
 		</div>
 	</div>
+	{% if entity.picture %}
+	<div class="card w-100">
+		<div class="card-body">
+			<img class="card-img-top" src="{{ asset('uploads/lg/' ~ entity.picture) }}" alt="">
+		</div>
+	</div>
+	{% endif %}
 </div>

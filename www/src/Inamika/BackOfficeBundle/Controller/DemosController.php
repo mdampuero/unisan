@@ -57,6 +57,7 @@ class DemosController extends BaseController{
             $action=$this->generateUrl('api_demos_put',array('id'=>$entity->getId()));
         }
 		return $this->render('InamikaBackOfficeBundle:Demos:_partials/form.html.twig',array(
+            'entity'=>$entity,
 			'form' => $this->createForm(DemoType::class, $entity,array(
                 'method' => $method,
                 'action' => $action

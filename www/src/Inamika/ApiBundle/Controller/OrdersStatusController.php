@@ -18,7 +18,7 @@ class OrdersStatusController extends FOSRestController
     public function indexAction(Request $request)
     {
         return $this->handleView(
-            $this->view($this->getDoctrine()->getRepository(OrdersStatus::class)->findByIsDelete(false)
+            $this->view($this->getDoctrine()->getRepository(OrdersStatus::class)->getAll()->getQuery()->getResult()
         ));
     }
 }

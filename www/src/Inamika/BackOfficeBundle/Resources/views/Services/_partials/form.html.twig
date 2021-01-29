@@ -11,14 +11,41 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    {{form_label(form.code)}}
-                    {{form_widget(form.code)}}
+                    {{form_label(form.model)}}
+                    {{form_widget(form.model)}}
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
                     {{form_label(form.description)}}
                     {{form_widget(form.description)}}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{form_label(form.specs)}}
+                    {{form_widget(form.specs)}}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{form_label(form.conditions)}}
+                    {{form_widget(form.conditions)}}
+                </div>
+            </div>
+        </div>
+        <h3 class="card-title cursor-pointer" data-toggle="collapse" data-target="#collapseMap" aria-expanded="false" aria-controls="collapseMap">{{ 'PICTURE' | trans }}</h3>
+        <hr>
+        <div class="collapse show" id="collapseMap">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {% if entity is defined and entity.picture %}
+                            {{form_widget(form.picture,{ attr: { 'data-default-file': asset('uploads/lg/' ~ entity.picture) }})}}
+                        {% else %}
+                            {{form_widget(form.picture)}}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
