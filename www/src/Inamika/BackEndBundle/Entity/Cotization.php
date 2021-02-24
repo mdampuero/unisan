@@ -12,18 +12,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
-
 /**
- * Demo
+ * Cotization
  *
- * @ORM\Table(name="demo")
- * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\DemoRepository")
+ * @ORM\Table(name="cotization")
+ * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\CotizationRepository")
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity(fields={"name"}, repositoryMethod="getUniqueNotDeleted")
  * @ExclusionPolicy("all")
  */
 
-class Demo
+class Cotization
 {
     /**
      * @var string
@@ -36,9 +34,18 @@ class Demo
     private $id;
 
     /**
+     * Many features have one Service. This is the owning side.
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Service")
+     * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $service;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="client_name", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = 3,
@@ -46,20 +53,40 @@ class Demo
      * )
      * @Expose
      */
-    private $name;
+    private $clientName;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="client_email", type="string", length=255)
+     * @Assert\Email()
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $clientEmail;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="client_phone", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $clientPhone;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="text", nullable=true)
+     * @ORM\Column(name="observation", type="text", nullable=true)
      * @Expose
      */
-    private $description;
+    private $observation;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
+     * @Expose
      */
     private $createdAt;
 
@@ -90,51 +117,124 @@ class Demo
     }
 
     /**
-     * Set name.
+     * Set clientName.
      *
-     * @param string $name
+     * @param string $clientName
      *
-     * @return Demo
+     * @return Cotization
      */
-    public function setName($name)
+    public function setClientName($clientName)
     {
-        $this->name = $name;
+        $this->clientName = $clientName;
 
         return $this;
     }
 
     /**
-     * Get name.
+     * Get clientName.
      *
      * @return string
      */
-    public function getName()
+    public function getClientName()
     {
-        return $this->name;
+        return $this->clientName;
     }
-
+    
     /**
-     * Set description.
+     * Set service.
      *
-     * @param string|null $description
+     * @param int $service
      *
-     * @return Demo
+     * @return UnitStatus
      */
-    public function setDescription($description = null)
+    public function setService($service)
     {
-        $this->description = $description;
+        $this->service = $service;
 
         return $this;
     }
 
     /**
-     * Get description.
+     * Get service.
+     *
+     * @return int
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    
+    /**
+     * Set clientEmail.
+     *
+     * @param string $clientEmail
+     *
+     * @return Cotization
+     */
+    public function setClientEmail($clientEmail)
+    {
+        $this->clientEmail = $clientEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get clientEmail.
+     *
+     * @return string
+     */
+    public function getClientEmail()
+    {
+        return $this->clientEmail;
+    }
+    
+    /**
+     * Set clientPhone.
+     *
+     * @param string $clientPhone
+     *
+     * @return Cotization
+     */
+    public function setClientPhone($clientPhone)
+    {
+        $this->clientPhone = $clientPhone;
+
+        return $this;
+    }
+
+    /**
+     * Get clientPhone.
+     *
+     * @return string
+     */
+    public function getClientPhone()
+    {
+        return $this->clientPhone;
+    }
+
+    /**
+     * Set observation.
+     *
+     * @param string|null $observation
+     *
+     * @return Cotization
+     */
+    public function setObservation($observation = null)
+    {
+        $this->observation = $observation;
+
+        return $this;
+    }
+
+    /**
+     * Get observation.
      *
      * @return string|null
      */
-    public function getDescription()
+    public function getObservation()
     {
-        return $this->description;
+        return $this->observation;
     }
 
     /**
@@ -142,7 +242,7 @@ class Demo
      *
      * @param \DateTime $createdAt
      *
-     * @return Demo
+     * @return Cotization
      */
     public function setCreatedAt($createdAt)
     {
@@ -166,7 +266,7 @@ class Demo
      *
      * @param \DateTime $updatedAt
      *
-     * @return Demo
+     * @return Cotization
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -190,7 +290,7 @@ class Demo
      *
      * @param bool $isDelete
      *
-     * @return Demo
+     * @return Cotization
      */
     public function setIsDelete($isDelete)
     {

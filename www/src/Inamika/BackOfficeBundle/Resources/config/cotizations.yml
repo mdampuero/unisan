@@ -1,0 +1,59 @@
+inamika_backoffice_cotizations:
+    path:     /
+    defaults: 
+        _controller: InamikaBackOfficeBundle:Cotizations:index
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: COTIZATIONS
+            parent_route: inamika_backoffice_homepage
+            
+inamika_backoffice_cotizations_add:
+    path:     /new
+    defaults: { _controller: InamikaBackOfficeBundle:Cotizations:add }
+    options:
+        breadcrumb:
+            label: Agregar cotización
+            parent_route: inamika_backoffice_cotizations
+    methods: [GET]
+
+inamika_backoffice_cotizations_landing:
+    path:     /landing/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Cotizations:landing }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Cotizaciones
+            parent_route: inamika_backoffice_cotizations
+
+inamika_backoffice_cotizations_import:
+    path:     /import
+    defaults: { _controller: InamikaBackOfficeBundle:Customers:import }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Importar cotización
+            parent_route: inamika_backoffice_cotizations
+
+inamika_backoffice_cotizations_get:
+    path:     /get/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Cotizations:get }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Cotizaciones
+            parent_route: inamika_backoffice_cotizations
+
+inamika_backoffice_cotizations_edit:
+    path:     /edit/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Cotizations:edit }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Editar cotización
+            parent_route: inamika_backoffice_cotizations
+
+inamika_backoffice_cotizations_delete:
+    path:     /delete/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Cotizations:delete }
+    methods: [POST,DELETE]

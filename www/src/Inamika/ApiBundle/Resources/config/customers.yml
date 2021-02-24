@@ -23,6 +23,11 @@ api_customers_post:
     defaults: { _controller: InamikaApiBundle:Customers:post }
     methods: [POST]
 
+api_customers_check:
+    path:     /customers_check
+    defaults: { _controller: InamikaApiBundle:Customers:check }
+    methods: [POST]
+
 api_customers_put:
     path:     /customers/{id}
     defaults: { _controller: InamikaApiBundle:Customers:put }

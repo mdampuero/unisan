@@ -1,0 +1,66 @@
+{% set pathBase='inamika_backoffice_cotizations' %}
+{% set pathBaseApi='api_cotizations' %}
+{% extends "InamikaBackOfficeBundle::layout.html.twig" %}
+{% block body %} 
+{{ parent()}}
+<div class="table-responsive">
+    <table id="{{ pathBase }}_dataTable" class="display nowrap table table-striped table-bordered" cellspacing="0" width="100%">
+    </table>
+</div>
+
+{{ form_start(formDelete, {'attr': {'id':id|default('formDelete')}}) }}
+{{ form_widget(formDelete) }}
+{{ form_end(formDelete) }}
+
+{% include 'InamikaBackOfficeBundle:_partials:modal.html.twig' with { pathBase:pathBase} %}
+
+{% endblock body %} 
+{% block javascripts %} 
+{{ parent() }}
+{% include 'InamikaBackOfficeBundle:_partials:dataTableScripts.html.twig' with { pathBase:pathBase,loadData:pathBaseApi } %}
+<script type="text/javascript">
+    $(function () {
+        $('#{{ pathBase }}_dataTable').DataTable({
+            order: [[ 3, 'desc' ]],
+            "processing": false,
+            "serverSide": true,
+            columns: [
+                { title:"{{ 'SERVICE' | trans }}",data: "service.name" },
+                { title:"{{ 'CLIENT_NAME' | trans }}",data: "clientName" },
+                { 
+                    title:"{{ 'CLIENT_EMAIL' | trans }}",
+                    data: "clientEmail",
+                    render: function (data, type, JsonResultRow, meta) {
+                        return `<a target="_blank" href="mailto:${data}">${data}</a>`;
+                    }
+                },
+                { 
+                    title:"Fecha",
+                    data: "createdAt",
+                    render: function (data, type, JsonResultRow, meta) {
+                        var d = new Date(JsonResultRow.createdAt);
+                        return `${(d.getDate()<10?'0':'') + d.getDate()}/${(d.getMonth()+1)}/${d.getFullYear()} ${(d.getHours()<10?'0':'') + d.getHours()}:${(d.getMinutes()<10?'0':'') + d.getMinutes()}`;
+                    }
+                },
+                {
+                    data: null,
+                    orderable: false,
+                    className: "text-center",
+                    render: function (data, type, row) 
+                    {
+                        let buttons=[];
+                        let buttonsHtml='';
+                        buttons.push('<button data-toggle="tooltip" data-placement="top" title="Ver más" type="button" class="btn-view btn btn-outline-success btn-circle"><i class="fa fa-eye"></i></button> ');
+                        {% if is_granted('ROLE_ADMIN') %}
+                             buttons.push('<button data-toggle="tooltip" data-placement="top" title="Eliminar" type="button" class="btn-remove btn btn-outline-danger btn-circle"><i class="fa fa-trash"></i></button> ');
+                        {% endif %}
+                        for(var i=0; i<buttons.length; i++)
+                            buttonsHtml+=buttons[i];
+                        return buttonsHtml;
+                    }
+                }
+            ]
+        });
+    });
+</script>
+{% endblock %}

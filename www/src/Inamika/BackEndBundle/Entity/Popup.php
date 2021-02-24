@@ -12,19 +12,22 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
-
 /**
- * Demo
+ * Popup
  *
- * @ORM\Table(name="demo")
- * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\DemoRepository")
+ * @ORM\Table(name="popup")
+ * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\PopupRepository")
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity(fields={"name"}, repositoryMethod="getUniqueNotDeleted")
  * @ExclusionPolicy("all")
  */
 
-class Demo
+class Popup
 {
+    const SHOW_FOR_ONCE='SHOW_FOR_ONCE';
+    const SHOW_FOR_ONCE_DAY='SHOW_FOR_ONCE_DAY';
+    const SHOW_ALWAYS='SHOW_ALWAYS';
+    const SHOW_FOR_SESSION='SHOW_FOR_SESSION';
+
     /**
      * @var string
      *
@@ -36,9 +39,18 @@ class Demo
     private $id;
 
     /**
+     * Many Popup have one Section. This is the owning side.
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Section")
+     * @ORM\JoinColumn(name="section_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $section;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = 3,
@@ -46,7 +58,20 @@ class Demo
      * )
      * @Expose
      */
-    private $name;
+    private $title;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="display", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 64
+     * )
+     * @Expose
+     */
+    private $display;
 
     /**
      * @var string|null
@@ -57,9 +82,19 @@ class Demo
     private $description;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_active", type="boolean")
+     * @Expose
+     */
+    private $isActive=false;
+
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
+     * @Expose
      */
     private $createdAt;
 
@@ -67,6 +102,7 @@ class Demo
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime")
+     * @Expose
      */
     private $updatedAt;
 
@@ -90,27 +126,75 @@ class Demo
     }
 
     /**
-     * Set name.
+     * Set section.
      *
-     * @param string $name
+     * @param int $section
      *
-     * @return Demo
+     * @return Popup
      */
-    public function setName($name)
+    public function setSection($section)
     {
-        $this->name = $name;
+        $this->section = $section;
 
         return $this;
     }
 
     /**
-     * Get name.
+     * Get section.
+     *
+     * @return int
+     */
+    public function getSection()
+    {
+        return $this->section;
+    }
+
+    /**
+     * Set title.
+     *
+     * @param string $title
+     *
+     * @return Popup
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title.
      *
      * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
+    }
+    
+    /**
+     * Set display.
+     *
+     * @param string $display
+     *
+     * @return Popup
+     */
+    public function setDisplay($display)
+    {
+        $this->display = $display;
+
+        return $this;
+    }
+
+    /**
+     * Get display.
+     *
+     * @return string
+     */
+    public function getDisplay()
+    {
+        return $this->display;
     }
 
     /**
@@ -118,7 +202,7 @@ class Demo
      *
      * @param string|null $description
      *
-     * @return Demo
+     * @return Popup
      */
     public function setDescription($description = null)
     {
@@ -142,7 +226,7 @@ class Demo
      *
      * @param \DateTime $createdAt
      *
-     * @return Demo
+     * @return Popup
      */
     public function setCreatedAt($createdAt)
     {
@@ -166,7 +250,7 @@ class Demo
      *
      * @param \DateTime $updatedAt
      *
-     * @return Demo
+     * @return Popup
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -190,7 +274,7 @@ class Demo
      *
      * @param bool $isDelete
      *
-     * @return Demo
+     * @return Popup
      */
     public function setIsDelete($isDelete)
     {
@@ -207,6 +291,30 @@ class Demo
     public function getIsDelete()
     {
         return $this->isDelete;
+    }
+    
+    /**
+     * Set isActive.
+     *
+     * @param bool $isActive
+     *
+     * @return Popup
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive.
+     *
+     * @return bool
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 
     /**

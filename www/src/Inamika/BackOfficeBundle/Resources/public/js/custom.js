@@ -126,33 +126,25 @@ $(function() {
 
 });
 
-function translateMonth(month){
-    switch(month){
-        case 'JANUARY':
-            return 'Enero';
-        case 'FEBRUARY':
-            return 'Febrero';
-        case 'MARCH':
-            return 'Marzo';
-        case 'APRIL':
-            return 'Abril';
-        case 'MAY':
-            return 'Mayo';
-        case 'JUNE':
-            return 'Junio';
-        case 'JULY':
-            return 'Julio';
-        case 'AUGUST':
-            return 'Agosto';
-        case 'SEPTEMBER':
-            return 'Septiembre';
-        case 'OCTOBER':
-            return 'Octubre';
-        case 'NOVEMBER':
-            return 'Noviembre';
-        case 'DECEMBER':
-            return 'Diciembre';
-        default:
-            return null;
-    } 
+function translate(text){
+    diccionary={
+        'JANUARY':'Enero',
+        'FEBRUARY':'Febrero',
+        'MARCH':'Marzo',
+        'APRIL':'Abril',
+        'MAY':'Mayo',
+        'JUNE':'Junio',
+        'JULY':'Julio',
+        'AUGUST':'Agosto',
+        'SEPTEMBER':'Septiembre',
+        'OCTOBER':'Octubre',
+        'NOVEMBER':'Noviembre',
+        'DECEMBER':'Diciembre',
+        'SHOW_FOR_SESSION': 'Una vez por sesión',
+        'SHOW_FOR_ONCE': 'Una vez',
+        'SHOW_FOR_ONCE_DAY': 'Una vez por día',
+        'SHOW_ALWAYS': 'Siempre'
+    }
+    if(typeof diccionary[text] != 'undefined') return diccionary[text];
+    else return text;
 }

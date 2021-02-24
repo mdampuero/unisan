@@ -1,0 +1,59 @@
+inamika_backoffice_popups:
+    path:     /
+    defaults: 
+        _controller: InamikaBackOfficeBundle:Popups:index
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Pop-ups
+            parent_route: inamika_backoffice_homepage
+            
+inamika_backoffice_popups_add:
+    path:     /new
+    defaults: { _controller: InamikaBackOfficeBundle:Popups:add }
+    options:
+        breadcrumb:
+            label: Agregar Pop-up
+            parent_route: inamika_backoffice_popups
+    methods: [GET]
+
+inamika_backoffice_popups_landing:
+    path:     /landing/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Popups:landing }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Pop-up
+            parent_route: inamika_backoffice_popups
+
+inamika_backoffice_popups_import:
+    path:     /import
+    defaults: { _controller: InamikaBackOfficeBundle:Customers:import }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Importar Pop-up
+            parent_route: inamika_backoffice_popups
+
+inamika_backoffice_popups_get:
+    path:     /get/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Popups:get }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Pop-up
+            parent_route: inamika_backoffice_popups
+
+inamika_backoffice_popups_edit:
+    path:     /edit/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Popups:edit }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Editar Pop-up
+            parent_route: inamika_backoffice_popups
+
+inamika_backoffice_popups_delete:
+    path:     /delete/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Popups:delete }
+    methods: [POST,DELETE]

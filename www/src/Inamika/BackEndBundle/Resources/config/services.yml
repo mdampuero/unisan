@@ -15,3 +15,5 @@ services:
         class: Inamika\BackEndBundle\Service\ApiTokko
         arguments:
                 - '@doctrine.orm.entity_manager'
+    ErrorStructure:
+        class: Inamika\BackEndBundle\Service\ErrorStructure

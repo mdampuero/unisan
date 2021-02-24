@@ -1,4 +1,24 @@
 api_cotizations:
-    path:     /cotizations_request
-    defaults: { _controller: InamikaApiBundle:Cotizations:request }
+    path:     /cotizations
+    defaults: { _controller: InamikaApiBundle:Cotizations:index }
+    methods: [GET]
+
+api_cotizations_get:
+    path:     /cotizations/{id}
+    defaults: { _controller: InamikaApiBundle:Cotizations:get }
+    methods: [GET]
+
+api_cotizations_post:
+    path:     /cotizations
+    defaults: { _controller: InamikaApiBundle:Cotizations:post }
     methods: [POST]
+
+api_cotizations_put:
+    path:     /cotizations/{id}
+    defaults: { _controller: InamikaApiBundle:Cotizations:put }
+    methods: [PUT]
+
+api_cotizations_delete:
+    path:     /cotizations/{id}
+    defaults: { _controller: InamikaApiBundle:Cotizations:delete }
+    methods: [DELETE]

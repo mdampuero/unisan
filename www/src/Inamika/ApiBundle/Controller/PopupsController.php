@@ -10,49 +10,47 @@ namespace Inamika\ApiBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Inamika\BackEndBundle\Entity\Cotization;
-use Inamika\BackEndBundle\Form\Cotization\CotizationType;
+use Inamika\BackEndBundle\Entity\Popup;
+use Inamika\BackEndBundle\Form\Popup\PopupType;
 
-class CotizationsController extends BaseController
+class PopupsController extends BaseController
 {   
     public function indexAction(Request $request){
-        $search = $request->query->get('search', array());
+        
         $query=(!isset($search['value']))?'':$search['value'];
         $offset = $request->query->get('start', 0);
         $limit = $request->query->get('length', 30);
         $sort = $request->query->get('sort', null);
         $direction = $request->query->get('direction', null);
         return $this->handleView($this->view(array(
-            'data' => $this->getDoctrine()->getRepository(Cotization::class)->search($query, $limit, $offset, $sort, $direction)->getQuery()->getResult(),
-            'recordsTotal' => $this->getDoctrine()->getRepository(Cotization::class)->total(),
-            'recordsFiltered' => $this->getDoctrine()->getRepository(Cotization::class)->searchTotal($query, $limit, $offset),
+            'data' => $this->getDoctrine()->getRepository(Popup::class)->search($query, $limit, $offset, $sort, $direction)->getQuery()->getResult(),
+            'recordsTotal' => $this->getDoctrine()->getRepository(Popup::class)->total(),
+            'recordsFiltered' => $this->getDoctrine()->getRepository(Popup::class)->searchTotal($query, $limit, $offset),
             'offset' => $offset,
             'limit' => $limit,
         )));
     }
     
     public function getAction($id){
-        if(!$entity=$this->getDoctrine()->getRepository(Cotization::class)->find($id))
-            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        if(!$entity=$this->getDoctrine()->getRepository(Popup::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));           
         return $this->handleView($this->view($entity));
+    }
+    
+    public function activeAction(){
+        return $this->handleView($this->view($this->getDoctrine()->getRepository(Popup::class)->findBy(array('isDelete'=>false,'isActive'=>true)), Response::HTTP_OK));
     }
 
     public function postAction(Request $request){
-        $entity = new Cotization();
-        $form = $this->createForm(CotizationType::class, $entity);
+        $entity = new Popup();
+        $form = $this->createForm(PopupType::class, $entity);
         $form->submit(json_decode($request->getContent(), true));
         if ($form->isSubmitted() && $form->isValid()) {
+            if(!$this->isAvailableActived($entity))
+                return $this->handleView($this->view($this->get('ErrorStructure')->get(array('code'=>400,'property'=>'isActive','message'=>'Ya existe otro Pop-up activo en para la seccion "'.$entity->getSection()->getName().'"')), Response::HTTP_BAD_REQUEST));
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-            //SEND EMAIL
-            $settings = $this->container->get('setting');
-            $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - Solicitud de cotización '))
-            ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
-            ->setTo($this->getParameter('mailer_from'))
-            ->setBody($this->renderView('InamikaBackEndBundle:Emails:Cotizations/post.html.twig', array('entity' => $entity)),'text/html')
-            ;
-            $this->get('mailer')->send($message);
             return $this->handleView($this->view($entity, Response::HTTP_OK));
         }
         return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
@@ -66,7 +64,7 @@ class CotizationsController extends BaseController
             $path='uploads/or/';
             $file=$this->get('Base64Service')->convertToFile($content["file"]["base64"],$path);
             try {
-                $this->getDoctrine()->getRepository(Cotization::class)->import($path.$file);
+                $this->getDoctrine()->getRepository(Popup::class)->import($path.$file);
                 return $this->handleView($this->view("", Response::HTTP_OK));
             } catch (\Throwable $th) {
                 return $this->handleView($this->view($th->getMessage(), Response::HTTP_BAD_REQUEST));
@@ -77,11 +75,13 @@ class CotizationsController extends BaseController
     }
     
     public function putAction(Request $request,$id){
-        if(!$entity=$this->getDoctrine()->getRepository(Cotization::class)->find($id))
+        if(!$entity=$this->getDoctrine()->getRepository(Popup::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
-        $form = $this->createForm(CotizationType::class, $entity);
+        $form = $this->createForm(PopupType::class, $entity);
         $form->submit(json_decode($request->getContent(), true));
         if ($form->isSubmitted() && $form->isValid()) {
+            if(!$this->isAvailableActived($entity))
+                return $this->handleView($this->view($this->get('ErrorStructure')->get(array('code'=>400,'property'=>'isActive','message'=>'Ya existe otro Pop-up activo en para la seccion "'.$entity->getSection()->getName().'"')), Response::HTTP_BAD_REQUEST));
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -91,7 +91,7 @@ class CotizationsController extends BaseController
     }
 
     public function deleteAction(Request $request,$id){
-        if(!$entity=$this->getDoctrine()->getRepository(Cotization::class)->find($id))
+        if(!$entity=$this->getDoctrine()->getRepository(Popup::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         $form = $this->createFormBuilder(null, array('csrf_protection' => false))->setMethod('DELETE')->getForm();
         $form->submit(json_decode($request->getContent(), true));
@@ -103,4 +103,7 @@ class CotizationsController extends BaseController
         return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
     }
 
+    private function isAvailableActived($entity){
+        return ($this->getDoctrine()->getRepository(Popup::class)->getActiveBySection($entity) && $entity->getIsActive()==true)?false:true;
+    }
 }

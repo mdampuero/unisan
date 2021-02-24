@@ -1,0 +1,4 @@
+api_cotizations:
+    path:     /cotizations_request
+    defaults: { _controller: InamikaApiBundle:Cotizations:request }
+    methods: [POST]

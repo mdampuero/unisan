@@ -152,7 +152,7 @@
                 labels=[];
                 values=[];
                 for(var i=0; i<data.length; i++){
-                    labels.push(translateMonth(data[i].month_label));
+                    labels.push(translate(data[i].month_label));
                     values.push(data[i].value);
                 }
                 var ctx1 = document.getElementById("chart1").getContext("2d");
@@ -228,7 +228,7 @@
                 labels=[];
                 values=[];
                 for(var i=0; i<data.length; i++){
-                    labels.push(translateMonth(data[i].month_label));
+                    labels.push(translate(data[i].month_label));
                     values.push(data[i].value);
                 }
                 /** BEGIN CHART */        

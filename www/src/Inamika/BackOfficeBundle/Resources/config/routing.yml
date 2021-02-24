@@ -82,3 +82,11 @@ inamika_backoffice_orders:
 inamika_backoffice_services:
     resource: "@InamikaBackOfficeBundle/Resources/config/services_routing.yml"
     prefix:   /services
+
+inamika_backoffice_cotizations:
+    resource: "@InamikaBackOfficeBundle/Resources/config/cotizations.yml"
+    prefix:   /cotizations
+
+inamika_backoffice_popups:
+    resource: "@InamikaBackOfficeBundle/Resources/config/popups.yml"
+    prefix:   /popups

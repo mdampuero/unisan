@@ -32,8 +32,7 @@ class Customer implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 

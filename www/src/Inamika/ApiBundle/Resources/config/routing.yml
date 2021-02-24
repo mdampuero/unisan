@@ -33,3 +33,6 @@ api_visits:
 
 api_cotizations:
     resource: "@InamikaApiBundle/Resources/config/cotizations.yml"
+
+api_popups:
+    resource: "@InamikaApiBundle/Resources/config/popups.yml"

@@ -14,23 +14,22 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 
 /**
- * Demo
+ * Section
  *
- * @ORM\Table(name="demo")
- * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\DemoRepository")
+ * @ORM\Table(name="section")
+ * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\SectionRepository")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"name"}, repositoryMethod="getUniqueNotDeleted")
  * @ExclusionPolicy("all")
  */
 
-class Demo
+class Section
 {
     /**
      * @var string
      *
      * @ORM\Column(name="id", type="guid")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="UUID")
      * @Expose
      */
     private $id;
@@ -47,6 +46,15 @@ class Demo
      * @Expose
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="position", type="integer")
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $position=0;
 
     /**
      * @var string|null
@@ -94,7 +102,7 @@ class Demo
      *
      * @param string $name
      *
-     * @return Demo
+     * @return Section
      */
     public function setName($name)
     {
@@ -114,11 +122,35 @@ class Demo
     }
 
     /**
+     * Set position.
+     *
+     * @param float|null $position
+     *
+     * @return OrdersStatus
+     */
+    public function setPosition($position = null)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position.
+     *
+     * @return float|null
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+    
+    /**
      * Set description.
      *
      * @param string|null $description
      *
-     * @return Demo
+     * @return Section
      */
     public function setDescription($description = null)
     {
@@ -142,7 +174,7 @@ class Demo
      *
      * @param \DateTime $createdAt
      *
-     * @return Demo
+     * @return Section
      */
     public function setCreatedAt($createdAt)
     {
@@ -166,7 +198,7 @@ class Demo
      *
      * @param \DateTime $updatedAt
      *
-     * @return Demo
+     * @return Section
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -190,7 +222,7 @@ class Demo
      *
      * @param bool $isDelete
      *
-     * @return Demo
+     * @return Section
      */
     public function setIsDelete($isDelete)
     {

@@ -15,6 +15,11 @@
                         <i class="mdi mdi-truck-delivery"></i><span class="hide-menu">{{ 'ORDERS' | trans }}</span>
                     </a>
                 </li>
+                <li class="{% if 'inamika_backoffice_cotizations' in app.request.get('_route') %}active{% endif %}">
+                    <a href="{{ path('inamika_backoffice_cotizations')}}" aria-expanded="false">
+                        <i class="mdi mdi-currency-usd"></i><span class="hide-menu">{{ 'COTIZATIONS' | trans }}</span>
+                    </a>
+                </li>
                 <li class="{% if 'inamika_backoffice_products' in app.request.get('_route') %}active{% endif %}">
                     <a href="{{ path('inamika_backoffice_products')}}" aria-expanded="false">
                         <i class="mdi mdi-barcode"></i><span class="hide-menu">{{ 'PRODUCTS' | trans }}</span>
@@ -23,6 +28,11 @@
                 <li class="{% if 'inamika_backoffice_services' in app.request.get('_route') %}active{% endif %}">
                     <a href="{{ path('inamika_backoffice_services')}}" aria-expanded="false">
                         <i class="mdi mdi-package"></i><span class="hide-menu">{{ 'SERVICES' | trans }}</span>
+                    </a>
+                </li>
+                <li class="{% if 'inamika_backoffice_popups' in app.request.get('_route') %}active{% endif %}">
+                    <a href="{{ path('inamika_backoffice_popups')}}" aria-expanded="false">
+                        <i class="mdi mdi-alert-octagon"></i><span class="hide-menu">{{ 'POPUPS' | trans }}</span>
                     </a>
                 </li>
                 <li class="{% if 'inamika_backoffice_customers' in app.request.get('_route') %}active{% endif %}">

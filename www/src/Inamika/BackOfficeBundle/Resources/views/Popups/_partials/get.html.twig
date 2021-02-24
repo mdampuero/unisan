@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="col-md-6 col-lg-4">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'SECTION' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.section.name }}</h5>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-4">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'TITLE' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.title }}</h5>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-4">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'DISPLAY' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.display | trans }}</h5>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-4">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'ACTIVE' | trans }}</h4>
+			<h5 class="card-subtitle">
+				{% if entity.isActive %}
+					<span class="badge badge-pill badge-success">{{ 'YES' | trans }}</span>
+				{% else %}
+					<span class="badge badge-pill badge-danger">{{ 'NO' | trans }}</span>
+				{% endif %}
+			</h5>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'DESCRIPTION' | trans }}</h4>
+			<p class="card-subtitle">{{ entity.description | nl2br }}</p>
+		</div>
+	</div>
+</div>

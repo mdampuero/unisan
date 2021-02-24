@@ -1,0 +1,29 @@
+api_popups:
+    path:     /popups
+    defaults: { _controller: InamikaApiBundle:Popups:index }
+    methods: [GET]
+
+api_popups_active:
+    path:     /popups_active
+    defaults: { _controller: InamikaApiBundle:Popups:active }
+    methods: [GET]
+
+api_popups_get:
+    path:     /popups/{id}
+    defaults: { _controller: InamikaApiBundle:Popups:get }
+    methods: [GET]
+
+api_popups_post:
+    path:     /popups
+    defaults: { _controller: InamikaApiBundle:Popups:post }
+    methods: [POST]
+
+api_popups_put:
+    path:     /popups/{id}
+    defaults: { _controller: InamikaApiBundle:Popups:put }
+    methods: [PUT]
+
+api_popups_delete:
+    path:     /popups/{id}
+    defaults: { _controller: InamikaApiBundle:Popups:delete }
+    methods: [DELETE]

@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="col-md-6 col-lg-4">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'SERVICE' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.service.name }}</h5>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-4">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'CLIENT_NAME' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.clientName }}</h5>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-4">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'CLIENT_EMAIL' | trans }}</h4>
+			<h5 class="card-subtitle"><a href='mailto:{{ entity.clientEmail }}' target="_blank">{{ entity.clientEmail }}</a></h5>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-4">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'CLIENT_PHONE' | trans }}</h4>
+			<h5 class="card-subtitle"><a href='mailto:{{ entity.clientPhone }}' target="_blank">{{ entity.clientPhone }}</a></h5>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-4">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'DATE' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.createdAt | date('d/m/Y H:i') }}</h5>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'OBSERVATION' | trans }}</h4>
+			<p class="card-subtitle">{{ entity.observation | default('N/E') }}</p>
+		</div>
+	</div>
+</div>
