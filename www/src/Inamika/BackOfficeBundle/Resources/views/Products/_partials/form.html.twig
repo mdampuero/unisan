@@ -3,10 +3,16 @@
         <h3 class="card-title">{{ 'GENERAL_DATA' | trans }}</h3>
         <hr>
         <div class="row p-t-20">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     {{form_label(form.name)}}
                     {{form_widget(form.name)}}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    {{form_label(form.isSalient)}}
+                    {{form_widget(form.isSalient)}}
                 </div>
             </div>
             <div class="col-md-3">

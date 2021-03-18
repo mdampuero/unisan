@@ -27,7 +27,7 @@
     $(function () {
         $('#{{ pathBase }}_dataTable').DataTable({
             order: [[ 1, 'desc' ]],
-            "processing": false,
+            
             "serverSide": true,
             columns: [
                 { title:"{{ 'SECTION' | trans }}",data: "section.name" },

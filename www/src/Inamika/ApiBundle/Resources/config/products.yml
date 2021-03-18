@@ -3,6 +3,11 @@ api_products:
     defaults: { _controller: InamikaApiBundle:Products:index }
     methods: [GET]
 
+api_products_salients:
+    path:     /products_salients
+    defaults: { _controller: InamikaApiBundle:Products:salients }
+    methods: [GET]
+
 api_products_get:
     path:     /products/{id}
     defaults: { _controller: InamikaApiBundle:Products:get }

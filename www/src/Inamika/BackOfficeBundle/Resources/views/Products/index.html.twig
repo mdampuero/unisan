@@ -31,7 +31,7 @@
     $(function () {
         $('#{{ pathBase }}_dataTable').DataTable({
             order: [[ 1, 'desc' ]],
-            "processing": false,
+            
             "serverSide": true,
             columns: [
                 {
@@ -51,6 +51,22 @@
                     className: "text-right",
                     render: function (data, type, JsonResultRow, meta) {
                         return `<b>${JsonResultRow.currency.symbol} ${new Intl.NumberFormat("de-DE").format(parseFloat(JsonResultRow.price))}</b>`;
+                    }
+                },
+                { 
+                    data: 'isSalient', 
+                    className: "text-center",
+                    title: '{{ 'ACTIVE' | trans }}',
+                    render: function (data, type, row) 
+                    {
+                        switch (data){
+                            case true:
+                                return '<span class="badge badge-pill badge-success">{{ 'YES' | trans }}</span>';
+                                break;
+                            default:
+                                return '<span class="badge badge-pill badge-danger">{{ 'NO' | trans }}</span>';
+                                break;
+                        }
                     }
                 },
                 {

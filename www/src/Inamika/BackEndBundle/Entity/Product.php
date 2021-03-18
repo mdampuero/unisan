@@ -92,6 +92,14 @@ class Product
     private $picture;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_salient", type="boolean")
+     * @Expose
+     */
+    private $isSalient=false;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -322,6 +330,30 @@ class Product
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set isSalient.
+     *
+     * @param bool $isSalient
+     *
+     * @return Product
+     */
+    public function setIsSalient($isSalient)
+    {
+        $this->isSalient = $isSalient;
+
+        return $this;
+    }
+
+    /**
+     * Get isSalient.
+     *
+     * @return bool
+     */
+    public function getIsSalient()
+    {
+        return $this->isSalient;
     }
 
     /**

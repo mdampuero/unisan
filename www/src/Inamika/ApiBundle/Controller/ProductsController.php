@@ -37,6 +37,12 @@ class ProductsController extends BaseController
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         return $this->handleView($this->view($entity));
     }
+    
+    public function salientsAction(){
+        return $this->handleView($this->view($this->getDoctrine()->getRepository(Product::class)->getAll()
+        ->andWhere('e.isSalient=:isSalient')->setParameter('isSalient',true)
+        ->getQuery()->getResult()));
+    }
 
     public function postAction(Request $request){
         $entity = new Product();

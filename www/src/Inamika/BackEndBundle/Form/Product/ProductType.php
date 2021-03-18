@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ProductType extends AbstractType
 {
@@ -29,6 +30,10 @@ class ProductType extends AbstractType
         ->add('description',TextareaType::class,array('label'=>'DESCRIPTION','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('pictureRemove',HiddenType::class,array("mapped" => false))
         ->add('pictureBase64',HiddenType::class,array("mapped" => false))
+        ->add('isSalient',ChoiceType::class, array('label'=>'SALIENT','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control'),'choices' => array(
+            'YES' => true,
+            'NO' => false
+        )))
         ->add('picture', FileType::class, array(
             'label'=>'PICTURE',
             'data_class' => null,

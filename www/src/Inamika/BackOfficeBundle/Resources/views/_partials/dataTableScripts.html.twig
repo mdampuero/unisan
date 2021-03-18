@@ -42,6 +42,17 @@ $.extend( true, $.fn.dataTable.defaults, {
     //'excel',
     ],
 });
+$(document).on("preInit.dt", function () {
+    var $sb = $(".dataTables_filter input[type='search']");
+    // remove current handler
+    $sb.off();
+    // Add key hander
+    $sb.on("keypress", function (evtObj) {
+        if (evtObj.keyCode == 13) {
+            $('#{{ pathBase }}_dataTable').DataTable().search($sb.val()).draw();
+        }
+    });
+});
 $('#{{ pathBase }}_dataTable').on('click', 'button.btn-edit', function () {
     var data = $('#{{ pathBase }}_dataTable').DataTable().row( $(this).parents('tr') ).data();
     var url="{{ path(pathBase~'_edit',{ id: 'ENTITY_ID' })}}";

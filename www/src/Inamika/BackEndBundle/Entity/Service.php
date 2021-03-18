@@ -49,6 +49,15 @@ class Service
     private $name;
     
     /**
+     * Many Popup have one ServiceCategory. This is the owning side.
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="ServiceCategory")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $category;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="picture", type="string", length=64, nullable=true)
@@ -140,6 +149,30 @@ class Service
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set category.
+     *
+     * @param int $category
+     *
+     * @return Service
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category.
+     *
+     * @return int
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     /**
