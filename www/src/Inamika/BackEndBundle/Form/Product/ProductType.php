@@ -15,6 +15,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Inamika\BackEndBundle\Entity\Popup;
 
 class ProductType extends AbstractType
 {
@@ -34,6 +37,20 @@ class ProductType extends AbstractType
             'YES' => true,
             'NO' => false
         )))
+        ->add('category', EntityType::class, array(
+            'label'=>'CATEGORY',
+            'label_attr'=>array('class'=>'control-label'),
+            'class' => 'InamikaBackEndBundle:Category',
+            'choice_label' => 'name',
+            'attr'=>array('class'=>'form-control'),
+            'placeholder' => '--Seleccione una opción--',
+            'query_builder' => function (EntityRepository $er) {
+                $qb = $er->createQueryBuilder('e');
+                $choices=$qb->where("e.isDelete=:isDelete")->setParameter('isDelete',false)
+                    ->orderBy('e.name', 'ASC');
+                return $choices;
+            }
+        ))
         ->add('picture', FileType::class, array(
             'label'=>'PICTURE',
             'data_class' => null,

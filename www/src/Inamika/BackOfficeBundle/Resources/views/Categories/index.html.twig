@@ -1,15 +1,11 @@
-{% set pathBase='inamika_backoffice_products' %}
-{% set pathBaseApi='api_products' %}
+{% set pathBase='inamika_backoffice_categories' %}
+{% set pathBaseApi='api_categories' %}
 {% extends "InamikaBackOfficeBundle::layout.html.twig" %}
 {% block body %} 
 {{ parent()}}
 <h3 class="card-title">
-    {# {% if app.request.attributes.get('_route_params')._breadcrumbs is defined %}
-        {{ (app.request.attributes.get('_route_params')['_breadcrumbs']|last)['label'] | trans }}
-    {% endif %} #}
     <div class="btn-group pull-right">
         <button type="button" class="btn btn-success btn-rounded " onclick="location.href='{{ path(pathBase~'_add')}}'"><i class="fa fa-plus"></i> {{ 'ADD' | trans }}</button>
-        {# <button type="button" class="btn btn-info btn-rounded " onclick="location.href='{{ path(pathBase~'_import')}}'"><i class="fa fa-upload"></i> {{ 'IMPORT' | trans }}</button> #}
     </div>
 </h3>
 <div class="table-responsive">
@@ -34,42 +30,7 @@
             
             "serverSide": true,
             columns: [
-                {
-                    title: '',
-                    orderable: false,
-                    render: function (data, type, JsonResultRow, meta) {
-                        if(JsonResultRow.picture){
-                            return '<img src="{{ asset('uploads') }}/xs/'+JsonResultRow.picture+'"  width="40"> ';
-                        }else{
-                            return '<img src="{{ asset("bundles/inamikabackoffice/assets/images/no-picture.png") }}" width="40" > ';
-                        }
-                    }
-                },
-                { title:"{{ 'CATEGORY' | trans }}",data: "category.name" },
                 { title:"{{ 'NAME' | trans }}",data: "name" },
-                { 
-                    title:"Precio",
-                    className: "text-right",
-                    render: function (data, type, JsonResultRow, meta) {
-                        return `<b>${JsonResultRow.currency.symbol} ${new Intl.NumberFormat("de-DE").format(parseFloat(JsonResultRow.price))}</b>`;
-                    }
-                },
-                { 
-                    data: 'isSalient', 
-                    className: "text-center",
-                    title: '{{ 'ACTIVE' | trans }}',
-                    render: function (data, type, row) 
-                    {
-                        switch (data){
-                            case true:
-                                return '<span class="badge badge-pill badge-success">{{ 'YES' | trans }}</span>';
-                                break;
-                            default:
-                                return '<span class="badge badge-pill badge-danger">{{ 'NO' | trans }}</span>';
-                                break;
-                        }
-                    }
-                },
                 {
                     data: null,
                     orderable: false,

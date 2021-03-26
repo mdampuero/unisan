@@ -36,6 +36,15 @@ class Product
     private $id;
 
     /**
+     * Many Popup have one Category. This is the owning side.
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $category;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -164,6 +173,30 @@ class Product
         return $this->name;
     }
     
+    /**
+     * Set category.
+     *
+     * @param int $category
+     *
+     * @return Product
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category.
+     *
+     * @return int
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
     /**
      * Set picture
      *

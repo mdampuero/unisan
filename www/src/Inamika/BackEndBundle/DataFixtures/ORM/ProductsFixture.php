@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Inamika\BackEndBundle\Entity\Product;
+use Inamika\BackEndBundle\Entity\Category;
 use Inamika\BackEndBundle\Entity\Currency;
 
 class ProductsFixture extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface{
@@ -24,9 +25,15 @@ class ProductsFixture extends AbstractFixture implements OrderedFixtureInterface
     }
     
     public function load(ObjectManager $manager){
+        $category = new Category();
+        $category->setName("Otra");
+        $manager->persist($category);
+        $manager->flush();
+
         for ($i=1; $i<=100; $i++){
             $product = new Product();
             $product->setName("Producto - ".$i);
+            $product->setCategory($category);
             $product->setCode("AA".$i);
             $product->setPrice($i*1000.10);
             $product->setCurrency($manager->getRepository(Currency::class)->findOneByIsDefault(true));

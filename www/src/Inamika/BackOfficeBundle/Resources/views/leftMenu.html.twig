@@ -20,9 +20,19 @@
                         <i class="mdi mdi-currency-usd"></i><span class="hide-menu">{{ 'COTIZATIONS' | trans }}</span>
                     </a>
                 </li>
+                <li class="{% if 'inamika_backoffice_categories' in app.request.get('_route') %}active{% endif %}">
+                    <a href="{{ path('inamika_backoffice_categories')}}" aria-expanded="false">
+                        <i class="mdi mdi-filter"></i><span class="hide-menu">{{ 'CATEGORIES' | trans }}</span>
+                    </a>
+                </li>
                 <li class="{% if 'inamika_backoffice_products' in app.request.get('_route') %}active{% endif %}">
                     <a href="{{ path('inamika_backoffice_products')}}" aria-expanded="false">
                         <i class="mdi mdi-barcode"></i><span class="hide-menu">{{ 'PRODUCTS' | trans }}</span>
+                    </a>
+                </li>
+                <li class="{% if 'inamika_backoffice_service_categories' in app.request.get('_route') %}active{% endif %}">
+                    <a href="{{ path('inamika_backoffice_service_categories')}}" aria-expanded="false">
+                        <i class="mdi mdi-package"></i><span class="hide-menu">{{ 'SERVICES' | trans }}---</span>
                     </a>
                 </li>
                 <li class="{% if 'inamika_backoffice_services' in app.request.get('_route') %}active{% endif %}">

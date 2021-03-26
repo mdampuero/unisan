@@ -36,3 +36,9 @@ api_cotizations:
 
 api_popups:
     resource: "@InamikaApiBundle/Resources/config/popups.yml"
+
+api_categories:
+    resource: "@InamikaApiBundle/Resources/config/categories.yml"
+
+api_service_categories:
+    resource: "@InamikaApiBundle/Resources/config/service_categories_routing.yml"

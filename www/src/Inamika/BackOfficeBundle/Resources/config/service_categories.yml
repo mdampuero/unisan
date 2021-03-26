@@ -1,0 +1,50 @@
+inamika_backoffice_service_categories:
+    path:     /
+    defaults: 
+        _controller: InamikaBackOfficeBundle:ServiceCategories:index
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Categorías de servicios
+            parent_route: inamika_backoffice_homepage
+            
+inamika_backoffice_service_categories_add:
+    path:     /new
+    defaults: { _controller: InamikaBackOfficeBundle:ServiceCategories:add }
+    options:
+        breadcrumb:
+            label: Agregar categoría
+            parent_route: inamika_backoffice_service_categories
+    methods: [GET]
+
+inamika_backoffice_service_categories_landing:
+    path:     /landing/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:ServiceCategories:landing }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Categoría de servicios
+            parent_route: inamika_backoffice_service_categories
+
+inamika_backoffice_service_categories_get:
+    path:     /get/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:ServiceCategories:get }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Categoría de servicios
+            parent_route: inamika_backoffice_service_categories
+
+inamika_backoffice_service_categories_edit:
+    path:     /edit/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:ServiceCategories:edit }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Editar categoría de servicio
+            parent_route: inamika_backoffice_service_categories
+
+inamika_backoffice_service_categories_delete:
+    path:     /delete/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:ServiceCategories:delete }
+    methods: [POST,DELETE]

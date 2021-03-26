@@ -90,3 +90,11 @@ inamika_backoffice_cotizations:
 inamika_backoffice_popups:
     resource: "@InamikaBackOfficeBundle/Resources/config/popups.yml"
     prefix:   /popups
+
+inamika_backoffice_categories:
+    resource: "@InamikaBackOfficeBundle/Resources/config/categories.yml"
+    prefix:   /categorias
+
+inamika_backoffice_service_categories:
+    resource: "@InamikaBackOfficeBundle/Resources/config/service_categories.yml"
+    prefix:   /categoriasDeServicios
