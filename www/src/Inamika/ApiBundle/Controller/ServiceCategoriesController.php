@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Inamika\BackEndBundle\Entity\ServiceCategory;
+use Inamika\BackEndBundle\Entity\ServiceSubcategory;
 use Inamika\BackEndBundle\Entity\Currency;
 use Inamika\BackEndBundle\Form\ServiceCategory\ServiceCategoryType;
 
@@ -42,9 +43,20 @@ class ServiceCategoriesController extends BaseController
         if(!$entity=$this->getDoctrine()->getRepository(ServiceCategory::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         $form = $this->createForm(ServiceCategoryType::class, $entity);
-        $form->submit(json_decode($request->getContent(), true));
+        $content=json_decode($request->getContent(), true);
+        $form->submit($content);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            if(key_exists('subcategories',$content)){
+                foreach($content['subcategories'] as $sub){
+                    if(!$subcategory=$this->getDoctrine()->getRepository(ServiceSubcategory::class)->find($sub["id"]))
+                        $subcategory= new ServiceSubcategory();
+                    $subcategory->setCategory($entity);
+                    $subcategory->setName($sub["name"]);
+                    $subcategory->setIsDelete(($sub["isDelete"])?1:0);
+                    $em->persist($subcategory);
+                }
+            }
             $em->persist($entity);
             $em->flush();
             return $this->handleView($this->view($entity, Response::HTTP_OK));

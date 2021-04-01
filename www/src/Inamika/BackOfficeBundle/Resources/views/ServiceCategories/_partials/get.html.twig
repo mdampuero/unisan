@@ -5,10 +5,22 @@
 			<h5 class="card-subtitle">{{ entity.name }}</h5>
 		</div>
 	</div>
-	<div class="col-md-12">
+	<div class="col-md-6 col-lg-4">
 		<div class="form-group">
-			<h4 class="card-title">{{ 'DESCRIPTION' | trans }}</h4>
-			<p class="card-subtitle">{{ entity.description }}</p>
+			<h4 class="card-title">{{ 'LABEL_FOR_MENU' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.label }}</h5>
 		</div>
 	</div>
 </div>
+<h3 class="card-title">
+{{ 'SUBCATEGORIES' | trans }}
+</h3>
+<table  class="display nowrap table table-stripped" cellspacing="0" width="100%">
+	<tbody id="subcategories">
+		{% for subcategory in entity.subcategories %}
+		<tr>
+			<td>{{ subcategory.name }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

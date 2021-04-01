@@ -7,31 +7,36 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Criteria;
 
 /**
- * ServiceCategory
+ * ServiceSubcategory
  *
- * @ORM\Table(name="service_category")
- * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\ServiceCategoryRepository")
+ * @ORM\Table(name="service_subcategory")
+ * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\ServiceSubcategoryRepository")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"name"}, repositoryMethod="getUniqueNotDeleted")
  */
-class ServiceCategory
+class ServiceSubcategory
 {
-    const INDUSTRY='INDUSTRY';
-    const HOME='HOME';
-    const EVENT='EVENT';
 
     /**
      * @var string
      *
      * @ORM\Column(name="id", type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Id
      * @Expose
      */
     private $id;
+
+    /**
+     * Many Popup have one ServiceCategory. This is the owning side.
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="ServiceCategory")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $category;
 
     /**
      * @var string
@@ -40,14 +45,6 @@ class ServiceCategory
      * @Assert\NotBlank()
      */
     private $name;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="label", type="string", length=255)
-     * @Assert\NotBlank()
-     */
-    private $label;
 
     /**
      * @var \DateTime
@@ -67,26 +64,17 @@ class ServiceCategory
      * @var bool
      *
      * @ORM\Column(name="is_delete", type="boolean")
+     * @Expose
      */
     private $isDelete=false;
 
-    /**
-     * @ORM\OneToMany(targetEntity="ServiceSubcategory", mappedBy="category")
-     * @Assert\NotBlank()
-     */
-    private $subcategories;
-
-    public function __construct()
-    {
-        $this->subcategories = new ArrayCollection();
-    }
 
     /**
      * Set id.
      *
      * @param string $id
      *
-     * @return ServiceCategory
+     * @return ServiceSubcategory
      */
     public function setId($id)
     {
@@ -95,6 +83,30 @@ class ServiceCategory
         return $this;
     }
 
+    /**
+     * Set category.
+     *
+     * @param int $category
+     *
+     * @return Service
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category.
+     *
+     * @return int
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+    
     /**
      * Get id.
      *
@@ -106,34 +118,11 @@ class ServiceCategory
     }
 
     /**
-     * Get subcategories.
-     *
-     * @return int
-     */
-    public function getSubcategories()
-    {
-        $criteria = Criteria::create()
-            ->andWhere(Criteria::expr()->eq('isDelete', false))
-            ->orderBy(['createdAt' => 'ASC']);
-        return $this->subcategories->matching($criteria);
-    }
-    
-    /**
-     * Set subcategories.
-     *
-     * @return Orders
-     */
-    public function setSubcategories($subcategories)
-    {
-        return $this->subcategories=$subcategories;
-    }
-
-    /**
      * Set name.
      *
      * @param string $name
      *
-     * @return ServiceCategory
+     * @return ServiceSubcategory
      */
     public function setName($name)
     {
@@ -151,37 +140,13 @@ class ServiceCategory
     {
         return $this->name;
     }
-    
-    /**
-     * Set label.
-     *
-     * @param string $label
-     *
-     * @return ServiceCategory
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * Get label.
-     *
-     * @return string
-     */
-    public function getLabel()
-    {
-        return $this->label;
-    }
 
     /**
      * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
-     * @return ServiceCategory
+     * @return ServiceSubcategory
      */
     public function setCreatedAt($createdAt)
     {
@@ -205,7 +170,7 @@ class ServiceCategory
      *
      * @param \DateTime $updatedAt
      *
-     * @return ServiceCategory
+     * @return ServiceSubcategory
      */
     public function setUpdateAt($updatedAt)
     {
@@ -229,7 +194,7 @@ class ServiceCategory
      *
      * @param bool $isDelete
      *
-     * @return ServiceCategory
+     * @return ServiceSubcategory
      */
     public function setIsDelete($isDelete)
     {

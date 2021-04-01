@@ -9,7 +9,21 @@
                     {{form_widget(form.name)}}
                 </div>
             </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    {{form_label(form.label)}}
+                    {{form_widget(form.label)}}
+                </div>
+            </div>
         </div>
+        <h3 class="card-title">
+        <button onclick="add();" type="button" class="pull-right btn btn-success btn-circle" onclick=""><i class="fa fa-plus"></i></button>
+        {{ 'SUBCATEGORIES' | trans }}
+        </h3>
+        <hr>
+        <table  class="display nowrap table table-bordered" cellspacing="0" width="100%">
+            <tbody id="subcategories"></tbody>
+        </table>
     </div>
     <div class="form-actions">
         <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> {{ 'SAVE' | trans }}</button>

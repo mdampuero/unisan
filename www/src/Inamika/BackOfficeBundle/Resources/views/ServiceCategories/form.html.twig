@@ -7,11 +7,63 @@
 {% block javascripts %} 
 {{ parent() }}
 <script>
+    var subcategories=[];
+    $(function (){
+        {% if entity is defined %}
+            {% for subcategory in entity.subcategories %}
+                subcategories.push({
+                    'id':'{{ subcategory.id}}',
+                    'name':'{{ subcategory.name}}',
+                    'isDelete':'{{ subcategory.isDelete}}'
+                });
+            {% endfor %}
+            renderSubcategories();
+        {% endif %}
+    });
+
     function beforeSuccess(){
         location.href="{{ path(pathBase) }}";
     }
     function cancell(){
         location.href='{{ path(pathBase) }}';
+    }
+    function add(){
+        subcategories.push({
+            id   : '',
+            name : '',
+            isDelete : ''
+        });
+        renderSubcategories();
+    }
+    function remove(i){
+        //subcategories.splice(i, 1); 
+        subcategories[i].isDelete=1;
+        renderSubcategories();
+    }
+    
+    function press(i){
+        subcategories[i].name=$("#"+i+"_input").val();
+    }
+
+    function renderSubcategories(){
+        $("#subcategories").html('');
+        for (let i = 0; i < subcategories.length; i++) {
+            if(!subcategories[i].isDelete){
+                $("#subcategories").append(`
+                <tr>
+                    <td><input type="name[]" id="${i}_input" placeholder="{{ 'SUBCATEGORY' | trans }}" onkeyup="press(${i})" class="form-control" value="${subcategories[i].name}"></td>
+                    <td class="text-right">
+                        <button data-toggle="tooltip" data-placement="top" title="Eliminar" type="button" onclick="remove(${i})" class="btn-remove btn btn-outline-danger btn-circle"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>`);
+            }
+        }
+    }
+
+    function preRequest() {
+        return {
+            subcategories:subcategories
+        }
     }
 </script>
 {% endblock javascripts %}

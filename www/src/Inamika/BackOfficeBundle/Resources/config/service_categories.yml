@@ -5,7 +5,7 @@ inamika_backoffice_service_categories:
     methods: [GET]
     options:
         breadcrumb:
-            label: Categorías de servicios
+            label: Tipos de servicio
             parent_route: inamika_backoffice_homepage
             
 inamika_backoffice_service_categories_add:
@@ -13,7 +13,7 @@ inamika_backoffice_service_categories_add:
     defaults: { _controller: InamikaBackOfficeBundle:ServiceCategories:add }
     options:
         breadcrumb:
-            label: Agregar categoría
+            label: Agregar tipo de servicio
             parent_route: inamika_backoffice_service_categories
     methods: [GET]
 
@@ -23,7 +23,7 @@ inamika_backoffice_service_categories_landing:
     methods: [GET]
     options:
         breadcrumb:
-            label: Categoría de servicios
+            label: Tipo de servicio
             parent_route: inamika_backoffice_service_categories
 
 inamika_backoffice_service_categories_get:
@@ -32,7 +32,7 @@ inamika_backoffice_service_categories_get:
     methods: [GET]
     options:
         breadcrumb:
-            label: Categoría de servicios
+            label: Tipo de servicio
             parent_route: inamika_backoffice_service_categories
 
 inamika_backoffice_service_categories_edit:
@@ -41,7 +41,7 @@ inamika_backoffice_service_categories_edit:
     methods: [GET]
     options:
         breadcrumb:
-            label: Editar categoría de servicio
+            label: Editar tipo de servicio
             parent_route: inamika_backoffice_service_categories
 
 inamika_backoffice_service_categories_delete:

@@ -4,65 +4,105 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                {# <li class="nav-small-cap">PERSONAL</li> #}
                 <li class="{% if (app.request.get('_route') == 'inamika_backoffice_homepage') %}active{% endif %}">
                     <a href="{{ path('inamika_backoffice_homepage')}}" aria-expanded="false">
                         <i class="mdi mdi-gauge"></i><span class="hide-menu">{{ 'DASHBOARD' | trans }}</span>
                     </a>
                 </li>
-                <li class="{% if 'inamika_backoffice_orders' in app.request.get('_route') %}active{% endif %}">
-                    <a href="{{ path('inamika_backoffice_orders')}}" aria-expanded="false">
+                <li class="{% 
+                if 'inamika_backoffice_orders' in app.request.get('_route') or
+                'inamika_backoffice_customers' in app.request.get('_route') 
+                %}active{% endif %}">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" aria-expanded="false">
                         <i class="mdi mdi-truck-delivery"></i><span class="hide-menu">{{ 'ORDERS' | trans }}</span>
                     </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="idebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_orders' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_orders')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i><span class="hide-menu">{{ 'ALL_ORDERS' | trans }}</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_customers' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_customers')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i>
+                                <span class="hide-menu"> {{ 'CUSTOMERS' | trans }} </span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="{% if 'inamika_backoffice_cotizations' in app.request.get('_route') %}active{% endif %}">
-                    <a href="{{ path('inamika_backoffice_cotizations')}}" aria-expanded="false">
-                        <i class="mdi mdi-currency-usd"></i><span class="hide-menu">{{ 'COTIZATIONS' | trans }}</span>
-                    </a>
-                </li>
-                <li class="{% if 'inamika_backoffice_categories' in app.request.get('_route') %}active{% endif %}">
-                    <a href="{{ path('inamika_backoffice_categories')}}" aria-expanded="false">
-                        <i class="mdi mdi-filter"></i><span class="hide-menu">{{ 'CATEGORIES' | trans }}</span>
-                    </a>
-                </li>
-                <li class="{% if 'inamika_backoffice_products' in app.request.get('_route') %}active{% endif %}">
-                    <a href="{{ path('inamika_backoffice_products')}}" aria-expanded="false">
+                <li class="{% 
+                if 'inamika_backoffice_products' in app.request.get('_route') or
+                'inamika_backoffice_categories' in app.request.get('_route') 
+                %}active{% endif %}">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" aria-expanded="false">
                         <i class="mdi mdi-barcode"></i><span class="hide-menu">{{ 'PRODUCTS' | trans }}</span>
                     </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="idebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_categories' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_categories')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i><span class="hide-menu">{{ 'CATEGORIES' | trans }}</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_products' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_products')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i>
+                                <span class="hide-menu"> {{ 'ALL_PRODUCTS' | trans }} </span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="{% if 'inamika_backoffice_service_categories' in app.request.get('_route') %}active{% endif %}">
-                    <a href="{{ path('inamika_backoffice_service_categories')}}" aria-expanded="false">
-                        <i class="mdi mdi-package"></i><span class="hide-menu">{{ 'SERVICES' | trans }}---</span>
-                    </a>
-                </li>
-                <li class="{% if 'inamika_backoffice_services' in app.request.get('_route') %}active{% endif %}">
-                    <a href="{{ path('inamika_backoffice_services')}}" aria-expanded="false">
+                <li class="{% 
+                if 'inamika_backoffice_services' in app.request.get('_route') or
+                'inamika_backoffice_service_categories' in app.request.get('_route') or
+                'inamika_backoffice_cotizations' in app.request.get('_route') 
+                %}active{% endif %}">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" aria-expanded="false">
                         <i class="mdi mdi-package"></i><span class="hide-menu">{{ 'SERVICES' | trans }}</span>
                     </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="idebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_service_categories' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_service_categories')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i><span class="hide-menu">{{ 'TYPE_SERVICES' | trans }}</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_services' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_services')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i>
+                                <span class="hide-menu"> {{ 'ALL_SERVICES' | trans }} </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_cotizations' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_cotizations')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i>
+                                <span class="hide-menu">{{ 'COTIZATIONS' | trans }}</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="{% if 'inamika_backoffice_popups' in app.request.get('_route') %}active{% endif %}">
-                    <a href="{{ path('inamika_backoffice_popups')}}" aria-expanded="false">
-                        <i class="mdi mdi-alert-octagon"></i><span class="hide-menu">{{ 'POPUPS' | trans }}</span>
-                    </a>
-                </li>
-                <li class="{% if 'inamika_backoffice_customers' in app.request.get('_route') %}active{% endif %}">
-                    <a href="{{ path('inamika_backoffice_customers')}}" aria-expanded="false">
-                        <i class="mdi mdi-account-card-details"></i><span class="hide-menu">{{ 'CUSTOMERS' | trans }}</span>
-                    </a>
-                </li>
-                {% if is_granted('ROLE_SUPER') %}
-                {# <li class="nav-small-cap">{{ 'USERS' | trans }}</li> #}
-                <li class="{% if 'inamika_backoffice_users' in app.request.get('_route') %}active{% endif %}">
-                    <a href="{{ path('inamika_backoffice_users')}}" aria-expanded="false">
-                        <i class="mdi mdi-account"></i><span class="hide-menu">{{ 'USERS' | trans }}</span>
-                    </a>
-                </li>
-                <li class="{% if 'inamika_backoffice_setting' in app.request.get('_route') %}active{% endif %}">
-                    <a href="{{ path('inamika_backoffice_setting')}}" aria-expanded="false">
+                 <li class="{% 
+                if 'inamika_backoffice_setting' in app.request.get('_route') or
+                'inamika_backoffice_users' in app.request.get('_route') or
+                'inamika_backoffice_popups' in app.request.get('_route') 
+                %}active{% endif %}">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" aria-expanded="false">
                         <i class="mdi mdi-settings"></i><span class="hide-menu">{{ 'SETTING' | trans }}</span>
                     </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="idebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_popups' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_popups')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i><span class="hide-menu">{{ 'POPUPS' | trans }}</span>
+                            </a>
+                        </li>
+                        {% if is_granted('ROLE_SUPER') %}
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_users' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_users')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i>
+                                <span class="hide-menu"> {{ 'USERS' | trans }} </span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
                 </li>
-                {% endif %}
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

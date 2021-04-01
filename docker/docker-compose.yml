@@ -7,7 +7,8 @@ services:
         extra_hosts:
             - "dev.unisan.cl:127.0.0.1"
         volumes:
-            - ".:/app:cached"
+            - .:/application:cached
+            - .:/app:cached
             - ../www/:/var/www/html
             - ./config/php.ini:/usr/local/etc/php/conf.d/php.ini
             - ./config/dev.unisan.cl.conf:/etc/apache2/sites-enabled/dev.unisan.cl.conf
@@ -33,7 +34,7 @@ services:
         environment:
             - MYSQL_DATABASE=unisan
             - MYSQL_ROOT_PASSWORD=Secreta007
-            - MYSQL_USER=root
+            - MYSQL_USER=unisan
             - MYSQL_PASSWORD=Secreta007
     unisan_memcached:
         image: memcached:latest

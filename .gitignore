@@ -9,3 +9,4 @@
 /www/phpunit.xml
 *.log
 www/web/cache/
+*.cache

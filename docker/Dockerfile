@@ -1,12 +1,22 @@
 FROM php:7.4-apache
  
-RUN apt-get update && apt-get install -y git \
+RUN apt-get update && apt-get install -y \
+    git \
     zlib1g-dev \
     nano \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    gnupg
+    gnupg 
+
+RUN apt-get install -y \ 
+    build-essential \ 
+    libssl-dev \ 
+    libjpeg-dev \ 
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libzip-dev \
+    zip
 
 RUN docker-php-ext-install \
     pdo_mysql \
@@ -14,10 +24,9 @@ RUN docker-php-ext-install \
     gd \
     mbstring 
 
-RUN apt-get install -y \
-        libzip-dev \
-        zip \
-  && docker-php-ext-install zip
+ 
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg=/usr/include/ --enable-gd 
+RUN docker-php-ext-install -j$(nproc) gd
   
 RUN a2enmod rewrite
  

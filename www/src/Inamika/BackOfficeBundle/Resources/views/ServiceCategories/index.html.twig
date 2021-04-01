@@ -26,11 +26,24 @@
 <script type="text/javascript">
     $(function () {
         $('#{{ pathBase }}_dataTable').DataTable({
-            order: [[ 1, 'desc' ]],
-            
+            order: [[ 0, 'desc' ]],
             "serverSide": true,
             columns: [
                 { title:"{{ 'NAME' | trans }}",data: "name" },
+                { title:"{{ 'LABEL_FOR_MENU' | trans }}",data: "label" },
+                { 
+                    data: 'subcategories', 
+                    className: "text-center",
+                    title: '{{ 'SUBCATEGORIES' | trans }}',
+                    render: function (data, type, row) 
+                    {
+                        let count=0;
+                        for (let i = 0; i < data.length; i++)
+                            if(!data[i].isDelete) 
+                                count++;
+                        return count;
+                    }
+                },
                 {
                     data: null,
                     orderable: false,

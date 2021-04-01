@@ -27,6 +27,7 @@ class ServiceCategoryType extends AbstractType
     {
         $builder
         ->add('name',TextType::class,array('label'=>'NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('label',TextType::class,array('label'=>'LABEL_FOR_MENU','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
         // ->add('description',TextareaType::class,array('label'=>'DESCRIPTION','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ;
     }
