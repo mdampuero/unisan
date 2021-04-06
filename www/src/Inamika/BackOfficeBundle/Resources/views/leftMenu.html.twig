@@ -14,12 +14,14 @@
                 'inamika_backoffice_customers' in app.request.get('_route') 
                 %}active{% endif %}">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" aria-expanded="false">
-                        <i class="mdi mdi-truck-delivery"></i><span class="hide-menu">{{ 'ORDERS' | trans }}</span>
+                        <i class="mdi mdi-truck-delivery"></i>
+                        <span class="hide-menu">{{ 'ORDERS' | trans }}</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="idebar-item">
                             <a class="sidebar-link {% if 'inamika_backoffice_orders' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_orders')}}" aria-expanded="false">
-                                <i class="mdi mdi-minus"></i><span class="hide-menu">{{ 'ALL_ORDERS' | trans }}</span>
+                                <i class="mdi mdi-minus"></i>
+                                <span class="hide-menu">{{ 'ALL_ORDERS' | trans }}</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -40,13 +42,14 @@
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="idebar-item">
                             <a class="sidebar-link {% if 'inamika_backoffice_categories' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_categories')}}" aria-expanded="false">
-                                <i class="mdi mdi-minus"></i><span class="hide-menu">{{ 'CATEGORIES' | trans }}</span>
+                                <i class="mdi mdi-minus"></i>
+                                <span class="hide-menu">{{ 'CATEGORIES' | trans }}</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link {% if 'inamika_backoffice_products' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_products')}}" aria-expanded="false">
                                 <i class="mdi mdi-minus"></i>
-                                <span class="hide-menu"> {{ 'ALL_PRODUCTS' | trans }} </span>
+                                <span class="hide-menu">{{ 'ALL_PRODUCTS' | trans }} </span>
                             </a>
                         </li>
                     </ul>
@@ -62,13 +65,14 @@
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="idebar-item">
                             <a class="sidebar-link {% if 'inamika_backoffice_service_categories' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_service_categories')}}" aria-expanded="false">
-                                <i class="mdi mdi-minus"></i><span class="hide-menu">{{ 'TYPE_SERVICES' | trans }}</span>
+                                <i class="mdi mdi-minus"></i>
+                                <span class="hide-menu">{{ 'TYPE_SERVICES' | trans }}</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link {% if 'inamika_backoffice_services' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_services')}}" aria-expanded="false">
                                 <i class="mdi mdi-minus"></i>
-                                <span class="hide-menu"> {{ 'ALL_SERVICES' | trans }} </span>
+                                <span class="hide-menu">{{ 'ALL_SERVICES' | trans }} </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -90,14 +94,15 @@
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="idebar-item">
                             <a class="sidebar-link {% if 'inamika_backoffice_popups' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_popups')}}" aria-expanded="false">
-                                <i class="mdi mdi-minus"></i><span class="hide-menu">{{ 'POPUPS' | trans }}</span>
+                                <i class="mdi mdi-minus"></i>
+                                <span class="hide-menu">{{ 'POPUPS' | trans }}</span>
                             </a>
                         </li>
                         {% if is_granted('ROLE_SUPER') %}
                         <li class="sidebar-item">
                             <a class="sidebar-link {% if 'inamika_backoffice_users' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_users')}}" aria-expanded="false">
                                 <i class="mdi mdi-minus"></i>
-                                <span class="hide-menu"> {{ 'USERS' | trans }} </span>
+                                <span class="hide-menu">{{ 'USERS' | trans }} </span>
                             </a>
                         </li>
                         {% endif %}

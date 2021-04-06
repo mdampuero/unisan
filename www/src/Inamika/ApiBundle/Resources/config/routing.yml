@@ -42,3 +42,6 @@ api_categories:
 
 api_service_categories:
     resource: "@InamikaApiBundle/Resources/config/service_categories_routing.yml"
+    
+api_service_subcategories:
+    resource: "@InamikaApiBundle/Resources/config/service_subcategories_routing.yml"

@@ -47,6 +47,20 @@ class ServiceType extends AbstractType
                 return $choices;
             }
         ))
+        ->add('subcategory', EntityType::class, array(
+            'label'=>'SUBCATEGORY',
+            'label_attr'=>array('class'=>'control-label'),
+            'class' => 'InamikaBackEndBundle:ServiceSubcategory',
+            'choice_label' => 'name',
+            'attr'=>array('class'=>'form-control'),
+            'placeholder' => '--Seleccione una opción--',
+            'query_builder' => function (EntityRepository $er) {
+                $qb = $er->createQueryBuilder('e');
+                $choices=$qb->where("e.isDelete=:isDelete")->setParameter('isDelete',false)
+                    ->orderBy('e.name', 'ASC');
+                return $choices;
+            }
+        ))
         ->add('picture', FileType::class, array(
             'label'=>'PICTURE',
             'data_class' => null,

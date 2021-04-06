@@ -56,6 +56,14 @@ class Service
      * @Expose
      */
     private $category;
+    
+    /**
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="ServiceSubcategory")
+     * @ORM\JoinColumn(name="subcategory_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $subcategory;
 
     /**
      * @var string
@@ -173,6 +181,30 @@ class Service
     public function getCategory()
     {
         return $this->category;
+    }
+    
+    /**
+     * Set subcategory.
+     *
+     * @param int $subcategory
+     *
+     * @return Service
+     */
+    public function setSubcategory($subcategory)
+    {
+        $this->subcategory = $subcategory;
+
+        return $this;
+    }
+
+    /**
+     * Get subcategory.
+     *
+     * @return int
+     */
+    public function getSubcategory()
+    {
+        return $this->subcategory;
     }
 
     /**

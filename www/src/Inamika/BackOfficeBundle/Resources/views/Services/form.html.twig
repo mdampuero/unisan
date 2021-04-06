@@ -14,5 +14,23 @@
     function cancell(){
         location.href='{{ path(pathBase) }}';
     }
+    $(function(){
+        $("#category").on("change",function(){
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                crossDomain: true,
+                success: function(data) {
+                    
+                },
+                complete:function(){
+
+                },
+                error: function(data, status, error) {
+
+                },
+            });           
+        });
+    });
 </script>
 {% endblock javascripts %}
