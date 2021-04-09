@@ -58,7 +58,6 @@ class Service
     private $category;
     
     /**
-     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="ServiceSubcategory")
      * @ORM\JoinColumn(name="subcategory_id", referencedColumnName="id")
      * @Expose

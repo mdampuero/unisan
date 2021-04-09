@@ -39,7 +39,7 @@ class ServiceType extends AbstractType
             'class' => 'InamikaBackEndBundle:ServiceCategory',
             'choice_label' => 'name',
             'attr'=>array('class'=>'form-control'),
-            'placeholder' => '--Seleccione una opción--',
+            'placeholder' => 'SELECT_AN_OPTION',
             'query_builder' => function (EntityRepository $er) {
                 $qb = $er->createQueryBuilder('e');
                 $choices=$qb->where("e.isDelete=:isDelete")->setParameter('isDelete',false)
@@ -53,7 +53,7 @@ class ServiceType extends AbstractType
             'class' => 'InamikaBackEndBundle:ServiceSubcategory',
             'choice_label' => 'name',
             'attr'=>array('class'=>'form-control'),
-            'placeholder' => '--Seleccione una opción--',
+            'placeholder' => 'SELECT_AN_OPTION',
             'query_builder' => function (EntityRepository $er) {
                 $qb = $er->createQueryBuilder('e');
                 $choices=$qb->where("e.isDelete=:isDelete")->setParameter('isDelete',false)

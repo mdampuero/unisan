@@ -23,7 +23,7 @@ class LoginController extends FOSRestController
         $form->submit(json_decode($request->getContent(), true));
         if ($form->isSubmitted() && $form->isValid()) {
             if(!$entity=$this->getDoctrine()->getRepository(Customer::class)->findOneBy(array(
-                'email'=>$form->get('username')->getData(),
+                'document'=>$form->get('username')->getData(),
                 'password'=>substr(md5($form->get('password')->getData()), 0, 19)
             )))
                 return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));

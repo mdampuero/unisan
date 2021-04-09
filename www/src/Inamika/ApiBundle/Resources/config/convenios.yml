@@ -1,0 +1,10 @@
+api_convenios:
+    path:     /convenios
+    defaults: { _controller: InamikaApiBundle:Convenios:index }
+    methods: [GET]
+
+api_convenios_by_rut:
+    path:     /convenios
+    defaults: { _controller: InamikaApiBundle:Convenios:getByRut }
+    methods: [POST]
+

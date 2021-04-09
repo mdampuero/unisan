@@ -38,7 +38,7 @@ class PopupType extends AbstractType
             Popup::SHOW_ALWAYS => Popup::SHOW_ALWAYS,
             Popup::SHOW_FOR_SESSION => Popup::SHOW_FOR_SESSION
         ),
-        'placeholder' => '--Seleccione una opción--',
+        'placeholder' => 'SELECT_AN_OPTION',
         ))
         ->add('section', EntityType::class, array(
             'label'=>'SECTION',
@@ -46,7 +46,7 @@ class PopupType extends AbstractType
             'class' => 'InamikaBackEndBundle:Section',
             'choice_label' => 'name',
             'attr'=>array('class'=>'form-control'),
-            'placeholder' => '--Seleccione una opción--',
+            'placeholder' => 'SELECT_AN_OPTION',
             'query_builder' => function (EntityRepository $er) {
                 $qb = $er->createQueryBuilder('e');
                 $choices=$qb->where("e.isDelete=:isDelete")->setParameter('isDelete',false)
