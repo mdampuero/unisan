@@ -7,6 +7,12 @@
 	</div>
 	<div class="col-md-6 col-lg-4">
 		<div class="form-group">
+			<h4 class="card-title">{{ 'DATE' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.createdAt | date('d/m/Y H:i') }}</h5>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-4">
+		<div class="form-group">
 			<h4 class="card-title">{{ 'CLIENT_NAME' | trans }}</h4>
 			<h5 class="card-subtitle">{{ entity.clientName }}</h5>
 		</div>
@@ -20,13 +26,19 @@
 	<div class="col-md-6 col-lg-4">
 		<div class="form-group">
 			<h4 class="card-title">{{ 'CLIENT_PHONE' | trans }}</h4>
-			<h5 class="card-subtitle"><a href='mailto:{{ entity.clientPhone }}' target="_blank">{{ entity.clientPhone }}</a></h5>
+			<h5 class="card-subtitle"><a href='tel:{{ entity.clientPhone }}' target="_blank">{{ entity.clientPhone }}</a></h5>
 		</div>
 	</div>
 	<div class="col-md-6 col-lg-4">
 		<div class="form-group">
-			<h4 class="card-title">{{ 'DATE' | trans }}</h4>
-			<h5 class="card-subtitle">{{ entity.createdAt | date('d/m/Y H:i') }}</h5>
+			<h4 class="card-title">{{ 'CLIENT_CITY' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.clientCity }}</h5>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'ADDRESS' | trans }}</h4>
+			<p class="card-subtitle">{{ entity.clientAddress | default('N/E') }}</p>
 		</div>
 	</div>
 	<div class="col-md-12">

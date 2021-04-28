@@ -81,6 +81,23 @@ class Cotization
      * @Expose
      */
     private $observation;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="client_address", type="text", nullable=true)
+     * @Expose
+     */
+    private $clientAddress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="client_city", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $clientCity;
 
     /**
      * @var \DateTime
@@ -235,6 +252,54 @@ class Cotization
     public function getObservation()
     {
         return $this->observation;
+    }
+    
+    /**
+     * Set clientAddress.
+     *
+     * @param string|null $clientAddress
+     *
+     * @return Cotization
+     */
+    public function setClientAddress($clientAddress = null)
+    {
+        $this->clientAddress = $clientAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get clientAddress.
+     *
+     * @return string|null
+     */
+    public function getClientAddress()
+    {
+        return $this->clientAddress;
+    }
+    
+    /**
+     * Set clientCity.
+     *
+     * @param string|null $clientCity
+     *
+     * @return Cotization
+     */
+    public function setClientCity($clientCity = null)
+    {
+        $this->clientCity = $clientCity;
+
+        return $this;
+    }
+
+    /**
+     * Get clientCity.
+     *
+     * @return string|null
+     */
+    public function getClientCity()
+    {
+        return $this->clientCity;
     }
 
     /**

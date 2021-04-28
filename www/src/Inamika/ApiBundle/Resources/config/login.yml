@@ -2,3 +2,15 @@ api_login_post:
     path:     /login
     defaults: { _controller: InamikaApiBundle:Login:post }
     methods: [POST]
+api_login_forgot_password:
+    path:     /forgot_password
+    defaults: { _controller: InamikaApiBundle:Login:forgotPassword }
+    methods: [POST]
+api_login_reset_password:
+    path:     /reset_password
+    defaults: { _controller: InamikaApiBundle:Login:resetPassword }
+    methods: [POST]
+api_login_check_code:
+    path:     /check_code
+    defaults: { _controller: InamikaApiBundle:Login:checkCode }
+    methods: [POST]

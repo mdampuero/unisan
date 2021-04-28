@@ -92,6 +92,13 @@ class Customer implements AdvancedUserInterface, \Serializable
     private $isSeller=false;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="code_active", type="string", length=255,nullable=true)
+     */
+    private $codeActive;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
@@ -147,13 +154,6 @@ class Customer implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="role", type="string", length=50)
      */
     private $role='ROLE_USER';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="code_active", type="string", length=255,nullable=true)
-     */
-    private $codeActive;
 
     /**
      * @var \DateTime
@@ -374,6 +374,57 @@ class Customer implements AdvancedUserInterface, \Serializable
         return $this->isSeller;
     }
 
+    /**
+     * Set codeActive
+     *
+     * @param string $codeActive
+     *
+     * @return User
+     */
+    public function setCodeActive($codeActive)
+    {
+        $this->codeActive = $codeActive;
+        $date= new \DateTime();
+        $date->add(new \DateInterval('PT24H'));
+        $this->setExpirationCode($date);
+
+        return $this;
+    }
+
+    /**
+     * Get codeActive
+     *
+     * @return string
+     */
+    public function getCodeActive()
+    {
+        return $this->codeActive;
+    }
+
+    /**
+     * Set expirationCode
+     *
+     * @param \DateTime $expirationCode
+     *
+     * @return User
+     */
+    public function setExpirationCode($expirationCode)
+    {
+        $this->expirationCode = $expirationCode;
+
+        return $this;
+    }
+
+    /**
+     * Get expirationCode
+     *
+     * @return \DateTime
+     */
+    public function getExpirationCode()
+    {
+        return $this->expirationCode;
+    }
+    
     /**
      * Set address.
      *

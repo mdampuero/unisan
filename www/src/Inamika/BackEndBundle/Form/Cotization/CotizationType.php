@@ -26,6 +26,8 @@ class CotizationType extends AbstractType
         ->add('clientName',TextType::class,array('label'=>'CLIENT_NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
         ->add('clientEmail',TextType::class,array('label'=>'CLIENT_EMAIL','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
         ->add('clientPhone',TextType::class,array('label'=>'CLIENT_PHONE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('clientCity',TextType::class,array('label'=>'CLIENT_CITY','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('clientAddress',TextareaType::class,array('label'=>'CLIENT_ADDRESS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
         ->add('observation',TextareaType::class,array('label'=>'OBSERVATION','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('service', EntityType::class, array(
             'label'=>'SERVICE',
