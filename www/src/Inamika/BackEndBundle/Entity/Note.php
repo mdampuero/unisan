@@ -13,25 +13,18 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Criteria;
-
 /**
- * Popup
+ * Note
  *
- * @ORM\Table(name="popup")
- * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\PopupRepository")
+ * @ORM\Table(name="note")
+ * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\NoteRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"name"}, repositoryMethod="getUniqueNotDeleted")
  * @ExclusionPolicy("all")
  */
 
-class Popup
+class Note
 {
-    const SHOW_FOR_ONCE='SHOW_FOR_ONCE';
-    const SHOW_FOR_ONCE_DAY='SHOW_FOR_ONCE_DAY';
-    const SHOW_ALWAYS='SHOW_ALWAYS';
-    const SHOW_FOR_SESSION='SHOW_FOR_SESSION';
-
     /**
      * @var string
      *
@@ -43,18 +36,18 @@ class Popup
     private $id;
 
     /**
-     * Many Popup have one Section. This is the owning side.
+     * Many Popup have one Popup. This is the owning side.
      * @Assert\NotBlank()
-     * @ORM\ManyToOne(targetEntity="Section")
-     * @ORM\JoinColumn(name="section_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Popup")
+     * @ORM\JoinColumn(name="popup_id", referencedColumnName="id")
      * @Expose
      */
-    private $section;
+    private $popup;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = 3,
@@ -62,20 +55,7 @@ class Popup
      * )
      * @Expose
      */
-    private $title;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="display", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 64
-     * )
-     * @Expose
-     */
-    private $display;
+    private $name;
 
     /**
      * @var string|null
@@ -84,21 +64,19 @@ class Popup
      * @Expose
      */
     private $description;
-
+    
     /**
-     * @var bool
+     * @var string|null
      *
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="picture", type="text", nullable=true)
      * @Expose
      */
-    private $isActive=false;
-
+    private $picture;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
-     * @Expose
      */
     private $createdAt;
 
@@ -106,7 +84,6 @@ class Popup
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime")
-     * @Expose
      */
     private $updatedAt;
 
@@ -120,40 +97,6 @@ class Popup
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Note", mappedBy="popup")
-     * @Expose
-     */
-    private $notes;
-
-    public function __construct()
-    {
-        $this->notes = new ArrayCollection();
-    }
-
-    /**
-     * Get notes.
-     *
-     * @return int
-     */
-    public function getNotes()
-    {
-        $criteria = Criteria::create()
-            ->andWhere(Criteria::expr()->eq('isDelete', false))
-            ->orderBy(['createdAt' => 'ASC']);
-        return $this->notes->matching($criteria);
-    }
-    
-    /**
-     * Set notes.
-     *
-     * @return Popup
-     */
-    public function setNotes($notes)
-    {
-        return $this->notes=$notes;
-    }
-
-    /**
      * Get id.
      *
      * @return int
@@ -164,75 +107,51 @@ class Popup
     }
 
     /**
-     * Set section.
+     * Set name.
      *
-     * @param int $section
+     * @param string $name
      *
-     * @return Popup
+     * @return Note
      */
-    public function setSection($section)
+    public function setName($name)
     {
-        $this->section = $section;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get section.
+     * Get name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set picture.
+     *
+     * @param int $picture
+     *
+     * @return Service
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture.
      *
      * @return int
      */
-    public function getSection()
+    public function getPicture()
     {
-        return $this->section;
-    }
-
-    /**
-     * Set title.
-     *
-     * @param string $title
-     *
-     * @return Popup
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-    
-    /**
-     * Set display.
-     *
-     * @param string $display
-     *
-     * @return Popup
-     */
-    public function setDisplay($display)
-    {
-        $this->display = $display;
-
-        return $this;
-    }
-
-    /**
-     * Get display.
-     *
-     * @return string
-     */
-    public function getDisplay()
-    {
-        return $this->display;
+        return $this->picture;
     }
 
     /**
@@ -240,13 +159,37 @@ class Popup
      *
      * @param string|null $description
      *
-     * @return Popup
+     * @return Note
      */
     public function setDescription($description = null)
     {
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * Set popup.
+     *
+     * @param int $popup
+     *
+     * @return Service
+     */
+    public function setPopup($popup)
+    {
+        $this->popup = $popup;
+
+        return $this;
+    }
+
+    /**
+     * Get popup.
+     *
+     * @return int
+     */
+    public function getPopup()
+    {
+        return $this->popup;
     }
 
     /**
@@ -264,7 +207,7 @@ class Popup
      *
      * @param \DateTime $createdAt
      *
-     * @return Popup
+     * @return Note
      */
     public function setCreatedAt($createdAt)
     {
@@ -288,7 +231,7 @@ class Popup
      *
      * @param \DateTime $updatedAt
      *
-     * @return Popup
+     * @return Note
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -312,7 +255,7 @@ class Popup
      *
      * @param bool $isDelete
      *
-     * @return Popup
+     * @return Note
      */
     public function setIsDelete($isDelete)
     {
@@ -329,30 +272,6 @@ class Popup
     public function getIsDelete()
     {
         return $this->isDelete;
-    }
-    
-    /**
-     * Set isActive.
-     *
-     * @param bool $isActive
-     *
-     * @return Popup
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    /**
-     * Get isActive.
-     *
-     * @return bool
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
     }
 
     /**

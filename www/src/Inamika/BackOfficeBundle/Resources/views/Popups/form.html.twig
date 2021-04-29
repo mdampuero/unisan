@@ -7,11 +7,78 @@
 {% block javascripts %} 
 {{ parent() }}
 <script>
+    var notes=[];
+    $(function (){
+        {% if entity is defined %}
+            {% for note in entity.notes %}
+                notes.push({
+                    'id':'{{ note.id}}',
+                    'name':'{{ note.name}}',
+                    'picture':'{{ note.picture}}',
+                    'description':'{{ note.description}}',
+                    'isDelete':'{{ note.isDelete}}'
+                });
+            {% endfor %}
+            renderNotes();
+        {% endif %}
+    });
+
     function beforeSuccess(){
         location.href="{{ path(pathBase) }}";
     }
     function cancell(){
         location.href='{{ path(pathBase) }}';
+    }
+    function add(){
+        notes.push({
+            id   : '',
+            name : '',
+            description : '',
+            picture : '',
+            isDelete : ''
+        });
+        renderNotes();
+    }
+    function remove(i){
+        notes[i].isDelete=1;
+        renderNotes();
+    }
+    
+    function press(i){
+        notes[i].name=$("#"+i+"_input").val();
+        notes[i].description=$("#"+i+"_description").val();
+        notes[i].picture=$("#"+i+"_picture").val();
+    }
+
+    function renderNotes(){
+        $("#notes").html('');
+        for (let i = 0; i < notes.length; i++) {
+            if(!notes[i].isDelete){
+                $("#notes").append(`
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" id="${i}_input" placeholder="{{ 'TITLE' | trans }}" onkeyup="press(${i})" class="form-control" value="${notes[i].name}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="${i}_picture" placeholder="{{ 'PICTURE_URL' | trans }}" onkeyup="press(${i})" class="form-control" value="${notes[i].picture}">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="${i}_description" placeholder="{{ 'DESCRIPTION' | trans }}" onkeyup="press(${i})" class="form-control">${notes[i].description}</textarea>
+                        </div>
+                    </td>
+                    <td class="text-center align-middle">
+                        <button data-toggle="tooltip" data-placement="top" title="Eliminar" type="button" onclick="remove(${i})" class="btn-remove btn btn-outline-danger btn-circle"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>`);
+            }
+        }
+    }
+
+    function preRequest() {
+        return {
+            notes:notes
+        }
     }
 </script>
 {% endblock javascripts %}
