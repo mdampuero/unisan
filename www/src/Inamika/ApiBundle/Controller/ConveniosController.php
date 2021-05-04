@@ -20,8 +20,7 @@ class ConveniosController extends BaseController
     }
 
     public function getByRutAction(Request $request){
-       
-        $sql = " SELECT * FROM VistaClientesConvenios WHERE ".$this->preQuery($request)." ORDER BY FechaInicioServecio DESC";
+        $sql = "SELECT * FROM VistaClientesConvenios WHERE ".$this->preQuery($request)." ORDER BY FechaInicioServecio DESC";
         $stmt = $this->getDoctrine()->getManager('convenios')->getConnection()->prepare($sql);
         $stmt->execute();
         return $this->handleView($this->view($stmt->fetchAll()));
@@ -32,7 +31,8 @@ class ConveniosController extends BaseController
         $content=json_decode($request->getContent(), true);
         if(key_exists('query',$content)){
             foreach($content["query"] as $key =>$value){
-                $conditions[]=$key." = '".$value."'";
+                if($value!='')
+                    $conditions[]=$key." = '".$value."'";
             }
             return join(" AND ",$conditions);
         }else{

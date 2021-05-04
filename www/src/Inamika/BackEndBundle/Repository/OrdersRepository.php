@@ -49,7 +49,7 @@ class OrdersRepository extends \Doctrine\ORM\EntityRepository
         return $qb;
     }
     
-    public function getByCustomerId($id,$limit=0,$offset=0){
+    public function getByCustomerId($id,$limit=0,$offset=0,$status=null,$orderId=null){
         if($limit>100) $limit=100;
         if($limit==0) $limit=30;
         $qb= $this->getAll()
@@ -57,6 +57,10 @@ class OrdersRepository extends \Doctrine\ORM\EntityRepository
         ->setMaxResults($limit)
         ->orderBy('e.createdAt','DESC')
         ->andWhere('e.customer = :id')->setParameter('id',$id);
+        if($status)
+            $qb->andWhere('e.status = :status')->setParameter('status',$status);
+        if($orderId)
+            $qb->andWhere('e.id = :orderId')->setParameter('orderId',$orderId);
         return $qb;
     }
 

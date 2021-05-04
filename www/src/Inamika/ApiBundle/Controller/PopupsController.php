@@ -45,11 +45,24 @@ class PopupsController extends BaseController
     public function postAction(Request $request){
         $entity = new Popup();
         $form = $this->createForm(PopupType::class, $entity);
-        $form->submit(json_decode($request->getContent(), true));
+        $content=json_decode($request->getContent(), true);
+        $form->submit($content);
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             if(!$this->isAvailableActived($entity))
                 return $this->handleView($this->view($this->get('ErrorStructure')->get(array('code'=>400,'property'=>'isActive','message'=>'Ya existe otro Pop-up activo en para la seccion "'.$entity->getSection()->getName().'"')), Response::HTTP_BAD_REQUEST));
-            $em = $this->getDoctrine()->getManager();
+            if(key_exists('notes',$content)){
+                foreach($content['notes'] as $n){
+                    if(!$note=$this->getDoctrine()->getRepository(Note::class)->find($n["id"]))
+                        $note= new Note();
+                    $note->setPopup($entity);
+                    $note->setName($n["name"]);
+                    $note->setPicture($n["picture"]);
+                    $note->setDescription($n["description"]);
+                    $note->setIsDelete(($n["isDelete"])?1:0);
+                    $em->persist($note);
+                }
+            }            
             $em->persist($entity);
             $em->flush();
             return $this->handleView($this->view($entity, Response::HTTP_OK));

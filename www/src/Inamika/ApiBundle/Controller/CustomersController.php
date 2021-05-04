@@ -45,11 +45,13 @@ class CustomersController extends FOSRestController
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         $offset = $request->query->get('start', 0);
         $limit = $request->query->get('length', 30);
+        $status = $request->query->get('status', null);
+        $orderId = $request->query->get('id', null);
         $sort = $request->query->get('sort', null);
         $direction = $request->query->get('direction', null);
         $total=$this->getDoctrine()->getRepository(Orders::class)->getByCustomerIdTotal($id);
         return $this->handleView($this->view(array(
-            'data' => $this->getDoctrine()->getRepository(Orders::class)->getByCustomerId($id, $limit, $offset)->getQuery()->getResult(),
+            'data' => $this->getDoctrine()->getRepository(Orders::class)->getByCustomerId($id, $limit, $offset,$status,$orderId)->getQuery()->getResult(),
             'recordsTotal' => $total,
             'recordsFiltered' => $total,
             'offset' => $offset,
