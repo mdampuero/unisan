@@ -13,7 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Inamika\BackEndBundle\Entity\Service;
-use Inamika\BackEndBundle\Entity\ServiceCategory;
 
 class ServicesFixture extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface{
 
@@ -24,35 +23,54 @@ class ServicesFixture extends AbstractFixture implements OrderedFixtureInterface
     }
     
     public function load(ObjectManager $manager){
-        $categoryINDUSTRY=$manager->getRepository(ServiceCategory::class)->find(ServiceCategory::INDUSTRY);
-        for ($i=1; $i<=15; $i++){
-            $service = new Service();
-            $service->setName($categoryINDUSTRY->getName()." - Servicio - ".$i);
-            $service->setCategory($categoryINDUSTRY);
-            $service->setCode("SE#".$i);
-            $service->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit scelerisque lectus. Sed suscipit quam tellus, in consequat nisi pulvinar nec. Suspendisse felis massa, gravida ut nisl interdum, ullamcorper convallis felis. Curabitur gravida gravida lacus, a tristique enim elementum non. Donec ligula turpis, interdum eget porta at, pellentesque quis elit. Proin ultricies mollis mi, nec fermentum elit dapibus eget. Phasellus in dolor porta, fringilla libero id, viverra velit. Suspendisse vulputate mauris turpis, nec pretium ipsum consectetur laoreet. Donec dictum faucibus lacus, in pretium magna tristique ac.");
-            $manager->persist($service);
-        }
         
-        $categoryHOME=$manager->getRepository(ServiceCategory::class)->find(ServiceCategory::HOME);
-        for ($i=16; $i<=30; $i++){
-            $service = new Service();
-            $service->setName($categoryHOME->getName()." - Servicio - ".$i);
-            $service->setCategory($categoryHOME);
-            $service->setCode("SE#".$i);
-            $service->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit scelerisque lectus. Sed suscipit quam tellus, in consequat nisi pulvinar nec. Suspendisse felis massa, gravida ut nisl interdum, ullamcorper convallis felis. Curabitur gravida gravida lacus, a tristique enim elementum non. Donec ligula turpis, interdum eget porta at, pellentesque quis elit. Proin ultricies mollis mi, nec fermentum elit dapibus eget. Phasellus in dolor porta, fringilla libero id, viverra velit. Suspendisse vulputate mauris turpis, nec pretium ipsum consectetur laoreet. Donec dictum faucibus lacus, in pretium magna tristique ac.");
-            $manager->persist($service);
-        }
+        $service = new Service();
+        $service->setName("Unidades Sanitarias");
+        $service->setTitle("Lorem ipsum dolor sit amet");
+        $service->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit scelerisque lectus. Sed suscipit quam tellus, in consequat nisi pulvinar nec. Suspendisse felis massa, gravida ut nisl interdum, ullamcorper convallis felis. Curabitur gravida gravida lacus, a tristique enim elementum non. Donec ligula turpis, interdum eget porta at, pellentesque quis elit. Proin ultricies mollis mi, nec fermentum elit dapibus eget. Phasellus in dolor porta, fringilla libero id, viverra velit. Suspendisse vulputate mauris turpis, nec pretium ipsum consectetur laoreet. Donec dictum faucibus lacus, in pretium magna tristique ac.");
+        $manager->persist($service);
+        
+        $service = new Service();
+        $service->setName("Baños de Lujo");
+        $service->setTitle("Lorem ipsum dolor sit amet");
+        $service->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit scelerisque lectus. Sed suscipit quam tellus, in consequat nisi pulvinar nec. Suspendisse felis massa, gravida ut nisl interdum, ullamcorper convallis felis. Curabitur gravida gravida lacus, a tristique enim elementum non. Donec ligula turpis, interdum eget porta at, pellentesque quis elit. Proin ultricies mollis mi, nec fermentum elit dapibus eget. Phasellus in dolor porta, fringilla libero id, viverra velit. Suspendisse vulputate mauris turpis, nec pretium ipsum consectetur laoreet. Donec dictum faucibus lacus, in pretium magna tristique ac.");
+        $manager->persist($service);
+        
+        $service = new Service();
+        $service->setName("Limpieza de Fosas y Grasas");
+        $service->setTitle("Lorem ipsum dolor sit amet");
+        $service->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit scelerisque lectus. Sed suscipit quam tellus, in consequat nisi pulvinar nec. Suspendisse felis massa, gravida ut nisl interdum, ullamcorper convallis felis. Curabitur gravida gravida lacus, a tristique enim elementum non. Donec ligula turpis, interdum eget porta at, pellentesque quis elit. Proin ultricies mollis mi, nec fermentum elit dapibus eget. Phasellus in dolor porta, fringilla libero id, viverra velit. Suspendisse vulputate mauris turpis, nec pretium ipsum consectetur laoreet. Donec dictum faucibus lacus, in pretium magna tristique ac.");
+        $manager->persist($service);
+       
+        $service = new Service();
+        $service->setName("Residuos Industriales");
+        $service->setTitle("Lorem ipsum dolor sit amet");
+        $service->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit scelerisque lectus. Sed suscipit quam tellus, in consequat nisi pulvinar nec. Suspendisse felis massa, gravida ut nisl interdum, ullamcorper convallis felis. Curabitur gravida gravida lacus, a tristique enim elementum non. Donec ligula turpis, interdum eget porta at, pellentesque quis elit. Proin ultricies mollis mi, nec fermentum elit dapibus eget. Phasellus in dolor porta, fringilla libero id, viverra velit. Suspendisse vulputate mauris turpis, nec pretium ipsum consectetur laoreet. Donec dictum faucibus lacus, in pretium magna tristique ac.");
+        $manager->persist($service);
 
-        $categoryEVENT=$manager->getRepository(ServiceCategory::class)->find(ServiceCategory::EVENT);
-        for ($i=31; $i<=45; $i++){
-            $service = new Service();
-            $service->setName($categoryEVENT->getName()." - Servicio - ".$i);
-            $service->setCategory($categoryEVENT);
-            $service->setCode("SE#".$i);
-            $service->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit scelerisque lectus. Sed suscipit quam tellus, in consequat nisi pulvinar nec. Suspendisse felis massa, gravida ut nisl interdum, ullamcorper convallis felis. Curabitur gravida gravida lacus, a tristique enim elementum non. Donec ligula turpis, interdum eget porta at, pellentesque quis elit. Proin ultricies mollis mi, nec fermentum elit dapibus eget. Phasellus in dolor porta, fringilla libero id, viverra velit. Suspendisse vulputate mauris turpis, nec pretium ipsum consectetur laoreet. Donec dictum faucibus lacus, in pretium magna tristique ac.");
-            $manager->persist($service);
-        }
+        $service = new Service();
+        $service->setName("Residuos Peligrosos");
+        $service->setTitle("Lorem ipsum dolor sit amet");
+        $service->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit scelerisque lectus. Sed suscipit quam tellus, in consequat nisi pulvinar nec. Suspendisse felis massa, gravida ut nisl interdum, ullamcorper convallis felis. Curabitur gravida gravida lacus, a tristique enim elementum non. Donec ligula turpis, interdum eget porta at, pellentesque quis elit. Proin ultricies mollis mi, nec fermentum elit dapibus eget. Phasellus in dolor porta, fringilla libero id, viverra velit. Suspendisse vulputate mauris turpis, nec pretium ipsum consectetur laoreet. Donec dictum faucibus lacus, in pretium magna tristique ac.");
+        $manager->persist($service);
+        
+        $service = new Service();
+        $service->setName("Escombros");
+        $service->setTitle("Lorem ipsum dolor sit amet");
+        $service->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit scelerisque lectus. Sed suscipit quam tellus, in consequat nisi pulvinar nec. Suspendisse felis massa, gravida ut nisl interdum, ullamcorper convallis felis. Curabitur gravida gravida lacus, a tristique enim elementum non. Donec ligula turpis, interdum eget porta at, pellentesque quis elit. Proin ultricies mollis mi, nec fermentum elit dapibus eget. Phasellus in dolor porta, fringilla libero id, viverra velit. Suspendisse vulputate mauris turpis, nec pretium ipsum consectetur laoreet. Donec dictum faucibus lacus, in pretium magna tristique ac.");
+        $manager->persist($service);
+        
+        $service = new Service();
+        $service->setName("Reciclaje y Valorización");
+        $service->setTitle("Lorem ipsum dolor sit amet");
+        $service->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit scelerisque lectus. Sed suscipit quam tellus, in consequat nisi pulvinar nec. Suspendisse felis massa, gravida ut nisl interdum, ullamcorper convallis felis. Curabitur gravida gravida lacus, a tristique enim elementum non. Donec ligula turpis, interdum eget porta at, pellentesque quis elit. Proin ultricies mollis mi, nec fermentum elit dapibus eget. Phasellus in dolor porta, fringilla libero id, viverra velit. Suspendisse vulputate mauris turpis, nec pretium ipsum consectetur laoreet. Donec dictum faucibus lacus, in pretium magna tristique ac.");
+        $manager->persist($service);
+       
+        $service = new Service();
+        $service->setName("Sanitización");
+        $service->setTitle("Lorem ipsum dolor sit amet");
+        $service->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit scelerisque lectus. Sed suscipit quam tellus, in consequat nisi pulvinar nec. Suspendisse felis massa, gravida ut nisl interdum, ullamcorper convallis felis. Curabitur gravida gravida lacus, a tristique enim elementum non. Donec ligula turpis, interdum eget porta at, pellentesque quis elit. Proin ultricies mollis mi, nec fermentum elit dapibus eget. Phasellus in dolor porta, fringilla libero id, viverra velit. Suspendisse vulputate mauris turpis, nec pretium ipsum consectetur laoreet. Donec dictum faucibus lacus, in pretium magna tristique ac.");
+        $manager->persist($service);
 
         $manager->flush();
     }

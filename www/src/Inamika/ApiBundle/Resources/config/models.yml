@@ -1,0 +1,29 @@
+api_models:
+    path:     /models
+    defaults: { _controller: InamikaApiBundle:Models:index }
+    methods: [GET]
+
+api_modelsByGroup:
+    path:     /modelsByGroup
+    defaults: { _controller: InamikaApiBundle:Models:byGroup }
+    methods: [GET]
+
+api_models_get:
+    path:     /models/{id}
+    defaults: { _controller: InamikaApiBundle:Models:get }
+    methods: [GET]
+
+api_models_post:
+    path:     /models
+    defaults: { _controller: InamikaApiBundle:Models:post }
+    methods: [POST]
+
+api_models_put:
+    path:     /models/{id}
+    defaults: { _controller: InamikaApiBundle:Models:put }
+    methods: [PUT]
+
+api_models_delete:
+    path:     /models/{id}
+    defaults: { _controller: InamikaApiBundle:Models:delete }
+    methods: [DELETE]

@@ -98,3 +98,7 @@ inamika_backoffice_categories:
 inamika_backoffice_service_categories:
     resource: "@InamikaBackOfficeBundle/Resources/config/service_categories.yml"
     prefix:   /categoriasDeServicios
+
+inamika_backoffice_models:
+    resource: "@InamikaBackOfficeBundle/Resources/config/models.yml"
+    prefix:   /models

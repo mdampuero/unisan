@@ -3,6 +3,11 @@ api_services:
     defaults: { _controller: InamikaApiBundle:Services:index }
     methods: [GET]
 
+api_services_byCategory:
+    path:     /servicesByCategory/{id}/{category}
+    defaults: { _controller: InamikaApiBundle:Services:servicesByCategory }
+    methods: [GET]
+
 api_services_get:
     path:     /services/{id}
     defaults: { _controller: InamikaApiBundle:Services:get }

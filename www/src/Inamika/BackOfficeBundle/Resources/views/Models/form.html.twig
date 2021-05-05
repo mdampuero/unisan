@@ -1,8 +1,8 @@
-{% set pathBase='inamika_backoffice_services' %} 
+{% set pathBase='inamika_backoffice_models' %} 
 {% extends "InamikaBackOfficeBundle::layout.html.twig" %}
 {% block body %} 
 {{ parent()}}   
-{{ render(controller('Inamika\\BackOfficeBundle\\Controller\\ServicesController::form',{ entity: entity})) }}  
+{{ render(controller('Inamika\\BackOfficeBundle\\Controller\\ModelsController::form',{ entity: entity})) }}  
 {% endblock body %}
 {% block javascripts %} 
 {{ parent() }}

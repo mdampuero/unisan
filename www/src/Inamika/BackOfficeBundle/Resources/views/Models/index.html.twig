@@ -1,5 +1,5 @@
-{% set pathBase='inamika_backoffice_services' %}
-{% set pathBaseApi='api_services' %}
+{% set pathBase='inamika_backoffice_models' %}
+{% set pathBaseApi='api_models' %}
 {% extends "InamikaBackOfficeBundle::layout.html.twig" %}
 {% block body %} 
 {{ parent()}}
@@ -45,8 +45,56 @@
                         }
                     }
                 },
+                { title:"{{ 'SERVICE' | trans }}", data: "service.name" },
                 { title:"{{ 'NAME' | trans }}",data: "name" },
-                { title:"{{ 'TITLE' | trans }}",data: "title" },
+                { 
+                    data: 'forHome', 
+                    className: "text-center",
+                    title: '{{ 'FOR_HOME' | trans }}',
+                    render: function (data, type, row) 
+                    {
+                        switch (data){
+                            case true:
+                                return '<span class="badge badge-pill badge-success">{{ 'YES' | trans }}</span>';
+                                break;
+                            default:
+                                return '<span class="badge badge-pill badge-danger">{{ 'NO' | trans }}</span>';
+                                break;
+                        }
+                    }
+                },
+                { 
+                    data: 'forIndustry', 
+                    className: "text-center",
+                    title: '{{ 'FOR_INDUSTRY' | trans }}',
+                    render: function (data, type, row) 
+                    {
+                        switch (data){
+                            case true:
+                                return '<span class="badge badge-pill badge-success">{{ 'YES' | trans }}</span>';
+                                break;
+                            default:
+                                return '<span class="badge badge-pill badge-danger">{{ 'NO' | trans }}</span>';
+                                break;
+                        }
+                    }
+                },
+                { 
+                    data: 'forEvent', 
+                    className: "text-center",
+                    title: '{{ 'FOR_EVENT' | trans }}',
+                    render: function (data, type, row) 
+                    {
+                        switch (data){
+                            case true:
+                                return '<span class="badge badge-pill badge-success">{{ 'YES' | trans }}</span>';
+                                break;
+                            default:
+                                return '<span class="badge badge-pill badge-danger">{{ 'NO' | trans }}</span>';
+                                break;
+                        }
+                    }
+                },
                 {
                     data: null,
                     orderable: false,
