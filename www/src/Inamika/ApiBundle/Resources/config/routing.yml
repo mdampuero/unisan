@@ -45,3 +45,6 @@ api_service_categories:
 
 api_convenios:
     resource: "@InamikaApiBundle/Resources/config/convenios.yml"
+
+api_models:
+    resource: "@InamikaApiBundle/Resources/config/models.yml"

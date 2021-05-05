@@ -5,28 +5,16 @@
 			<h5 class="card-subtitle">{{ entity.name }}</h5>
 		</div>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-6 col-lg-6">
 		<div class="form-group">
-			<h4 class="card-title">{{ 'MODEL' | trans }}</h4>
-			<h5 class="card-subtitle">{{ entity.model | default('N/E') }}</h5>
+			<h4 class="card-title">{{ 'TITLE' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.title }}</h5>
 		</div>
 	</div>
 	<div class="col-md-12">
 		<div class="form-group">
 			<h4 class="card-title">{{ 'DESCRIPTION' | trans }}</h4>
-			<p class="card-subtitle">{{ entity.description | default('N/E') }}</p>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<div class="form-group">
-			<h4 class="card-title">{{ 'SPECS' | trans }}</h4>
-			<p class="card-subtitle">{{ entity.specs | default('N/E') }}</p>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<div class="form-group">
-			<h4 class="card-title">{{ 'CONDITIONS' | trans }}</h4>
-			<p class="card-subtitle">{{ entity.conditions | default('N/E') }}</p>
+			<p class="card-subtitle">{{ entity.description | nl2br }}</p>
 		</div>
 	</div>
 	{% if entity.picture %}

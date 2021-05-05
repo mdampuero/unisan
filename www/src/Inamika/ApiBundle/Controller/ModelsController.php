@@ -10,12 +10,11 @@ namespace Inamika\ApiBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Inamika\BackEndBundle\Entity\Service;
 use Inamika\BackEndBundle\Entity\Model;
 use Inamika\BackEndBundle\Entity\Currency;
-use Inamika\BackEndBundle\Form\Service\ServiceType;
+use Inamika\BackEndBundle\Form\Model\ModelType;
 
-class ServicesController extends BaseController
+class ModelsController extends BaseController
 {   
     public function indexAction(Request $request){
         $search = $request->query->get('search', array());
@@ -25,34 +24,55 @@ class ServicesController extends BaseController
         $sort = $request->query->get('sort', null);
         $direction = $request->query->get('direction', null);
         return $this->handleView($this->view(array(
-            'data' => $this->getDoctrine()->getRepository(Service::class)->search($query, $limit, $offset, $sort, $direction)->getQuery()->getResult(),
-            'recordsTotal' => $this->getDoctrine()->getRepository(Service::class)->total(),
-            'recordsFiltered' => $this->getDoctrine()->getRepository(Service::class)->searchTotal($query, $limit, $offset),
+            'data' => $this->getDoctrine()->getRepository(Model::class)->search($query, $limit, $offset, $sort, $direction)->getQuery()->getResult(),
+            'recordsTotal' => $this->getDoctrine()->getRepository(Model::class)->total(),
+            'recordsFiltered' => $this->getDoctrine()->getRepository(Model::class)->searchTotal($query, $limit, $offset),
             'offset' => $offset,
             'limit' => $limit,
         )));
     }
     
-    public function getAction($id){
-        if(!$entity=$this->getDoctrine()->getRepository(Service::class)->find($id))
-            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
-        return $this->handleView($this->view($entity));
-    }
-    
-    public function servicesByCategoryAction($id,$category){
-        if(!$entity=$this->getDoctrine()->getRepository(Service::class)->find($id))
-            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
-        $models=$this->getDoctrine()->getRepository(Model::class)->getByCategory($entity,$category)->getQuery()->getResult();
+    public function byGroupAction(Request $request){
+        $results=$this->getDoctrine()->getRepository(Model::class)->getAll()->getQuery()->getResult();
         $data=[
-            'service'=>$entity,
-            'models'=>$models
+            'forHome'=>[],
+            'forIndustry'=>[],
+            'forEvent'=>[]
         ];
+        foreach($results as $key=>$result){
+            if($result->getForHome()){
+                if(!$this->ifExist($data['forHome'],$result->getService()->getId()))
+                    $data['forHome'][]=$result->getService();
+            }
+            if($result->getForIndustry()){
+                if(!$this->ifExist($data['forIndustry'],$result->getService()->getId()))
+                    $data['forIndustry'][]=$result->getService();
+            }
+            if($result->getForEvent()){
+                if(!$this->ifExist($data['forEvent'],$result->getService()->getId()))
+                    $data['forEvent'][]=$result->getService();
+            }
+        }        
         return $this->handleView($this->view($data));
     }
 
+    protected function ifExist($array,$key){
+        foreach($array as $index=>$value){
+            if($value->getId()==$key)
+                return true;
+        }
+        return false;
+    }
+    
+    public function getAction($id){
+        if(!$entity=$this->getDoctrine()->getRepository(Model::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        return $this->handleView($this->view($entity));
+    }
+
     public function postAction(Request $request){
-        $entity = new Service();
-        $form = $this->createForm(ServiceType::class, $entity);
+        $entity = new Model();
+        $form = $this->createForm(ModelType::class, $entity);
         $form->submit(json_decode($request->getContent(), true));
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -72,9 +92,9 @@ class ServicesController extends BaseController
         $form->submit($content);
         if ($form->isSubmitted() && $form->isValid()) {
             $path='uploads/or/';
-            $file=$this->get('Base64Service')->convertToFile($content["file"]["base64"],$path);
+            $file=$this->get('Base64Model')->convertToFile($content["file"]["base64"],$path);
             try {
-                $this->getDoctrine()->getRepository(Service::class)->import($path.$file);
+                $this->getDoctrine()->getRepository(Model::class)->import($path.$file);
                 return $this->handleView($this->view("", Response::HTTP_OK));
             } catch (\Throwable $th) {
                 return $this->handleView($this->view($th->getMessage(), Response::HTTP_BAD_REQUEST));
@@ -85,9 +105,9 @@ class ServicesController extends BaseController
     }
     
     public function putAction(Request $request,$id){
-        if(!$entity=$this->getDoctrine()->getRepository(Service::class)->find($id))
+        if(!$entity=$this->getDoctrine()->getRepository(Model::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
-        $form = $this->createForm(ServiceType::class, $entity);
+        $form = $this->createForm(ModelType::class, $entity);
         $fileOld=$entity->getPicture();
         $form->submit(json_decode($request->getContent(), true));
         if ($form->isSubmitted() && $form->isValid()) {
@@ -105,7 +125,7 @@ class ServicesController extends BaseController
     }
 
     public function deleteAction(Request $request,$id){
-        if(!$entity=$this->getDoctrine()->getRepository(Service::class)->find($id))
+        if(!$entity=$this->getDoctrine()->getRepository(Model::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         $form = $this->createFormBuilder(null, array('csrf_protection' => false))->setMethod('DELETE')->getForm();
         $form->submit(json_decode($request->getContent(), true));

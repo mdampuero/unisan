@@ -60,12 +60,7 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="code", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 10
-     * )
+     * @ORM\Column(name="code", type="string", length=255,nullable=true)
      * @Expose
      */
     private $code;

@@ -56,6 +56,7 @@
                 </li>
                 <li class="{% 
                 if 'inamika_backoffice_services' in app.request.get('_route') or
+                'inamika_backoffice_models' in app.request.get('_route') or
                 'inamika_backoffice_service_categories' in app.request.get('_route') or
                 'inamika_backoffice_cotizations' in app.request.get('_route') 
                 %}active{% endif %}">
@@ -63,16 +64,22 @@
                         <i class="mdi mdi-package"></i><span class="hide-menu">{{ 'SERVICES' | trans }}</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
-                        <li class="idebar-item">
+                        {# <li class="idebar-item">
                             <a class="sidebar-link {% if 'inamika_backoffice_service_categories' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_service_categories')}}" aria-expanded="false">
                                 <i class="mdi mdi-minus"></i>
                                 <span class="hide-menu">{{ 'TYPE_SERVICES' | trans }}</span>
                             </a>
-                        </li>
+                        </li> #}
                         <li class="sidebar-item">
                             <a class="sidebar-link {% if 'inamika_backoffice_services' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_services')}}" aria-expanded="false">
                                 <i class="mdi mdi-minus"></i>
-                                <span class="hide-menu">{{ 'ALL_SERVICES' | trans }} </span>
+                                <span class="hide-menu">{{ 'SERVICES' | trans }} </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_models' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_models')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i>
+                                <span class="hide-menu">{{ 'MODELS' | trans }} </span>
                             </a>
                         </li>
                         <li class="sidebar-item">

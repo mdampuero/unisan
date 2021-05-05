@@ -5,20 +5,55 @@
         <div class="row p-t-20">
             <div class="col-md-6">
                 <div class="form-group">
-                    {{form_label(form.name)}}
-                    {{form_widget(form.name)}}
+                    {{form_label(form.service)}}
+                    {{form_widget(form.service)}}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    {{form_label(form.title)}}
-                    {{form_widget(form.title)}}
+                    {{form_label(form.name)}}
+                    {{form_widget(form.name)}}
                 </div>
             </div>
+        
             <div class="col-md-12">
                 <div class="form-group">
                     {{form_label(form.description)}}
                     {{form_widget(form.description)}}
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    {{form_label(form.spec)}}
+                    {{form_widget(form.spec)}}
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    {{form_label(form.conditions)}}
+                    {{form_widget(form.conditions)}}
+                </div>
+            </div>
+        </div>
+        <h3 class="card-title">{{ 'AVAILABLE_FOR' | trans }}</h3>
+        <hr>
+        <div class="row p-t-20">
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{form_widget(form.forHome)}}
+                    {{form_label(form.forHome)}}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{form_widget(form.forIndustry)}}
+                    {{form_label(form.forIndustry)}}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{form_widget(form.forEvent)}}
+                    {{form_label(form.forEvent)}}
                 </div>
             </div>
         </div>

@@ -28,7 +28,7 @@ class ProductType extends AbstractType
     {
         $builder
         ->add('name',TextType::class,array('label'=>'NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
-        ->add('code',TextType::class,array('label'=>'CODE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        // ->add('code',TextType::class,array('label'=>'CODE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
         ->add('price',TextType::class,array('label'=>'PRICE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
         ->add('description',TextareaType::class,array('label'=>'DESCRIPTION','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('pictureRemove',HiddenType::class,array("mapped" => false))

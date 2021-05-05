@@ -14,15 +14,15 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 
 /**
- * Service
+ * Model
  *
- * @ORM\Table(name="service")
- * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\ServiceRepository")
+ * @ORM\Table(name="model")
+ * @ORM\Entity(repositoryClass="Inamika\BackEndBundle\Repository\ModelRepository")
  * @ORM\HasLifecycleCallbacks()
  * @ExclusionPolicy("all")
  */
 
-class Service
+class Model
 {
     /**
      * @var string
@@ -33,6 +33,39 @@ class Service
      * @Expose
      */
     private $id;
+
+    /**
+     * Many Popup have one Service. This is the owning side.
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Service")
+     * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
+     * @Expose
+     */
+    private $service;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="for_home", type="boolean")
+     * @Expose
+     */
+    private $forHome=false;
+    
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="for_industry", type="boolean")
+     * @Expose
+     */
+    private $forIndustry=false;
+    
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="for_event", type="boolean")
+     * @Expose
+     */
+    private $forEvent=false;
 
     /**
      * @var string
@@ -61,25 +94,28 @@ class Service
     private $picture;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 64
-     * )
-     * @Expose
-     */
-    private $title;
-
-    /**
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", nullable=true)
      * @Expose
      */
     private $description;
+   
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="spec", type="text", nullable=true)
+     * @Expose
+     */
+    private $spec;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="conditions", type="text", nullable=true)
+     * @Expose
+     */
+    private $conditions;
 
     /**
      * @var \DateTime
@@ -115,6 +151,30 @@ class Service
     }
 
     /**
+     * Set service.
+     *
+     * @param int $service
+     *
+     * @return Product
+     */
+    public function setService($service)
+    {
+        $this->service = $service;
+
+        return $this;
+    }
+
+    /**
+     * Get service.
+     *
+     * @return int
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    /**
      * Set picture
      *
      * @param string $picture
@@ -143,7 +203,7 @@ class Service
      *
      * @param string $name
      *
-     * @return Service
+     * @return Model
      */
     public function setName($name)
     {
@@ -162,36 +222,13 @@ class Service
         return $this->name;
     }
     
-    /**
-     * Set title.
-     *
-     * @param string $title
-     *
-     * @return Service
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
 
     /**
      * Set description.
      *
      * @param string|null $description
      *
-     * @return Service
+     * @return Model
      */
     public function setDescription($description = null)
     {
@@ -209,13 +246,61 @@ class Service
     {
         return $this->description;
     }
+    
+    /**
+     * Set conditions.
+     *
+     * @param string|null $conditions
+     *
+     * @return Model
+     */
+    public function setConditions($conditions = null)
+    {
+        $this->conditions = $conditions;
+
+        return $this;
+    }
+
+    /**
+     * Get conditions.
+     *
+     * @return string|null
+     */
+    public function getConditions()
+    {
+        return $this->conditions;
+    }
+    
+    /**
+     * Set spec.
+     *
+     * @param string|null $spec
+     *
+     * @return Model
+     */
+    public function setSpec($spec = null)
+    {
+        $this->spec = $spec;
+
+        return $this;
+    }
+
+    /**
+     * Get spec.
+     *
+     * @return string|null
+     */
+    public function getSpec()
+    {
+        return $this->spec;
+    }
    
     /**
      * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
-     * @return Service
+     * @return Model
      */
     public function setCreatedAt($createdAt)
     {
@@ -239,7 +324,7 @@ class Service
      *
      * @param \DateTime $updatedAt
      *
-     * @return Service
+     * @return Model
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -263,7 +348,7 @@ class Service
      *
      * @param bool $isDelete
      *
-     * @return Service
+     * @return Model
      */
     public function setIsDelete($isDelete)
     {
@@ -280,6 +365,78 @@ class Service
     public function getIsDelete()
     {
         return $this->isDelete;
+    }
+    
+    /**
+     * Set forHome.
+     *
+     * @param bool $forHome
+     *
+     * @return Model
+     */
+    public function setForHome($forHome)
+    {
+        $this->forHome = $forHome;
+
+        return $this;
+    }
+
+    /**
+     * Get forHome.
+     *
+     * @return bool
+     */
+    public function getForHome()
+    {
+        return $this->forHome;
+    }
+    
+    /**
+     * Set forEvent.
+     *
+     * @param bool $forEvent
+     *
+     * @return Model
+     */
+    public function setForEvent($forEvent)
+    {
+        $this->forEvent = $forEvent;
+
+        return $this;
+    }
+
+    /**
+     * Get forEvent.
+     *
+     * @return bool
+     */
+    public function getForEvent()
+    {
+        return $this->forEvent;
+    }
+    
+    /**
+     * Set forIndustry.
+     *
+     * @param bool $forIndustry
+     *
+     * @return Model
+     */
+    public function setForIndustry($forIndustry)
+    {
+        $this->forIndustry = $forIndustry;
+
+        return $this;
+    }
+
+    /**
+     * Get forIndustry.
+     *
+     * @return bool
+     */
+    public function getForIndustry()
+    {
+        return $this->forIndustry;
     }
 
     /**

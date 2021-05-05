@@ -23,22 +23,22 @@ class ServiceCategoryFixture extends AbstractFixture implements OrderedFixtureIn
     }
 
     public function load(ObjectManager $manager){
-        $serviceCategory = new ServiceCategory();
-        $serviceCategory->setId(ServiceCategory::INDUSTRY);
-        $serviceCategory->setName('Industria');
-        $manager->persist($serviceCategory);
+        // $serviceCategory = new ServiceCategory();
+        // $serviceCategory->setId(ServiceCategory::INDUSTRY);
+        // $serviceCategory->setName('Industria');
+        // $manager->persist($serviceCategory);
         
-        $serviceCategory = new ServiceCategory();
-        $serviceCategory->setId(ServiceCategory::HOME);
-        $serviceCategory->setName('Hogar');
-        $manager->persist($serviceCategory);
+        // $serviceCategory = new ServiceCategory();
+        // $serviceCategory->setId(ServiceCategory::HOME);
+        // $serviceCategory->setName('Hogar');
+        // $manager->persist($serviceCategory);
         
-        $serviceCategory = new ServiceCategory();
-        $serviceCategory->setId(ServiceCategory::EVENT);
-        $serviceCategory->setName('Eventos');
-        $manager->persist($serviceCategory);
+        // $serviceCategory = new ServiceCategory();
+        // $serviceCategory->setId(ServiceCategory::EVENT);
+        // $serviceCategory->setName('Eventos');
+        // $manager->persist($serviceCategory);
 
-        $manager->flush();
+        // $manager->flush();
     }
     
     public function getOrder(){

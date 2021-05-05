@@ -1,0 +1,59 @@
+inamika_backoffice_models:
+    path:     /
+    defaults: 
+        _controller: InamikaBackOfficeBundle:Models:index
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: MODELS
+            parent_route: inamika_backoffice_homepage
+            
+inamika_backoffice_models_add:
+    path:     /new
+    defaults: { _controller: InamikaBackOfficeBundle:Models:add }
+    options:
+        breadcrumb:
+            label: MODELS_ADD
+            parent_route: inamika_backoffice_models
+    methods: [GET]
+
+inamika_backoffice_models_landing:
+    path:     /landing/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Models:landing }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: MODEL
+            parent_route: inamika_backoffice_models
+
+inamika_backoffice_models_import:
+    path:     /import
+    defaults: { _controller: InamikaBackOfficeBundle:Customers:import }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: MODEL
+            parent_route: inamika_backoffice_models
+
+inamika_backoffice_models_get:
+    path:     /get/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Models:get }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: MODEL
+            parent_route: inamika_backoffice_models
+
+inamika_backoffice_models_edit:
+    path:     /edit/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Models:edit }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: MODELS_EDIT
+            parent_route: inamika_backoffice_models
+
+inamika_backoffice_models_delete:
+    path:     /delete/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Models:delete }
+    methods: [POST,DELETE]
