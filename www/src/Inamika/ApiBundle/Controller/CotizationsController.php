@@ -49,9 +49,8 @@ class CotizationsController extends BaseController
             $settings = $this->container->get('setting');
             $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - Solicitud de cotización '))
             ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
-            ->setTo($this->getParameter('mailer_from'))
-            ->setBody($this->renderView('InamikaBackEndBundle:Emails:Cotizations/post.html.twig', array('entity' => $entity)),'text/html')
-            ;
+            ->setTo($this->get('setting')->getData()->getEmailCotizations())
+            ->setBody($this->renderView('InamikaBackEndBundle:Emails:Cotizations/post.html.twig', array('entity' => $entity)),'text/html');
             $this->get('mailer')->send($message);
             return $this->handleView($this->view($entity, Response::HTTP_OK));
         }

@@ -34,45 +34,117 @@ class Cotization
     private $id;
 
     /**
-     * Many features have one Service. This is the owning side.
+     * Many features have one Model. This is the owning side.
      * @Assert\NotBlank()
-     * @ORM\ManyToOne(targetEntity="Service")
-     * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Model")
+     * @ORM\JoinColumn(name="model_id", referencedColumnName="id")
      * @Expose
      */
-    private $service;
+    private $model;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="client_name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 64
-     * )
      * @Expose
      */
-    private $clientName;
+    private $name;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="client_email", type="string", length=255)
+     * @ORM\Column(name="company", type="string", length=255,nullable=true)
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $company;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rut", type="string", length=255,nullable=true)
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $rut;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comercial_address_street", type="string", length=255,nullable=true)
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $comercialAddressStreet;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comercial_address_number", type="string", length=255,nullable=true)
+     * @Expose
+     */
+    private $comercialAddressNumber;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comercial_address_city", type="string", length=255,nullable=true)
+     * @Expose
+     */
+    private $comercialAddressCity;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="service_address_street", type="string", length=255,nullable=true)
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $serviceAddressStreet;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="service_address_number", type="string", length=255,nullable=true)
+     * @Expose
+     */
+    private $serviceAddressNumber;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="service_address_city", type="string", length=255,nullable=true)
+     * @Expose
+     */
+    private $serviceAddressCity;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
      * @Assert\Email()
      * @Assert\NotBlank()
      * @Expose
      */
-    private $clientEmail;
+    private $email;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="client_phone", type="string", length=255)
+     * @ORM\Column(name="phone", type="string", length=255)
      * @Assert\NotBlank()
      * @Expose
      */
-    private $clientPhone;
+    private $phone;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="frequency", type="string", length=255, nullable=true)
+     * @Expose
+     */
+    private $frequency;
 
     /**
      * @var string|null
@@ -81,23 +153,6 @@ class Cotization
      * @Expose
      */
     private $observation;
-    
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="client_address", type="text", nullable=true)
-     * @Expose
-     */
-    private $clientAddress;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="client_city", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Expose
-     */
-    private $clientCity;
 
     /**
      * @var \DateTime
@@ -134,100 +189,316 @@ class Cotization
     }
 
     /**
-     * Set clientName.
+     * Set name.
      *
-     * @param string $clientName
+     * @param string $name
      *
      * @return Cotization
      */
-    public function setClientName($clientName)
+    public function setName($name)
     {
-        $this->clientName = $clientName;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get clientName.
+     * Get name.
      *
      * @return string
      */
-    public function getClientName()
+    public function getName()
     {
-        return $this->clientName;
+        return $this->name;
     }
     
     /**
-     * Set service.
+     * Set company.
      *
-     * @param int $service
+     * @param string $company
+     *
+     * @return Cotization
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get company.
+     *
+     * @return string
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+    
+    /**
+     * Set rut.
+     *
+     * @param string $rut
+     *
+     * @return Cotization
+     */
+    public function setRut($rut)
+    {
+        $this->rut = $rut;
+
+        return $this;
+    }
+
+    /**
+     * Get rut.
+     *
+     * @return string
+     */
+    public function getRut()
+    {
+        return $this->rut;
+    }
+    
+    /**
+     * Set comercialAddressStreet.
+     *
+     * @param string $comercialAddressStreet
+     *
+     * @return Cotization
+     */
+    public function setComercialAddressStreet($comercialAddressStreet)
+    {
+        $this->comercialAddressStreet = $comercialAddressStreet;
+
+        return $this;
+    }
+
+    /**
+     * Get comercialAddressStreet.
+     *
+     * @return string
+     */
+    public function getComercialAddressStreet()
+    {
+        return $this->comercialAddressStreet;
+    }
+    
+    /**
+     * Set comercialAddressNumber.
+     *
+     * @param string $comercialAddressNumber
+     *
+     * @return Cotization
+     */
+    public function setComercialAddressNumber($comercialAddressNumber)
+    {
+        $this->comercialAddressNumber = $comercialAddressNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get comercialAddressNumber.
+     *
+     * @return string
+     */
+    public function getComercialAddressNumber()
+    {
+        return $this->comercialAddressNumber;
+    }
+    
+    /**
+     * Set comercialAddressCity.
+     *
+     * @param string $comercialAddressCity
+     *
+     * @return Cotization
+     */
+    public function setComercialAddressCity($comercialAddressCity)
+    {
+        $this->comercialAddressCity = $comercialAddressCity;
+
+        return $this;
+    }
+
+    /**
+     * Get comercialAddressCity.
+     *
+     * @return string
+     */
+    public function getComercialAddressCity()
+    {
+        return $this->comercialAddressCity;
+    }
+    
+    /**
+     * Set serviceAddressStreet.
+     *
+     * @param string $serviceAddressStreet
+     *
+     * @return Cotization
+     */
+    public function setServiceAddressStreet($serviceAddressStreet)
+    {
+        $this->serviceAddressStreet = $serviceAddressStreet;
+
+        return $this;
+    }
+
+    /**
+     * Get serviceAddressStreet.
+     *
+     * @return string
+     */
+    public function getServiceAddressStreet()
+    {
+        return $this->serviceAddressStreet;
+    }
+    
+    /**
+     * Set serviceAddressNumber.
+     *
+     * @param string $serviceAddressNumber
+     *
+     * @return Cotization
+     */
+    public function setServiceAddressNumber($serviceAddressNumber)
+    {
+        $this->serviceAddressNumber = $serviceAddressNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get serviceAddressNumber.
+     *
+     * @return string
+     */
+    public function getServiceAddressNumber()
+    {
+        return $this->serviceAddressNumber;
+    }
+    
+    /**
+     * Set serviceAddressCity.
+     *
+     * @param string $serviceAddressCity
+     *
+     * @return Cotization
+     */
+    public function setServiceAddressCity($serviceAddressCity)
+    {
+        $this->serviceAddressCity = $serviceAddressCity;
+
+        return $this;
+    }
+
+    /**
+     * Get serviceAddressCity.
+     *
+     * @return string
+     */
+    public function getServiceAddressCity()
+    {
+        return $this->serviceAddressCity;
+    }
+    
+    /**
+     * Set model.
+     *
+     * @param int $model
      *
      * @return UnitStatus
      */
-    public function setService($service)
+    public function setModel($model)
     {
-        $this->service = $service;
+        $this->model = $model;
 
         return $this;
     }
 
     /**
-     * Get service.
+     * Get model.
      *
      * @return int
      */
-    public function getService()
+    public function getModel()
     {
-        return $this->service;
+        return $this->model;
     }
 
     
     /**
-     * Set clientEmail.
+     * Set email.
      *
-     * @param string $clientEmail
+     * @param string $email
      *
      * @return Cotization
      */
-    public function setClientEmail($clientEmail)
+    public function setEmail($email)
     {
-        $this->clientEmail = $clientEmail;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * Get clientEmail.
+     * Get email.
      *
      * @return string
      */
-    public function getClientEmail()
+    public function getEmail()
     {
-        return $this->clientEmail;
+        return $this->email;
     }
     
     /**
-     * Set clientPhone.
+     * Set phone.
      *
-     * @param string $clientPhone
+     * @param string $phone
      *
      * @return Cotization
      */
-    public function setClientPhone($clientPhone)
+    public function setPhone($phone)
     {
-        $this->clientPhone = $clientPhone;
+        $this->phone = $phone;
 
         return $this;
     }
 
     /**
-     * Get clientPhone.
+     * Get phone.
      *
      * @return string
      */
-    public function getClientPhone()
+    public function getPhone()
     {
-        return $this->clientPhone;
+        return $this->phone;
+    }
+    
+    /**
+     * Set frequency.
+     *
+     * @param string $frequency
+     *
+     * @return Cotization
+     */
+    public function setFrequency($frequency)
+    {
+        $this->frequency = $frequency;
+
+        return $this;
+    }
+
+    /**
+     * Get frequency.
+     *
+     * @return string
+     */
+    public function getFrequency()
+    {
+        return $this->frequency;
     }
 
     /**
@@ -252,55 +523,8 @@ class Cotization
     public function getObservation()
     {
         return $this->observation;
-    }
+    }   
     
-    /**
-     * Set clientAddress.
-     *
-     * @param string|null $clientAddress
-     *
-     * @return Cotization
-     */
-    public function setClientAddress($clientAddress = null)
-    {
-        $this->clientAddress = $clientAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get clientAddress.
-     *
-     * @return string|null
-     */
-    public function getClientAddress()
-    {
-        return $this->clientAddress;
-    }
-    
-    /**
-     * Set clientCity.
-     *
-     * @param string|null $clientCity
-     *
-     * @return Cotization
-     */
-    public function setClientCity($clientCity = null)
-    {
-        $this->clientCity = $clientCity;
-
-        return $this;
-    }
-
-    /**
-     * Get clientCity.
-     *
-     * @return string|null
-     */
-    public function getClientCity()
-    {
-        return $this->clientCity;
-    }
 
     /**
      * Set createdAt.

@@ -27,6 +27,9 @@ class SettingsFixture extends AbstractFixture implements OrderedFixtureInterface
         $setting = new Setting();
         $setting->setId("setting");
         $setting->setTitle("Unisan");
+        $setting->setEmailOrders("email@host.com");
+        $setting->setEmailCotizations("email@host.com");
+        $setting->setTitle("Unisan");
         $setting->setCopyright("© ".date('Y')." - smartraining.cl");
         $manager->persist($setting);
         $manager->flush();

@@ -75,7 +75,6 @@
 					<thead>
 						<tr>
 							<th class="text-center">#</th>
-							<th>Código</th>
 							<th>Nombre</th>
 							<th class="text-right">Cantidad</th>
 							<th class="text-right">P/U</th>
@@ -86,7 +85,6 @@
 						{% for item in data.items %}
 							<tr>
 								<td class="text-center">{{ (loop.index ) }}</td>
-								<td>{{ item.code }}</td>
 								<td>{{ item.description }}</td>
 								<td class="text-right">{{ item.quantity }}</td>
 								<td class="text-right">{{ item.product.currency.symbol }}

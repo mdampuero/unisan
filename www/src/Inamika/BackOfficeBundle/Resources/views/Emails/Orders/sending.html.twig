@@ -23,7 +23,6 @@
         <thead>
             <tr>
                 <th align="center">{{ 'ITEM' | trans }}</th>
-                <th align="center">Código</th>
                 <th align="left">Nombre</th>
                 <th align="center">Cantidad</th>
                 <th align="right">P/U</th>
@@ -34,7 +33,6 @@
             {% for item in entity.items %}
             <tr>
                 <td align="center">{{ loop.index }}</td>
-                <td align="center">{{ item.code}}</td>
                 <td align="left">{{ item.description }}</td>
                 <td align="center">{{ item.quantity }}</td>
                 <td align="right">{{ item.product.currency.symbol }} {{ (item.subtotal / item.quantity) | number_format(2, ',', '.')}}</td>

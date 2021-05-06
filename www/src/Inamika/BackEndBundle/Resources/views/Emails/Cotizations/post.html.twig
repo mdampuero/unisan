@@ -1,12 +1,61 @@
 {% extends "InamikaBackOfficeBundle::Emails/layout.html.twig" %}
 {% block body %}
-<h4>Solicitud</h4>
+<b>Solicitud de cotización: </b>
 <hr>
-<div>
-    <p><b>Servicio: {{ entity.service.name }}</b></p>
-    <p><b>Nombre:</b> {{ entity.clientName }}</p>
-    <p><b>Email:</b> <a href="mailto:{{ entity.clientEmail }}">{{ entity.clientEmail }}</a></p>
-    <p><b>Teléfono:</b> {{ entity.clientPhone }}</p>
-    <p><b>Observaciones:</b> {{ entity.observation | default('N/E') }}</p>
-</div>
+    <p>
+        <b>{{ 'SERVICE' | trans }}: </b>
+        <span>{{ entity.model.name }}</span>
+    
+
+    <p>
+        <b>{{ 'DATE' | trans }}: </b>
+        <span>{{ entity.createdAt | date('d/m/Y H:i') }}</span>
+    
+
+    <p>
+        <b>{{ 'COMPANY' | trans }}: </b>
+        <span>{{ entity.company }}</span>
+    
+
+    <p>
+        <b>{{ 'RUT' | trans }}: </b>
+        <span>{{ entity.rut }}</span>
+    
+
+    <p>
+        <b>{{ 'COMERCIAL_ADDRESS' | trans }}: </b>
+        <span>{{ entity.comercialAddressStreet }} {{ entity.comercialAddressNumber }} - {{ entity.comercialAddressCity }}</span>
+    
+
+    <p>
+        <b>{{ 'SERVICE_ADDRESS' | trans }}: </b>
+        <span>{{ entity.serviceAddressStreet }} {{ entity.serviceAddressNumber }} - {{ entity.serviceAddressCity }}</span>
+    
+
+    <p>
+        <b>{{ 'CLIENT_NAME' | trans }}: </b>
+        <span>{{ entity.name }}</span>
+    
+
+    <p>
+        <b>{{ 'CLIENT_PHONE' | trans }}: </b>
+        <span><a href='tel:{{ entity.phone }}' target="_blank">{{ entity.phone }}</a></span>
+    
+
+    <p>
+        <b>{{ 'CLIENT_EMAIL' | trans }}: </b>
+        <span><a href='mailto:{{ entity.email }}' target="_blank">{{ entity.email }}</a></span>
+    
+
+    <p>
+        <b>{{ 'FREQUENCE' | trans }}: </b>
+        <span>{{ entity.frequency }}</span>
+    
+
+    <p>
+        <b>{{ 'OBSERVATION' | trans }}: </b>
+        <p class="card-subtitle">{{ entity.observation | default('N/E') }}</p>
+    
+
+
 {% endblock %}

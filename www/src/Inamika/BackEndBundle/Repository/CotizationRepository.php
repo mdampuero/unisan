@@ -13,7 +13,7 @@ class CotizationRepository extends \Doctrine\ORM\EntityRepository
     public function getAll(){
         return $this->createQueryBuilder('e')
         ->select('e')
-        ->join('e.service','service')
+        ->join('e.model','model')
         ->where('e.isDelete = :isDelete')
         ->setParameter('isDelete',false)
         ->orderBy("e.createdAt","DESC");
@@ -38,12 +38,12 @@ class CotizationRepository extends \Doctrine\ORM\EntityRepository
             if(count($words)>1){
                 foreach ($words as $key => $word) {
                     $queryString=array();
-                    $queryString[]="CONCAT(e.clientName,e.clientEmail,e.clientPhone,service.name) LIKE :word".$key;
+                    $queryString[]="CONCAT(e.clientName,e.clientEmail,e.clientPhone,model.name) LIKE :word".$key;
                     $qb->setParameter('word'.$key,"%".$word."%");
                     $qb->andWhere(join(' AND ',$queryString));
                 }
             }else{
-                $qb->andWhere("CONCAT(e.clientName,e.clientEmail,e.clientPhone,service.name) LIKE :query")->setParameter('query',"%".$query."%");
+                $qb->andWhere("CONCAT(e.clientName,e.clientEmail,e.clientPhone,model.name) LIKE :query")->setParameter('query',"%".$query."%");
             }
         }
         return $qb;

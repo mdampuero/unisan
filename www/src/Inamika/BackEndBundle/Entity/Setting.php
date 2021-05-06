@@ -44,6 +44,26 @@ class Setting
      * @Expose
      */
     private $title;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email_orders", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     * @Expose
+     */
+    private $emailOrders;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email_cotizations", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     * @Expose
+     */
+    private $emailCotizations;
 
     /**
      * @var string
@@ -122,6 +142,54 @@ class Setting
     public function getTitle()
     {
         return $this->title;
+    }
+    
+    /**
+     * Set emailOrders.
+     *
+     * @param string $emailOrders
+     *
+     * @return Setting
+     */
+    public function setEmailOrders($emailOrders)
+    {
+        $this->emailOrders = $emailOrders;
+
+        return $this;
+    }
+
+    /**
+     * Get emailOrders.
+     *
+     * @return string
+     */
+    public function getEmailOrders()
+    {
+        return $this->emailOrders;
+    }
+    
+    /**
+     * Set emailCotizations.
+     *
+     * @param string $emailCotizations
+     *
+     * @return Setting
+     */
+    public function setEmailCotizations($emailCotizations)
+    {
+        $this->emailCotizations = $emailCotizations;
+
+        return $this;
+    }
+
+    /**
+     * Get emailCotizations.
+     *
+     * @return string
+     */
+    public function getEmailCotizations()
+    {
+        return $this->emailCotizations;
     }
     
     /**

@@ -23,16 +23,23 @@ class CotizationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('clientName',TextType::class,array('label'=>'CLIENT_NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
-        ->add('clientEmail',TextType::class,array('label'=>'CLIENT_EMAIL','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
-        ->add('clientPhone',TextType::class,array('label'=>'CLIENT_PHONE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
-        ->add('clientCity',TextType::class,array('label'=>'CLIENT_CITY','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
-        ->add('clientAddress',TextareaType::class,array('label'=>'CLIENT_ADDRESS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('company',TextType::class,array('label'=>'CLIENT_NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('name',TextType::class,array('label'=>'CLIENT_NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('rut',TextType::class,array('label'=>'CLIENT_NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('comercialAddressStreet',TextType::class,array('label'=>'CLIENT_NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('comercialAddressNumber',TextType::class,array('label'=>'CLIENT_NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('comercialAddressCity',TextType::class,array('label'=>'CLIENT_NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('serviceAddressStreet',TextType::class,array('label'=>'CLIENT_NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('serviceAddressNumber',TextType::class,array('label'=>'CLIENT_NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('serviceAddressCity',TextType::class,array('label'=>'CLIENT_NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('email',TextType::class,array('label'=>'CLIENT_EMAIL','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('phone',TextType::class,array('label'=>'CLIENT_PHONE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('frequency',TextType::class,array('label'=>'CLIENT_CITY','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
         ->add('observation',TextareaType::class,array('label'=>'OBSERVATION','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
-        ->add('service', EntityType::class, array(
+        ->add('model', EntityType::class, array(
             'label'=>'SERVICE',
             'label_attr'=>array('class'=>'control-label'),
-            'class' => 'InamikaBackEndBundle:Service',
+            'class' => 'InamikaBackEndBundle:Model',
             'choice_label' => 'name',
             'attr'=>array('class'=>'form-control'),
             'placeholder' => 'SELECT_AN_OPTION',

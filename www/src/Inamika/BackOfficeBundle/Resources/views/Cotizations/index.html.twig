@@ -25,11 +25,12 @@
             
             "serverSide": true,
             columns: [
-                { title:"{{ 'SERVICE' | trans }}",data: "service.name" },
-                { title:"{{ 'CLIENT_NAME' | trans }}",data: "clientName" },
+                { title:"{{ 'SERVICE' | trans }}",data: "model.name" },
+                { title:"{{ 'COMPANY' | trans }}",data: "company" },
+                { title:"{{ 'CLIENT_NAME' | trans }}",data: "name" },
                 { 
                     title:"{{ 'CLIENT_EMAIL' | trans }}",
-                    data: "clientEmail",
+                    data: "email",
                     render: function (data, type, JsonResultRow, meta) {
                         return `<a target="_blank" href="mailto:${data}">${data}</a>`;
                     }
