@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Service
@@ -103,7 +104,36 @@ class Service
      */
     private $isDelete=false;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Model", mappedBy="service")
+     * @Expose
+     */
+    private $models;
 
+    public function __construct()
+    {
+        $this->models = new ArrayCollection();
+    }
+
+    /**
+     * Get models.
+     *
+     * @return int
+     */
+    public function getModels()
+    {
+        return $this->models;
+    }
+    
+    /**
+     * Set models.
+     *
+     * @return Orders
+     */
+    public function setModels($models)
+    {
+        return $this->models=$models;
+    }
     /**
      * Get id.
      *
