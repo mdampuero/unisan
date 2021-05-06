@@ -32,8 +32,43 @@
             "serverSide": true,
             columns: [
                 { title:"{{ 'NAME' | trans }}",data: "name" },
+                { 
+                    data: 'role', 
+                    className: "text-center",
+                    title: '{{ 'ROLE' | trans }}',
+                    render: function (data, type, row) 
+                    {
+                        switch (data){
+                            case 'ROLE_CUSTOMER_SUPER':
+                                return 'Administrador de Empresa';
+                                break;
+                            case 'ROLE_CUSTOMER_OPER':
+                                return 'Operador de Empresa';
+                                break;
+                            case 'ROLE_CUSTOMER_OPER':
+                                return 'Cliente web';
+                                break;
+                        }
+                    }
+                },
                 { title:"{{ 'RUT' | trans }}",data: "document" },
                 { title:"{{ 'EMAIL' | trans }}",data: "email" },
+                { 
+                    data: 'isValidate', 
+                    className: "text-center",
+                    title: '{{ 'IS_VALIDATE' | trans }}',
+                    render: function (data, type, row) 
+                    {
+                        switch (data){
+                            case true:
+                                return '<span class="badge badge-pill badge-success">{{ 'YES' | trans }}</span>';
+                                break;
+                            default:
+                                return '<span class="badge badge-pill badge-danger">{{ 'NO' | trans }}</span>';
+                                break;
+                        }
+                    }
+                },
                 {
                     data: null,
                     orderable: false,
@@ -42,6 +77,8 @@
                     {
                         let buttons=[];
                         let buttonsHtml='';
+                        if(!data.isValidate)
+                            buttons.push('<button data-toggle="tooltip" data-placement="top" title="Enviar email de validación" type="button" class="btn-validate btn btn-outline-warning btn-circle"><i class="fa fa-envelope"></i></button> ');
                         buttons.push('<button data-toggle="tooltip" data-placement="top" title="Ver más" type="button" class="btn-view btn btn-outline-success btn-circle"><i class="fa fa-eye"></i></button> ');
                         {% if is_granted('ROLE_ADMIN') %}
                             buttons.push('<button data-toggle="tooltip" data-placement="top" title="Editar" type="button" class="btn-edit btn btn-outline-info btn-circle"><i class="fa fa-pencil"></i></button> ');
@@ -53,6 +90,60 @@
                     }
                 }
             ]
+        });
+        $('#{{ pathBase }}_dataTable').on('click', 'button.btn-validate', function () {
+           
+            var data = $('#{{ pathBase }}_dataTable').DataTable().row( $(this).parents('tr') ).data();
+            swal({   
+                title: "{{ 'WARNING' | trans }}",   
+                text: "{{ 'ARE_YOU_SURE_SEND_EMAIL_ACTIVATION' | trans }}",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "{{ 'YES' | trans }}",   
+                cancelButtonText: "{{ 'NO' | trans }}",   
+                closeOnConfirm: true 
+            }, function(){
+                loading.show();
+                var url="{{ path('api_customers_postValidate',{ id: 'ENTITY_ID' })}}";
+                $.ajax({
+                    url: url.replace('ENTITY_ID',data.id),
+                    type: 'POST',
+                    crossDomain: true,
+                    success: function(data) {
+                         loading.hide();
+                        $.toast({
+                            heading: '{{ 'SUCCESS' | trans }}',
+                            text: '{{ 'ARE_YOU_SURE_SEND_EMAIL_ACTIVATION_SUCCESS' | trans }}',
+                            position: 'top-right',
+                            icon: 'success',
+                            hideAfter: 3000, 
+                            stack: 6
+                        });
+                    },  
+                    complete:function(){
+                         loading.hide();
+                    },
+                    error: function(data, status, error) {
+                        loading.hide();
+                        var message='{{ 'ERROR' | trans }}';
+                        if(typeof data.responseJSON.message != 'undefined' && data.responseJSON.message != ''){
+                            message=data.responseJSON.message
+                        }
+                        $.toast({
+                            heading: '{{ 'ERROR' | trans }}',
+                            text: message,
+                            position: 'top-right',
+                            icon: 'error',
+                            hideAfter: 3000, 
+                            stack: 6
+                        });
+                    }
+                });
+            });
+            // var data = $('#{{ pathBase }}_dataTable').DataTable().row( $(this).parents('tr') ).data();
+            // var url="{{ path(pathBase~'_edit',{ id: 'ENTITY_ID' })}}";
+            // location.href=url.replace('ENTITY_ID',data.id);
         });
     });
 </script>

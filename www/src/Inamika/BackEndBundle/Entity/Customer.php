@@ -68,7 +68,7 @@ class Customer implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255)
+     * @ORM\Column(name="password", type="string", length=255, nullable=true)
      * @Assert\Length(
      *      min = 4,
      *      max = 32
@@ -152,7 +152,7 @@ class Customer implements AdvancedUserInterface, \Serializable
      *
      * @ORM\Column(name="role", type="string", length=50)
      */
-    private $role='ROLE_USER';
+    private $role='ROLE_CUSTOMER_USER';
 
     /**
      * @var \DateTime

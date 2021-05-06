@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
-class CustomerType extends AbstractType
+class CustomerProfileType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -26,17 +26,10 @@ class CustomerType extends AbstractType
         $builder
         ->add('name',TextType::class,array('label'=>'NAME','constraints' => array(new NotBlank()),'label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('email',TextType::class,array('label'=>'EMAIL','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
-        ->add('document',TextType::class,array('label'=>'RUT','constraints' => array(new NotBlank(),new Length(array('min'=>9,'max'=>9))),'label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('phone',TextType::class,array('label'=>'PHONE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('address',TextType::class,array('label'=>'ADDRESS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('provence',TextType::class,array('label'=>'PROVENCE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('city',TextType::class,array('label'=>'CITY','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
-        ->add('observations',TextareaType::class,array('label'=>'OBSERVATIONS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
-        ->add('role',ChoiceType::class, array('label'=>'ROLE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control'),'choices' => array(
-            'Administrador de Empresa' => 'ROLE_CUSTOMER_SUPER',
-            //'Operador de Empresa' => 'ROLE_ADMIN',
-            'Cliente web' => 'ROLE_CUSTOMER_OPER'
-            )))
         ;
     }
 

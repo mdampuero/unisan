@@ -13,6 +13,11 @@ api_customers_orders:
     defaults: { _controller: InamikaApiBundle:Customers:orders }
     methods: [GET]
 
+api_customers_operators:
+    path:     /customersOperators/{id}
+    defaults: { _controller: InamikaApiBundle:Customers:operators }
+    methods: [GET]
+
 api_customers_refreshToken:
     path:     /customers/{id}/refreshToken
     defaults: { _controller: InamikaApiBundle:Customers:refreshToken }
@@ -23,6 +28,21 @@ api_customers_post:
     defaults: { _controller: InamikaApiBundle:Customers:post }
     methods: [POST]
 
+api_customers_post_customersOperators:
+    path:     /customersOperators/{id}
+    defaults: { _controller: InamikaApiBundle:Customers:customersOperators }
+    methods: [POST]
+
+api_customers_postValidate:
+    path:     /customersValidate/{id}
+    defaults: { _controller: InamikaApiBundle:Customers:validate }
+    methods: [POST]
+
+api_customers_postValidateConfirm:
+    path:     /customersValidateConfirm
+    defaults: { _controller: InamikaApiBundle:Customers:validateConfirm }
+    methods: [POST]
+
 api_customers_check:
     path:     /customers_check
     defaults: { _controller: InamikaApiBundle:Customers:check }
@@ -31,6 +51,11 @@ api_customers_check:
 api_customers_put:
     path:     /customers/{id}
     defaults: { _controller: InamikaApiBundle:Customers:put }
+    methods: [PUT]
+    
+api_customers_put_profile:
+    path:     /customersProfile/{id}
+    defaults: { _controller: InamikaApiBundle:Customers:profile }
     methods: [PUT]
 
 api_customers_blankPassword:

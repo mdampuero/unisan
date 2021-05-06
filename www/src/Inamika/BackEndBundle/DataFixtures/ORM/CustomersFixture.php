@@ -24,15 +24,15 @@ class CustomersFixture extends AbstractFixture implements OrderedFixtureInterfac
     }
     
     public function load(ObjectManager $manager){
-        for ($i=1; $i<=10; $i++){
-            $customer = new Customer();
-            $customer->setName("Cliente - ".$i);
-            $customer->setEmail("cliente".$i."@email.com");
-            $customer->setPhone("11122225555".$i);
-            $customer->setPassword(substr(md5("123456"), 0, 19));
-            $manager->persist($customer);
-        }
-        $manager->flush();
+        // for ($i=1; $i<=10; $i++){
+        //     $customer = new Customer();
+        //     $customer->setName("Cliente - ".$i);
+        //     $customer->setEmail("cliente".$i."@email.com");
+        //     $customer->setPhone("11122225555".$i);
+        //     $customer->setPassword(substr(md5("123456"), 0, 19));
+        //     $manager->persist($customer);
+        // }
+        // $manager->flush();
     }
     
     public function getOrder(){

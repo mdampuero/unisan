@@ -24,6 +24,7 @@ class LoginController extends FOSRestController
         if ($form->isSubmitted() && $form->isValid()) {
             if(!$entity=$this->getDoctrine()->getRepository(Customer::class)->findOneBy(array(
                 'email'=>$form->get('username')->getData(),
+                'isValidate'=>true,
                 'password'=>substr(md5($form->get('password')->getData()), 0, 16)
             )))
                 return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
@@ -66,6 +67,7 @@ class LoginController extends FOSRestController
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         $entity->setPassword(substr(md5($content["password"]), 0, 16));
         $entity->setCodeActive(md5(md5(uniqid().uniqid())));
+        $entity->setIsValidate(true);
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();

@@ -14,6 +14,8 @@ use FOS\RestBundle\Controller\FOSRestController;
 
 use Inamika\BackEndBundle\Entity\Customer;
 use Inamika\BackEndBundle\Form\Customer\CustomerType;
+use Inamika\BackEndBundle\Form\Customer\CustomerOperatorType;
+use Inamika\BackEndBundle\Form\Customer\CustomerProfileType;
 use Inamika\BackEndBundle\Entity\Orders;
 
 class CustomersController extends FOSRestController
@@ -59,6 +61,18 @@ class CustomersController extends FOSRestController
         )));
     }
     
+    public function operatorsAction($id){
+        if(!$entity=$this->getDoctrine()->getRepository(Customer::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        return $this->handleView($this->view(array(
+            'data' => $this->getDoctrine()->getRepository(Customer::class)->getAll()
+                ->andWhere('e.role=:role')->setParameter('role','ROLE_CUSTOMER_OPER')
+                ->andWhere('e.document=:document')->setParameter('document',$entity->getDocument())
+                ->orderBy("e.createdAt","DESC")
+                ->getQuery()->getResult()
+        )));
+    }
+
     public function refreshTokenAction($id, Request $request){
         $em = $this->getDoctrine()->getManager();
         if(!$entity=$em->getRepository(Customer::class)->find($id))
@@ -105,6 +119,86 @@ class CustomersController extends FOSRestController
             return $this->handleView($this->view($entity, Response::HTTP_OK));
         }
         return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
+    }
+    
+    public function profileAction(Request $request,$id){
+        if(!$entity=$this->getDoctrine()->getRepository(Customer::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        $form = $this->createForm(CustomerProfileType::class, $entity);
+        $form->submit(json_decode($request->getContent(), true));
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+            return $this->handleView($this->view($entity, Response::HTTP_OK));
+        }
+        return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
+    }
+
+    
+    public function customersOperatorsAction(Request $request,$id){
+        if(!$parent=$this->getDoctrine()->getRepository(Customer::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        $entity = new Customer();
+        $form = $this->createForm(CustomerOperatorType::class, $entity);
+        $form->submit(json_decode($request->getContent(), true));
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entity->setDocument($parent->getDocument());
+            $entity->setRole('ROLE_CUSTOMER_OPER');
+            $entity->setCodeActive(md5(md5(uniqid().uniqid())));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+            $this->sendEmailForValidate($entity);
+            return $this->handleView($this->view($entity, Response::HTTP_OK));
+        }
+        return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
+    }
+    
+    public function validateAction($id,Request $request){
+        if(!$entity=$this->getDoctrine()->getRepository(Customer::class)->findOneBy(array(
+            'id'=>$id,
+            'isValidate'=>false
+            )))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+       
+        $entity->setCodeActive(md5(md5(uniqid().uniqid())));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entity);
+        $em->flush();
+        
+        $this->sendEmailForValidate($entity);
+
+        return $this->handleView($this->view($entity, Response::HTTP_OK));
+    }
+
+    private function sendEmailForValidate($entity){
+        $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - '.$this->get('translator')->trans('ACTIVATE_ACCOUNT')))
+        ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
+        ->setTo($entity->getEmail())
+        ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:LoginFE/validate.html.twig', array('entity' => $entity,'resetUrl'=>$this->getParameter('fe_url').'validarCuenta')),'text/html');
+        $this->get('mailer')->send($message); 
+    }
+    
+    public function validateConfirmAction(Request $request){
+        $content=json_decode($request->getContent(), true);
+        if(!$entity=$this->getDoctrine()->getRepository(Customer::class)->findOneBy(array(
+            'id'=>$content['id'],
+            'codeActive'=>$content['code']
+            )))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        $entity->setPassword(substr(md5($content["password"]), 0, 16));
+        $entity->setCodeActive(md5(md5(uniqid().uniqid())));
+        $entity->setIsValidate(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entity);
+        $em->flush();
+        $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - '.$this->get('translator')->trans('ACTIVATE_ACCOUNT')))
+        ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
+        ->setTo($entity->getEmail())
+        ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:LoginFE/validateConfirm.html.twig', array('entity' => $entity)),'text/html');
+        $this->get('mailer')->send($message); 
+        return $this->handleView($this->view($entity, Response::HTTP_OK));
     }
     
     public function blankPasswordAction(Request $request){
