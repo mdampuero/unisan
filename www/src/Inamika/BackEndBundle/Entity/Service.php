@@ -64,12 +64,7 @@ class Service
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 64
-     * )
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      * @Expose
      */
     private $title;

@@ -27,7 +27,7 @@ class ServiceType extends AbstractType
     {
         $builder
         ->add('name',TextType::class,array('label'=>'NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
-        ->add('title',TextType::class,array('label'=>'TITLE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        // ->add('title',TextType::class,array('label'=>'TITLE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
         ->add('description',TextareaType::class,array('label'=>'DESCRIPTION','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('pictureRemove',HiddenType::class,array("mapped" => false))
         ->add('pictureBase64',HiddenType::class,array("mapped" => false))
