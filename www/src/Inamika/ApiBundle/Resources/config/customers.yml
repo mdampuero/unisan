@@ -28,6 +28,16 @@ api_customers_post:
     defaults: { _controller: InamikaApiBundle:Customers:post }
     methods: [POST]
 
+api_customers_import:
+    path:     /customersImport
+    defaults: { _controller: InamikaApiBundle:Customers:import }
+    methods: [POST]
+    
+api_customers_postByEmail:
+    path:     /customersByEmail
+    defaults: { _controller: InamikaApiBundle:Customers:postByEmail }
+    methods: [POST]
+
 api_customers_post_customersOperators:
     path:     /customersOperators/{id}
     defaults: { _controller: InamikaApiBundle:Customers:customersOperators }

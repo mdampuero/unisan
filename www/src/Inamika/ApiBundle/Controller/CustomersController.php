@@ -14,6 +14,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 
 use Inamika\BackEndBundle\Entity\Customer;
 use Inamika\BackEndBundle\Form\Customer\CustomerType;
+use Inamika\BackEndBundle\Form\Customer\CustomerByEmailType;
 use Inamika\BackEndBundle\Form\Customer\CustomerOperatorType;
 use Inamika\BackEndBundle\Form\Customer\CustomerProfileType;
 use Inamika\BackEndBundle\Entity\Orders;
@@ -92,6 +93,22 @@ class CustomersController extends FOSRestController
         $form->submit(json_decode($request->getContent(), true));
         if ($form->isSubmitted() && $form->isValid()) {
             $entity->setPassword(substr(md5($entity->getPassword()), 0, 16));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+            return $this->handleView($this->view($entity, Response::HTTP_OK));
+        }
+        return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
+    }
+    
+    public function postByEmailAction(Request $request){
+        $entity = new Customer();
+        $form = $this->createForm(CustomerByEmailType::class, $entity);
+        $form->submit(json_decode($request->getContent(), true));
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entity->setPassword(substr(md5('$entity->getPassword()'), 0, 16));
+            $entity->setCodeActive(md5(md5(uniqid().uniqid())));
+            $entity->setRole('ROLE_CUSTOMER_USER');
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();

@@ -165,13 +165,21 @@ class OrdersController extends FOSRestController
         if (!$entity = $this->getDoctrine()->getRepository(Orders::class)->find($id))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
 
-        //SEND EMAIL
+        //SEND EMAIL ADMINISTRATOR
         $settings = $this->container->get('setting');
         $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - Pedido #'.$entity->getId() ))
         ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
         ->setTo($this->get('setting')->getData()->getEmailOrders())
         ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:Orders/sending.html.twig', array('entity' => $entity)),'text/html');
        // ->setBcc([$this->get('setting')->getData()->getEmailOrders()]);
+        $this->get('mailer')->send($message);
+        
+        //SEND EMAIL USER
+        $settings = $this->container->get('setting');
+        $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - Pedido #'.$entity->getId() ))
+        ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
+        ->setTo($entity->getCustomer()->getEmail())
+        ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:Orders/sendingCustomer.html.twig', array('entity' => $entity,'resetUrl'=>$this->getParameter('fe_url').'validarCuenta')),'text/html');
         $this->get('mailer')->send($message);
         return $this->handleView($this->view($entity));
     }

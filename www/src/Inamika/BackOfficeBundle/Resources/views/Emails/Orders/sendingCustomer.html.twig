@@ -1,14 +1,15 @@
 {% extends "InamikaBackOfficeBundle::Emails/layout.html.twig" %}
 {% block body %}
+<h2>¡Gracias por tu compra!</h4>
+{% if not entity.customer.isValidate %}
+<p>Te recordamos que pueden ingresar a nuestra web para ver el estado del pedido y otras opciones, validando tu dirección de Email y completando una contraseña.<p>
+<p>Haz click <a href="{{ resetUrl | raw  }}/{{ entity.customer.id }}/{{ entity.customer.codeActive }}"> aquí </a> para continuar.</p>
+{% endif %}
 <h4>Datos del pedido</h4>
 <hr>
 <div>
     <p>
     <b>Pedido Nº: #{{ entity.id }}</b><br/>
-    <b>Rut:</b> {{ entity.customer.document }}<br/>
-    <b>Email:</b> <a href="mailto:{{ entity.customer.email }}">{{ entity.customer.email }}</a><br/>
-    <b>Teléfono:</b> {{ entity.customer.phone }}<br/>
-    <b>Canal de venta:</b> {{ entity.channel }}<br/>
     <b>Fecha:</b> {{ entity.createdAt | date('d/m/Y H:i') }}<br/>
     {% for total in entity.totals %}
         <b>Total:</b> {{ total.currency.symbol}} {{ total.total | number_format(2, ',', '.')}}<br/>

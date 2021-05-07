@@ -35,7 +35,7 @@ class CustomerType extends AbstractType
         ->add('role',ChoiceType::class, array('label'=>'ROLE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control'),'choices' => array(
             'Administrador de Empresa' => 'ROLE_CUSTOMER_SUPER',
             //'Operador de Empresa' => 'ROLE_ADMIN',
-            'Cliente web' => 'ROLE_CUSTOMER_OPER'
+            'Cliente web' => 'ROLE_CUSTOMER_USER'
             )))
         ;
     }

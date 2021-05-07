@@ -9,6 +9,7 @@ namespace Inamika\BackOfficeBundle\Controller;
 
 use Inamika\BackEndBundle\Entity\Customer;
 use Inamika\BackEndBundle\Form\Customer\CustomerType;
+use Inamika\BackEndBundle\Form\Customer\CustomerImportType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Routing\Generator\UrlGenerator;
@@ -42,7 +43,7 @@ class CustomersController extends BaseController{
 
     public function importAction(){
 		return $this->render('InamikaBackOfficeBundle:Customers:import.html.twig',array(
-			'form' => $this->createForm(ImportType::class, null,array(
+			'form' => $this->createForm(CustomerImportType::class, null,array(
                 'method' => 'POST',
                 'action' => $this->generateUrl('api_customers_import')
             ))->createView()
