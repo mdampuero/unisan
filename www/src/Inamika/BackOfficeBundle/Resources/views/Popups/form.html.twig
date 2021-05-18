@@ -6,6 +6,7 @@
 {% endblock body %}
 {% block javascripts %} 
 {{ parent() }}
+{% include 'InamikaBackOfficeBundle:_partials:dropifyScripts.html.twig' %}
 <script>
     var notes=[];
     $(function (){
@@ -61,7 +62,7 @@
                             <input type="text" id="${i}_input" placeholder="{{ 'TITLE' | trans }}" onkeyup="press(${i})" class="form-control" value="${notes[i].name}">
                         </div>
                         <div class="form-group">
-                            <input type="text" id="${i}_picture" placeholder="{{ 'PICTURE_URL' | trans }}" onkeyup="press(${i})" class="form-control" value="${notes[i].picture}">
+                            <input type="text" id="${i}_picture" placeholder="{{ 'PICTURE' | trans }}" onkeyup="press(${i})" class="form-control" value="${notes[i].picture}">
                         </div>
                         <div class="form-group">
                             <textarea id="${i}_description" placeholder="{{ 'DESCRIPTION' | trans }}" onkeyup="press(${i})" class="form-control">${notes[i].description}</textarea>
@@ -71,6 +72,32 @@
                         <button data-toggle="tooltip" data-placement="top" title="Eliminar" type="button" onclick="remove(${i})" class="btn-remove btn btn-outline-danger btn-circle"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>`);
+                $('.dropify').dropify({
+                    messages: {
+                        'default': '{{ 'DRAG_AND_DROP_FILE' | trans }}',
+                        'replace': '{{ 'DRAG_AND_DROP_OR_REPLACE' | trans }}',
+                        'remove':  '{{ 'DELETE' | trans }}',
+                        'error':   '{{ 'ERROR' | trans }}'
+                    },
+                    error: {
+                        'fileSize': '{{ 'FILE_VERY_LONG' | trans }}',
+                        'imageFormat': '{{ 'FILE_format' | trans }}'
+                    }
+                });
+                $('.dropify-clear').on("click",function (){
+                    var $inputRemove=$("input[name='"+$(this).siblings("input").attr("name")+"Remove']");
+                    if($inputRemove.length>0){
+                        $inputRemove.val("true");
+                        $.toast({
+                            heading: '{{ 'WARNING' | trans }}',
+                            text: '{{ 'THE_ITEM_WAS_REMOVED' | trans }}',
+                            position: 'top-right',
+                            icon: 'warning',
+                            hideAfter: 5000, 
+                            stack: 6
+                        });
+                    }
+                });
             }
         }
     }

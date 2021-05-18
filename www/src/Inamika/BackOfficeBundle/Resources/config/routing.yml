@@ -102,3 +102,7 @@ inamika_backoffice_service_categories:
 inamika_backoffice_models:
     resource: "@InamikaBackOfficeBundle/Resources/config/models.yml"
     prefix:   /models
+
+inamika_backoffice_filters:
+    resource: "@InamikaBackOfficeBundle/Resources/config/filters.yml"
+    prefix:   /filters

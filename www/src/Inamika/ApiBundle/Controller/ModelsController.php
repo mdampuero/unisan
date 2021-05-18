@@ -55,6 +55,13 @@ class ModelsController extends BaseController
         }        
         return $this->handleView($this->view($data));
     }
+    
+    public function byCategoryAction(Request $request,$category){
+        $qb=$this->getDoctrine()->getRepository(Model::class)->getAll();   
+        $qb->andWhere('e.'.$category.'=:value')->setParameter('value',true)->orderBy("service.name","ASC");;
+        return $this->handleView($this->view($qb->getQuery()->getResult()));
+    }
+
 
     protected function ifExist($array,$key){
         foreach($array as $index=>$value){

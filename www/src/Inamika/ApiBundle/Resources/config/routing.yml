@@ -48,3 +48,6 @@ api_convenios:
 
 api_models:
     resource: "@InamikaApiBundle/Resources/config/models.yml"
+
+api_filters:
+    resource: "@InamikaApiBundle/Resources/config/filters.yml"

@@ -45,18 +45,13 @@
                 if 'inamika_backoffice_services' in app.request.get('_route') or
                 'inamika_backoffice_models' in app.request.get('_route') or
                 'inamika_backoffice_service_categories' in app.request.get('_route') or
+                'inamika_backoffice_filters' in app.request.get('_route') or
                 'inamika_backoffice_cotizations' in app.request.get('_route') 
                 %}active{% endif %}">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" aria-expanded="false">
                         <i class="mdi mdi-package"></i><span class="hide-menu">{{ 'SERVICES' | trans }}</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
-                        {# <li class="idebar-item">
-                            <a class="sidebar-link {% if 'inamika_backoffice_service_categories' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_service_categories')}}" aria-expanded="false">
-                                <i class="mdi mdi-minus"></i>
-                                <span >{{ 'TYPE_SERVICES' | trans }}</span>
-                            </a>
-                        </li> #}
                         <li class="sidebar-item">
                             <a class="sidebar-link {% if 'inamika_backoffice_services' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_services')}}" aria-expanded="false">
                                 <i class="mdi mdi-minus"></i>
@@ -67,6 +62,12 @@
                             <a class="sidebar-link {% if 'inamika_backoffice_models' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_models')}}" aria-expanded="false">
                                 <i class="mdi mdi-minus"></i>
                                 <span >{{ 'MODELS' | trans }} </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_filters' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_filters')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i>
+                                <span >{{ 'FILTERS' | trans }} </span>
                             </a>
                         </li>
                         <li class="sidebar-item">

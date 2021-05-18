@@ -23,7 +23,7 @@ class DemosFixture extends AbstractFixture implements OrderedFixtureInterface, C
     }
     
     public function load(ObjectManager $manager){
-        for ($i=1; $i<=1000; $i++){
+        for ($i=1; $i<=10; $i++){
             $demo = new Demo();
             $demo->setName("Mock - ".$i);
             $demo->setDescription("Description mock - ".$i);

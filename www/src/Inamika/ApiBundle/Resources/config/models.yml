@@ -8,6 +8,11 @@ api_modelsByGroup:
     defaults: { _controller: InamikaApiBundle:Models:byGroup }
     methods: [GET]
 
+api_modelsByCategory:
+    path:     /modelsByCategory/{category}
+    defaults: { _controller: InamikaApiBundle:Models:byCategory }
+    methods: [GET]
+
 api_models_get:
     path:     /models/{id}
     defaults: { _controller: InamikaApiBundle:Models:get }

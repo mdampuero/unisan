@@ -224,3 +224,5 @@ ARE_YOU_SURE_SEND_EMAIL_ACTIVATION: '¿Está seguro que desea enviar el email de
 ARE_YOU_SURE_SEND_EMAIL_ACTIVATION_SUCCESS: 'Se envió correctamente el email de validación'
 ACTIVATE_ACCOUNT: 'Activación de cuenta'
 VALIDATE_ACCOUNT_DESCRIPTION: 'Para validar su cuenta en nuestro sistema y acceder a todas las funcionalidades es necesario validar su cuenta y crear una contraseña.'
+FILTERS: 'Filtros'
+FOR: 'Para'

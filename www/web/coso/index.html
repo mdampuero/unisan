@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>UNISAN</title>
+  <meta name="description" content="Model Viewer (VR / AR) • UNISAN">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="loader.css">
+  <link rel="stylesheet" href="embedded.css">
+  <script src="./dist/aframe-master.js"></script>
+  <script src="./dist/scripts/info-message.js"></script>
+  <script src="./dist/scripts/fullscreen-btn.js"></script>
+  <script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
+  <script src="./dist/scripts/hide-on-enter-ar.js"></script>
+  <script src="ar-shadows.js"></script>
+  <script src="ar-hit-test.js"></script>
+  <script src="model-viewer.js"></script>
+  <script src="background-gradient.js"></script>
+  <script>
+    AFRAME.registerComponent("threecomp", {
+      init: function() {
+        var targetCube = new THREE.WebGLRenderTargetCube(1024, 1024);
+        var renderer = this.el.sceneEl.renderer;
+        var camera = this.el.sceneEl.camera;
+
+        this.el.addEventListener("model-loaded", e => {
+          let mesh = this.el.getObject3D("mesh");
+          let object = this.el.object3D;
+          var texture = new THREE.TextureLoader().load(
+            "./models/wide_street_01.jpg",
+            function() 
+            {
+              var cubeTex = targetCube.fromEquirectangularTexture(renderer, texture);
+              mesh.traverse(function(el) 
+              {
+                if (el.material) 
+                {
+                  el.material.envMap = cubeTex.texture;
+                  el.material.envMap.intensity = 1;
+                  el.material.needsUpdate = true;
+                }
+              });
+              renderer.toneMapping = THREE.ACESFilmicToneMapping;
+              renderer.outputEncoding = THREE.sRGBEncoding;
+              const canvas = renderer.domElement;
+              camera.aspect = canvas.clientWidth / canvas.clientHeight;
+              camera.updateProjectionMatrix();
+              let splash = document.getElementById("splash");
+              splash.style.zIndex = 0;
+              object.visible = true;
+            }
+
+          );
+        });
+      }
+    });
+  </script>
+
+</head>
+<body>
+  <div>
+    <h2>EJEMPLO EMBEBIDO</h2>
+  </div>
+  <div class="embedded-example">
+    <a-scene
+      embedded
+      renderer="colorManagement: true;"
+      info-message="htmlSrc: #messageText"
+      fullscreen-btn
+      model-viewer="">
+      <div id="splash">
+        <div class="loading"></div>
+      </div>
+      <a-assets>
+
+        <a-asset-item id="ACON"
+        src=""
+        >
+        </a-asset-item>
+
+        <img id="shadow" src="shadow.png"></img>
+        <a-asset-item id="messageText" src="message.html"></a-asset-item>
+      </a-assets>
+    </a-scene>
+  </div>
+</body>
+</html>

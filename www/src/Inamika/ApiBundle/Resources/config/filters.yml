@@ -1,0 +1,29 @@
+api_filters:
+    path:     /filters
+    defaults: { _controller: InamikaApiBundle:Filters:index }
+    methods: [GET]
+
+api_filters_get:
+    path:     /filters/{id}
+    defaults: { _controller: InamikaApiBundle:Filters:get }
+    methods: [GET]
+
+api_filters_post:
+    path:     /filters
+    defaults: { _controller: InamikaApiBundle:Filters:post }
+    methods: [POST]
+
+api_filters_put:
+    path:     /filters/{id}
+    defaults: { _controller: InamikaApiBundle:Filters:put }
+    methods: [PUT]
+
+api_filters_delete:
+    path:     /filters/{id}
+    defaults: { _controller: InamikaApiBundle:Filters:delete }
+    methods: [DELETE]
+
+api_filters_ByGroup:
+    path:     /filtersByGroup
+    defaults: { _controller: InamikaApiBundle:Filters:byGroup }
+    methods: [GET]

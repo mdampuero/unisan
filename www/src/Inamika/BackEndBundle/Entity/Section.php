@@ -86,7 +86,20 @@ class Section
      */
     private $isDelete=false;
 
+    /**
+     * Set id.
+     *
+     * @param string $id
+     *
+     * @return Currency
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
+        return $this;
+    }
+    
     /**
      * Get id.
      *

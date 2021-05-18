@@ -36,6 +36,8 @@ services:
             tags: ['doctrine.fixture.orm']
     Inamika\BackEndBundle\DataFixtures\ORM\ModelsFixture:
             tags: ['doctrine.fixture.orm']
+    Inamika\BackEndBundle\DataFixtures\ORM\SectionsFixture:
+            tags: ['doctrine.fixture.orm']
 #     Inamika\BackEndBundle\DataFixtures\ORM\ServiceCategoryFixture:
 #             tags: ['doctrine.fixture.orm']
     # controllers are imported separately to make sure they're public

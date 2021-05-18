@@ -1,0 +1,50 @@
+inamika_backoffice_filters:
+    path:     /
+    defaults: 
+        _controller: InamikaBackOfficeBundle:Filters:index
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: FILTERS
+            parent_route: inamika_backoffice_homepage
+            
+inamika_backoffice_filters_add:
+    path:     /new
+    defaults: { _controller: InamikaBackOfficeBundle:Filters:add }
+    options:
+        breadcrumb:
+            label: Agregar filtro
+            parent_route: inamika_backoffice_filters
+    methods: [GET]
+
+inamika_backoffice_filters_landing:
+    path:     /landing/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Filters:landing }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: FILTERS
+            parent_route: inamika_backoffice_filters
+
+inamika_backoffice_filters_get:
+    path:     /get/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Filters:get }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: FILTERS
+            parent_route: inamika_backoffice_filters
+
+inamika_backoffice_filters_edit:
+    path:     /edit/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Filters:edit }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Editar filtro
+            parent_route: inamika_backoffice_filters
+
+inamika_backoffice_filters_delete:
+    path:     /delete/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Filters:delete }
+    methods: [POST,DELETE]

@@ -1,0 +1,17 @@
+[
+    {
+        "name" : "URI",
+        "description" : "Description here",
+        "model" : "URI.glb"
+    },
+    {
+        "name" : "URI3C",
+        "description" : "Description here",
+        "model" : "URI3C.glb"
+    },
+    {
+        "name" : "CVM",
+        "description" : "Description here",
+        "model" : "CVM.glb"
+    }
+]

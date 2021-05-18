@@ -1,0 +1,71 @@
+{% set pathBase='inamika_backoffice_filters' %} 
+{% extends "InamikaBackOfficeBundle::layout.html.twig" %}
+{% block body %} 
+{{ parent()}}   
+{{ render(controller('Inamika\\BackOfficeBundle\\Controller\\FiltersController::form',{ entity: entity})) }}  
+{% endblock body %}
+{% block javascripts %} 
+{{ parent() }}
+<script>
+    var models=[];
+    var services=[];
+    var modelsSelected=[];
+    function beforeSuccess(){
+        location.href="{{ path(pathBase) }}";
+    }
+    function preRequest(){
+        models=[];
+        services=[];
+        $("input:checked").each(function () {
+            models.push($(this).val());
+            services.push($(this).data('service'));
+        });
+        return {
+            models:models,
+            services:services
+        }
+    }
+    {% if entity.jsonModels %}
+        modelsSelected=JSON.parse('{{ entity.jsonModels | raw }}');
+    {% endif %}
+    function cancell(){
+        location.href='{{ path(pathBase) }}';
+    }
+    $(function (){
+        $("#forSection").on('change',function(){
+            getService($(this).val());
+        });
+        getService($("#forSection").val());
+    });
+    function getService(forSection){
+        models=[];
+        services=[];
+        var url='{{ path('api_modelsByCategory',{ 'category': 'CATEGORY' }) }}';
+        $("#result").html('<div class="col-sm-12 text-center my-4">'+getSpin()+'</div>');
+        $.ajax({
+            url: url.replace('CATEGORY',forSection),
+            type: 'GET',
+            crossDomain: true,
+            success: function(data) {
+                var lastService='';
+                $("#result").html('<hr>');
+                for(var i=0; i<data.length; i++){
+                    if(lastService!=data[i].service.id)
+                        $('#result').append(`<div class="col-sm-12"><h5>${data[i].service.name}</h5><hr/></div>`);
+                    lastService=data[i].service.id;
+                    let checked =(modelsSelected.indexOf(data[i].id)!=-1)?'checked="checked"':'';
+                    $('#result').append(`
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input id="${ data[i].id }" value="${ data[i].id }" type="checkbox" data-service="${ data[i].service.id }" ${checked} class="form-control" >
+                                <label for="${ data[i].id }">${ data[i].name }</label>
+                            </div>
+                        </div>`);
+                }
+            },  
+            complete:function(){},
+            error: function(data, status, error) {}
+        });
+    }
+</script>
+{% endblock javascripts %}
