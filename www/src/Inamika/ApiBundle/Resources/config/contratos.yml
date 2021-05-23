@@ -1,0 +1,10 @@
+api_contratos:
+    path:     /contratos
+    defaults: { _controller: InamikaApiBundle:Contratos:index }
+    methods: [GET]
+
+api_contratos_by_rut:
+    path:     /contratosByRut
+    defaults: { _controller: InamikaApiBundle:Contratos:getByRut }
+    methods: [POST]
+

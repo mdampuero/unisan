@@ -51,3 +51,6 @@ api_models:
 
 api_filters:
     resource: "@InamikaApiBundle/Resources/config/filters.yml"
+
+api_contratos:
+    resource: "@InamikaApiBundle/Resources/config/contratos.yml"

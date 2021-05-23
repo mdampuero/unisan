@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>UNISAN</title>
+  <meta name="description" content="Model Viewer (VR / AR) • UNISAN">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="./viewer/loader.css">
+  <link rel="stylesheet" href="./viewer/embedded.css">
+  <script src="./viewer/aframe-master.js"></script>
+  <script src="./viewer/scripts/info-message.js"></script>
+  <script src="./viewer/scripts/fullscreen-btn.js"></script>
+  <script src="./viewer/scripts/threecomp.js"></script>
+  <script src="./viewer/aframe-extras.min.js"></script>
+  <script src="./viewer/scripts/hide-on-enter-ar.js"></script>
+  <script src="./viewer/ar-shadows.js"></script>
+  <script src="./viewer/ar-hit-test.js"></script>
+  <script src="./viewer/model-viewer.js"></script>
+  <script src="./viewer/background-gradient.js"></script>
+</head>
+<body>
+  <div>
+    <h2>EJEMPLO EMBEBIDO</h2>
+  </div>
+  <div id="modelPath" data-model="http://dev.unisan.cl/models/unisan/CAA.glb"></div>
+  <div class="embedded-example">
+    <a-scene
+      embedded
+      renderer="colorManagement: true;"
+      info-message="htmlSrc: #messageText"
+      fullscreen-btn
+      model-viewer>
+      <div id="splash">
+        <div class="loading"></div>
+      </div>
+      <a-assets>
+
+        <a-asset-item id="ACON"
+        src=""
+        >
+        </a-asset-item>
+
+        <img id="shadow" src="./viewer/shadow.png"></img>
+        <a-asset-item id="messageText" src="./viewer/message.html"></a-asset-item>
+      </a-assets>
+    </a-scene>
+  </div>
+</body>
+</html>
