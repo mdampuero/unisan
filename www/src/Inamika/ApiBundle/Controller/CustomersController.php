@@ -119,6 +119,8 @@ class CustomersController extends FOSRestController
     
     public function checkAction(Request $request){
         $content=json_decode($request->getContent(), true);
+        if (!filter_var($content["email"], FILTER_VALIDATE_EMAIL)) 
+            return $this->handleView($this->view(null, Response::HTTP_BAD_REQUEST));
         if(!$entity=$this->getDoctrine()->getRepository(Customer::class)->findOneBy(array('isDelete'=>false,'email'=>$content["email"])))
             return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
         return $this->handleView($this->view($entity));

@@ -1,0 +1,119 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false , class:'no-fixed',route: app.request.get('_route') })) }}
+<div class="mb-5"></div>
+<div class="container">
+    <div class="breadcrumb-custom">
+        <p>
+            <a class="beforeSpinner"  href="javascript:window.history.go(-1);"> <i class="bi bi-arrow-left"></i> Volver</a>
+        </p>
+        <p >
+            <span>Tienda online | {{ data.name }}</span>
+        </p>
+    </div>
+</div>
+<div class="container">
+    <div class="product_view">
+        <div class="row" >
+            <div class="col-md-6 py-4 px-5 wow fadeInLeft">
+                 {% if data.picture %}
+                    <img  src="{{ asset('uploads/') }}lg/{{ data.picture }}" class="w-100" alt="{{ data.name }}">
+                {% else %}
+                    <img  src="{{ asset('bundles/inamikafrontend/no-foto.png') }}" class="w-100" alt="{{ data.name }}">
+                {% endif %}
+            </div>
+            <div class="col-md-6 description wow fadeInRight">
+                <h3>{{ data.name }}</h3>
+                <hr class="blue mt-4 mb-4">
+                <p>DESCRIPCION<br />{{ data.description}}</p>
+                <h2>{{ data.currency.symbol }} {{ data.price }}</h2>
+                <hr>
+                <div class="float-left quantity" style="width: 150px;">
+                    <div class="input-group pt-1">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" onclick="btnMinus()" type="button"><i
+                                    class="fa fa-minus"></i></button>
+                        </div>
+                        <input type="text" readonly="readonly" value="" id="amount" class="form-control text-center" placeholder="">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" onclick="btnPlus()" type="button"><i
+                                    class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="float-right">
+                    <button class="btn rounded-pill btn-outline-primary p-3" onclick="addCart()">
+                        <span id="btnAdd">Añadir a carrito</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+    <script>
+        var amount=1;
+        
+        var item={
+            id:'{{ data.id }}',
+            name:'{{ data.name }}',
+            price:'{{ data.price }}',
+            picture:'{{ data.picture }}',
+            quantity:0
+        }
+        function btnMinus(){
+            if(amount>1)
+                amount--;
+            setValue();
+        }
+        function btnPlus(){
+            if(amount<1000)
+                amount++;
+            setValue();
+        }
+        
+        function ifExist(){
+            for (let i = 0; i < listCart.length; i++) {
+                if(listCart[i].id == item.id) {
+                    amount=listCart[i].quantity;
+                    $("#btnAdd").html('Actualizar');
+                    return i;
+                }
+            }
+            $("#btnAdd").html('Añadir al carrito');
+            return -1;
+        }
+        
+        function addCart(){
+            item.quantity=amount;
+            let index=ifExist();
+            if(index==-1){
+                listCart.push(item);
+            }else{
+                listCart[index]=item;
+            }
+            saveStorageCart();
+            $.toast({
+                heading: 'Carrito actualizado',
+                text: `Se agregó el producto '${item.name}' (${item.quantity}).` ,
+                position: 'bottom-right',
+                icon: 'success',
+                hideAfter: 3000, 
+                stack: 6
+            });
+            ifExist();
+            updateBadge();
+        }
+        function setValue(){
+            $("#amount").val(amount);
+        }
+        $(function (){
+            loadStorageCart();
+            ifExist();
+            setValue();
+        })
+    </script>
+{% endblock %}

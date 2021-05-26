@@ -1,0 +1,432 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false , class:'no-fixed',route: app.request.get('_route') })) }}
+<div class="mb-5"></div>
+<div class="container">
+    <div class="breadcrumb-custom">
+        <p>
+            <a href="javascript:window.history.go(-1);"> <i class="bi bi-arrow-left"></i> Volver</a>
+        </p>
+        <p>
+            <span>Tienda online | Carrito</span>
+        </p>
+    </div>
+</div>
+<div class="container checkout">
+    <div class="container-fluid" id="grad1">
+        <div class="row justify-content-center mt-0">
+            <div class="col-11 col-md-12 col-lg-9 text-center p-0 mt-3 mb-2">
+                <div class="px-0 pt-4 pb-0 mt-3 mb-3">
+                    <h2>Carrito de compras</h2>
+                    <div class="col-lg-12">
+                        <p>Complete los campos y haga click en continuar para completar el proceso de compra</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mx-0">
+                            <form id="msform">
+                                <!-- progressbar -->
+                                <ul id="progressbar">
+                                    <li class="active" id="account" onclick="manualGoToStep(1)">
+                                        <strong>Carrito</strong>
+                                    </li>
+                                    <li id="personal" onclick="manualGoToStep(2)">
+                                        <strong>Datos personales</strong>
+                                    </li>
+                                    <li id="delivery" onclick="manualGoToStep(3)">
+                                        <strong>Domicilio</strong>
+                                    </li>
+                                    <li id="payment" onclick="manualGoToStep(4)">
+                                        <strong>Pago</strong>
+                                    </li>
+                                </ul> <!-- fieldsets -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 p-0 mb-2">
+                <div class="row">
+                    <div class="col-md-12 mx-0">
+                        <div id="msform">
+                            <fieldset id="step1" style="display:none" class="">
+                                <div class="table-responsive" id="cartNotEmpty" style="display:none">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Producto</th>
+                                                <th scope="col" class="text-center">Precio</th>
+                                                <th scope="col" class="text-center">Cantidad</th>
+                                                <th scope="col" class="text-center">Subtotal</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="contentCart"></tbody>
+                                        <tbody class="total">
+                                            <tr>
+                                                <th scope="col" colspan="3" class="text-right pt-4">
+                                                    <h4>TOTAL:</h4>
+                                                </th>
+                                                <th scope="col" class="text-center pt-4">
+                                                    <h4 id="totalCart"></h4>
+                                                </th>
+                                            </tr>                                            
+                                        </tbody>
+                                    </table>
+                                <hr>
+                                <div class="text-center py-3">
+                                    <button onclick="goToStep(2)" class="btn-get-started rounded-pill btn-primary px-5 py-3">Continuar</button>
+                                </div>
+                                </div>
+                                <div class="alert text-center" id="cartEmpty" style="display:none;">
+                                    No tiene productos en su carrito.
+                                </div>
+                                
+                            </fieldset>
+                            <fieldset id="step2" style="display:none">
+                                <div class="text-center">
+                                    <p>Para continuar con el proceso de la compra no es necesario iniciar sesión o registrarse,<br/> solo indique su dirección de Email.</p>
+                                    <div class="row">
+                                        <div class="col-md-6 offset-md-3">
+                                            <div class="form-group">
+                                                <input class="form-control rounded-pill py-4 px-4" type="text" id="email">
+                                                <small class="form-text text-danger d-n" id="emailError">Ingrese un correo válido</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="text-center py-3">
+                                        <button type="button" class="btn-get-started rounded-pill btn-primary px-5 py-3" onclick="step2()">Continuar</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset id="step3" style="display:none">
+                                <form method="post" id="formStep3" novalidate="novalidate">
+                                    <div>
+                                        <h3>Domicilio</h3>
+                                        <p>Por favor ingrese sus datos personales para realizar la entrega</p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nombre completo</label>
+                                                    <input class="form-control rounded-pill py-4 px-4" name="name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nº Rut</label>
+                                                    <input class="form-control rounded-pill py-4 px-4" name="document">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Fono</label>
+                                                    <input class="form-control rounded-pill py-4 px-4" name="phone">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Región</label>
+                                                    <input class="form-control rounded-pill py-4 px-4" name="provence">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Ciudad</label>
+                                                    <input class="form-control rounded-pill py-4 px-4" name="city">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Dirección</label>
+                                                    <textarea class="form-control rounded-pill py-4 px-4" name="address"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="text-center py-3">
+                                            <button type="submit" class="btn-get-started rounded-pill btn-primary px-5 py-3">Continuar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </fieldset>
+                            <fieldset id="step4" style="display:none">
+                                <div >
+                                    <div class="col-md-8 offset-md-2">
+                                        <h3>Pago</h3>
+                                        <p>Ingrese los datos de su tarjeta de crédito</p>
+
+                                        <div class="row">
+                                            <div class="col-sm-12 form-group">
+                                                <label>Titular de la tarjeta</label>
+                                                <input type="text" placeholder="Juan Perez" class="form-control rounded-pill py-4 px-4"
+                                                    [class.is-invalid]="step4_name.invalid && step4_name.touched"
+                                                    #step4_name="ngModel" required [(ngModel)]="form.step4.name"
+                                                    name="step4_name">
+                                            </div>
+                                            <div class="col-sm-12 form-group">
+                                                <label>Número de la tarjeta</label>
+                                                <input type="text" placeholder="1234-1234-1234-1234"
+                                                    class="form-control rounded-pill py-4 px-4"
+                                                    [class.is-invalid]="step4_number.invalid && step4_number.touched"
+                                                    #step4_number="ngModel" required [(ngModel)]="form.step4.number"
+                                                    name="step4_number">
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label>Vencimiento</label>
+                                                <input type="text" placeholder="06/22" class="form-control rounded-pill py-4 px-4"
+                                                    [class.is-invalid]="step4_date.invalid && step4_date.touched"
+                                                    #step4_date="ngModel" required [(ngModel)]="form.step4.date"
+                                                    name="ste4_date">
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label>Código</label>
+                                                <input type="text" placeholder="123" class="form-control rounded-pill py-4 px-4"
+                                                    [class.is-invalid]="step4_code.invalid && step4_code.touched"
+                                                    #step4_code="ngModel" required [(ngModel)]="form.step4.code"
+                                                    name="step4_code">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="text-center py-3">
+                                        <button type="button" class="btn-get-started rounded-pill btn-primary px-5 py-3" onclick="step4()">Continuar</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+    <script>
+        var dataCustomer={};
+        var currentStep=1;
+        function renderCart(){
+            if(listCart.length>0){
+                $("#cartNotEmpty").fadeIn();
+                $("#cartEmpty").hide();
+                $('#contentCart').html('');
+                for (let i = 0; i < listCart.length; i++) {
+                    const element = listCart[i];
+                    $('#contentCart').append(`
+                        <tr>
+                            <td>${element.name}</td>
+                            <td class="text-center">$ ${element.price}</td>
+                            <td class="text-center">${element.quantity}</td>
+                            <td class="text-center">$ ${ (element.quantity * element.price)}</td>
+                            <td class="text-center"><i onclick="removeItem(${i})" class="fa fa-trash-alt text-danger cursor-pointer"></i></td>
+                        </tr>`);
+                }
+                $('#totalCart').html("$ "+totalCart);
+            }else{
+                $("#cartNotEmpty").hide();
+                $("#cartEmpty").fadeIn();
+            }
+        }
+
+        function manualGoToStep(step){
+            if(step < currentStep) 
+                goToStep(step)
+        }
+
+        function goToStep(step){
+            currentStep=step;
+            $("#progressbar li").removeClass('active');
+            switch (step) {
+                case 1:
+                    $("#progressbar li#account").addClass('active');
+                    break;
+                case 2:
+                    $("#progressbar li#personal").addClass('active');
+                    break;
+                case 3:
+                    $("#progressbar li#delivery").addClass('active');
+                    break;
+                case 4:
+                    $("#progressbar li#payment").addClass('active');
+                    break;
+            
+                default:
+                    break;
+            }
+            $('fieldset').hide();
+            $('#step'+step).fadeIn();
+        }
+        
+        function setCustomer(data){
+            dataCustomer=data;
+            $("#formStep3 [name='name']").val(dataCustomer.name),
+            $("#formStep3 [name='document']").val(dataCustomer.document),
+            $("#formStep3 [name='phone']").val(dataCustomer.phone),
+            $("#formStep3 [name='provence']").val(dataCustomer.provence),
+            $("#formStep3 [name='city']").val(dataCustomer.city),
+            $("#formStep3 [name='address']").val(dataCustomer.address)
+        }
+        
+        function removeItem(index){
+            swal({   
+                title: "Eliminar producto",   
+                text: "¿Está seguro que desea eliminar este producto del carrito?",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "{{ 'YES_DELETE' | trans }}",   
+                cancelButtonText: "{{ 'NO' | trans }}",   
+                closeOnConfirm: true 
+            }, function(){
+                listCart.splice(index, 1);
+                saveStorageCart();
+                renderCart();
+                updateBadge();
+                $('#totalCart').html("$ "+totalCart);
+            });
+        }
+        function step2(){
+            $("#email").removeClass('is-invalid');
+            $("#emailError").hide();
+            loading.show();
+            var dataPost={
+                'email':$("#email").val()
+            }
+            $.ajax({
+                url: '{{ path('api_customers_check') }}',
+                type: 'POST',
+                data:JSON.stringify(dataPost),
+                crossDomain: true,
+                success: function(data) {
+                    setCustomer(data)
+                    goToStep(3);
+                    loading.hide();
+                },  
+                complete:function(){
+                },
+                error: function(data, status, error) {
+                    if(data.status == 400){
+                        $("#email").addClass('is-invalid');
+                        $("#emailError").fadeIn();
+                        loading.hide();
+                    }else if(data.status==404){
+                        $.ajax({
+                            url: '{{ path('api_customers_postByEmail') }}',
+                            type: 'POST',
+                            data:JSON.stringify(dataPost),
+                            crossDomain: true,
+                            success: function(data) {
+                                setCustomer(data);
+                                goToStep(3);
+                                loading.hide();
+                            },  
+                            complete:function(){
+                                loading.hide();
+                            },
+                            error: function(data, status, error) {
+                                errorGeneral();
+                                loading.hide();
+                            }
+                        });
+                    }else{
+                        errorGeneral();
+                        loading.hide();
+                    }
+                }
+            });
+        }
+        
+        function step3(){
+            
+            loading.show();
+            var inputs=$("#formStep3").closest('form').find(':input');
+            inputs.removeClass('is-invalid');
+            inputs.next('small').remove();
+            var url='{{ path('api_customers_put',{ id : 'ENTITY_ID' }) }}';
+            var dataPostStep3={
+                'name':$("#formStep3 [name='name']").val(),
+                'email':$("#email").val(),
+                'document':$("#formStep3 [name='document']").val(),
+                'phone':$("#formStep3 [name='phone']").val(),
+                'provence':$("#formStep3 [name='provence']").val(),
+                'city':$("#formStep3 [name='city']").val(),
+                'address':$("#formStep3 [name='address']").val(),
+                'role':dataCustomer.role,
+            }
+            $.ajax({
+                url: url.replace('ENTITY_ID',dataCustomer.id),
+                type: 'PUT',
+                data:JSON.stringify(dataPostStep3),
+                crossDomain: true,
+                success: function(data) {
+                    goToStep(4);
+                    loading.hide();
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    data.responseJSON.form=data.responseJSON.form.errors;
+                    $.each( data.responseJSON.form.children, function( index, item ){ 
+                        if(typeof item.errors != "undefined" && item.errors.length>0){
+                            $('#formStep3 [name="'+index+'"]').addClass('is-invalid');
+                            $('#formStep3 [name="'+index+'"]').after('<small class="text-danger">'+item.errors[0]+'</small>');
+                        }
+                        
+                    });
+                }
+            });
+        }
+        
+        function step4(){
+            loading.show();
+            $.ajax({
+                url: "{{ path('api_orders_post') }}",
+                type: 'POST',
+                data:JSON.stringify({
+                    channel: "WEB",
+                    total: totalCart,
+                    customer: dataCustomer.id,
+                    items: listCart,
+                }),
+                crossDomain: true,
+                success: function(data) {
+                    successOrder(data);
+                    loading.hide();
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    errorGeneral();
+                    loading.hide();
+                }
+            });
+        }
+
+        function successOrder(data){
+            localStorage.setItem("cart", JSON.stringify([]));
+            swal({ 
+                title: '¡Pedido enviado!',
+                text: 'Nº de pedido: #'+data.id,
+                icon: 'check',
+                allowOutsideClick: false,
+                confirmButtonText: 'Aceptar'
+            }, function(){
+                loading.show();
+                location.href="{{ path('inamika_frontend_products') }}";
+            });
+        }
+
+        $(function(){
+            goToStep(1);
+            renderCart();
+            $( "#formStep3" ).submit(function( event ) {
+                step3();
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

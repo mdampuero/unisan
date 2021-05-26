@@ -4,3 +4,43 @@ inamika_frontend_homepage:
     options:
         breadcrumb:
             label: Inicio
+inamika_frontend_service:
+    path:     /Servicio/{section}/{id}
+    defaults: { _controller: InamikaFrontendBundle:Default:service }
+    options:
+        breadcrumb:
+            label: Servicio
+inamika_frontend_model:
+    path:     /Modelo/{section}/{id}
+    defaults: { _controller: InamikaFrontendBundle:Default:model }
+    options:
+        breadcrumb:
+            label: Servicio
+
+inamika_frontend_products:
+    path:     /Productos
+    defaults: { _controller: InamikaFrontendBundle:Default:products }
+    options:
+        breadcrumb:
+            label: Productos
+
+inamika_frontend_salients:
+    path:     /Destacados
+    defaults: { _controller: InamikaFrontendBundle:Default:salients }
+    options:
+        breadcrumb:
+            label: Productos
+
+inamika_frontend_product:
+    path:     /Producto/{id}
+    defaults: { _controller: InamikaFrontendBundle:Default:product }
+    options:
+        breadcrumb:
+            label: Producto
+
+inamika_frontend_cart:
+    path:     /Carrito
+    defaults: { _controller: InamikaFrontendBundle:Default:cart }
+    options:
+        breadcrumb:
+            label: Cart

@@ -1,13 +1,7 @@
-body 
-{
-    padding: 1em;
-}
 .embedded-example 
 {
-    width: 800px;
+    width: 100%;
     height: 600px;
-    padding-left: 100px;
-    padding-top: 200px;
 }
 
 #splash 

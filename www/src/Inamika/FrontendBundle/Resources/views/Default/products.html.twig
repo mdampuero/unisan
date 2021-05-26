@@ -1,0 +1,79 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false, class:'fixed', route: app.request.get('_route') })) }}
+<section id="header-product">
+    <div class="header-container">
+        <div class="container">
+            <div class="row">
+                <div class="offset-md-2 col-md-8">
+                    <div class="box-search wow fadeInDown">
+                        <select id="category" onchange='search()'>
+                            <option value="">Categorías</option>
+                            {% for key,item in categories %}
+                            <option value="{{ item.id }}" {% if item.id ==  app.request.get('category')%} selected="selected" {% endif %}>
+                            {{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <span class="separator-vertical">|</span>
+                        <i class="bi bi-search"></i>
+                        <input type="text" placeholder="Buscar Productos" id="q" value="{{ app.request.get('q') }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% if salients | length %}
+    <div class="container" *ngIf="salients.length>0">
+        <div class="box-salient">
+            <h2 class="text-center mt-4">PRODUCTOS DESTACADOS</h2>
+            <div class="row">
+                {% for key,item in salients %}
+                    <div class="col-md-4 mb-4 wow fadeInUp" data-wow-delay="{{ key * 0.1 }}s">
+                        {% include 'InamikaFrontendBundle:Utils:cardProduct.html.twig' with { item: item } %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="text-center wow fadeInRight">
+                <a role="button" href="{{ path('inamika_frontend_salients')}}" class="btn beforeSpinner rounded-pill btn-primary pl-5 pr-5 p-2 " routerLink="/productos/destacados">Ver destacatados</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<section id="result" class="mt-5">
+    <div class="container">
+        {% if products | length %}
+            <div class="row">
+                {% for key,item in products %}
+                    <div class="col-md-4 col-lg-3 mb-4 wow fadeInUp" data-wow-delay="{{ key * 0.1 }}s">
+                        {% include 'InamikaFrontendBundle:Utils:cardProduct.html.twig' with { item: item } %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+        <div class="text-center" >
+            <p>No se econtraron resultados</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+    <script>
+        
+        function search(){
+            loading.show();
+            var url="{{ path('inamika_frontend_products') }}";
+            location.href=url+"?q="+$("#q").val()+"&category="+$("#category").val()
+        }
+        $(function (){
+           $('#q').on("keyup", function(e) {
+                if (e.keyCode == 13) {
+                    search();       
+                }
+            });
+        })
+    </script>
+{% endblock %}

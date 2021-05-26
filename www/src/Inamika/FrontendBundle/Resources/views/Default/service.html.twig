@@ -1,0 +1,88 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false ,class:'fixed', route: app.request.get('_route') })) }}
+<section id="header-product" class="whitout-search">
+    <div class="header-container">
+        <div class="container">
+            <h2 class="text-center mt-4"></h2>
+        </div>
+    </div>
+</section>
+<section id="result" class="mt-5">
+    <div class="container">
+        <div class="breadcrumb-custom">
+            <p><a class="beforeSpinner"  href="javascript:window.history.go(-1);"> <i class="bi bi-arrow-left"></i> Volver</a></p>
+            <p>
+                {% if section == 'forHome' %}
+                    <span>Para Hogar | </span> 
+                {% endif %}
+                {% if section == 'forIndustry' %}
+                    <span>Para la Industria | </span> 
+                {% endif %}
+                {% if section == 'forEvent' %}
+                    <span>Para Eventos | </span> 
+                {% endif %}
+                <span>{{ data.name }}</span>
+            </p>
+        </div>
+        <h2 class="text-uppercase text-center text-dark bold-700 mt-4">{{ data.name }}</h2>
+        <div class="row relative mb-5">
+            <div class="col-md-10">
+                <div class="box-blue mt-3 wow fadeInLeft" >
+                    <div class="row">
+                        <div class="col-md-8 text-right">
+                            <h2>DESCRIPCIÓN</h2>
+                            <p class="mt-5">
+                                {{ data.description }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if data.picture %}
+                <img class="img-service wow fadeInRight" style="height: 350px; background-size: cover; background-image: url('{{ asset('uploads/') }}md/{{ data.picture }}')"> 
+            {% endif %}                
+        </div>
+        <br/>
+        <h2 class="text-uppercase text-center text-dark bold-700 my-5">Seleccione el Tipo de servicio</h2>
+        <div class="mb-5">
+            <div class="row carousel-cards">
+                <div id="carouselSalient" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner row w-100 mx-auto">
+                    {% for key,item in models %}
+                        <div class="carousel-item col-md-4 mb-4 {% if key == 0 %}active{% endif %}">
+                            <div class="card-service cursor-pointer" >
+                                {% if item.picture %}
+                                    <div class="img" style="background-image: url('{{ asset('uploads/') }}md/{{ item.picture }}');"></div>
+                                {% else %}
+                                    <div class="img" style="background-image: url('{{ asset('bundles/inamikafrontend/') }}no-foto.png');"></div>
+                                {% endif %}
+                                <div class="caption">
+                                    <h4>{{ item.name }}</h4>
+                                    <hr>
+                                    <p class="mb-0">{{ item.description }}</p>
+                                    <div class="text-center my-4">
+                                        <a role="button" href="{{ path('inamika_frontend_model',{ section:section ,id: item.id })}}" class="btn beforeSpinner rounded-pill btn-primary btn-sm pl-3 pr-3" >Ver más</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="results.length > 3">
+                <div class="wow fadeInLeft">
+                    <button class="btn-carrousel btn rounded-circle btn-outline-primary mr-2" onclick="$('#carouselSalient').carousel('prev')">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <button class="btn-carrousel btn rounded-circle btn-primary" onclick="$('#carouselSalient').carousel('next')">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

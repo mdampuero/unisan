@@ -92,6 +92,15 @@ class Model
      * @Expose
      */
     private $picture;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="model3d", type="string", length=64, nullable=true)
+     * @Assert\File()
+     * @Expose
+     */
+    private $model3d;
 
     /**
      * @var string|null
@@ -196,6 +205,30 @@ class Model
     public function getPicture()
     {
         return $this->picture;
+    }
+    
+    /**
+     * Set model3d
+     *
+     * @param string $model3d
+     *
+     * @return User
+     */
+    public function setModel3d($model3d)
+    {
+        $this->model3d = $model3d;
+
+        return $this;
+    }
+
+    /**
+     * Get model3d
+     *
+     * @return string
+     */
+    public function getModel3d()
+    {
+        return $this->model3d;
     }
 
     /**

@@ -1,0 +1,29 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false, class:'fixed', route: app.request.get('_route') })) }}
+<section id="header-product" class="whitout-search">
+    <div class="header-container">
+        <div class="container">
+            <h2 class="text-center mt-4">PRODUCTOS DESTACADOS</h2>
+        </div>
+    </div>
+</section>
+<section id="result" class="mt-5">
+    <div class="container">
+        {% if salients | length %}
+            <div class="row">
+                {% for key,item in salients %}
+                    <div class="col-md-4 col-lg-3 mb-4 wow fadeInUp" data-wow-delay="{{ key * 0.1 }}s">
+                        {% include 'InamikaFrontendBundle:Utils:cardProduct.html.twig' with { item: item } %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+        <div class="text-center" >
+            <p>No se econtraron resultados</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
