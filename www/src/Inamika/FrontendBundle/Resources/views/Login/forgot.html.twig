@@ -1,0 +1,60 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false , class:'no-fixed',route: app.request.get('_route') })) }}
+<div class="container">
+    <div class="account">
+        <div class="row py-5">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="card box-login p-4">
+                    <div class="card-body">
+                        <form method="POST" action="{{ path('api_login_forgot_password') }}" novalidate="novalidate" class="form-material sendToApi">
+                            <h4 class="card-title text-center text-dark">Olvidé mi contraseña</h4>
+                            <hr>
+                            <div class="row py-4">
+                                <div class="col-sm-12 form-group">
+                                    <label>Email</label>
+                                    <input type="text" name="email" class="form-control rounded-pill py-4 px-4">
+                                </div>
+                            </div>
+                            <div class="text-left"><a href="{{ path('inamika_frontend_login') }}" class="beforeSpinner">Ingresar</a></div>
+                            <div class="text-center">
+                                <p>
+                                    <small id="errorLogin" class="form-text text-danger d-n">Email inexistente, por favor ingrese un email válido</small>
+                                </p>
+                                <button type="submit" class="btn-get-started rounded-pill btn-primary px-5 py-3" >Iniciar recuperación</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+    <script>
+        function after404(){
+            $("#errorLogin").fadeIn();
+        }
+        function after200(data){
+            localStorage.setItem("cart", JSON.stringify([]));
+            swal({ 
+                title: 'Email enviado',
+                text: 'Se envío un Email con los pasos a seguir para blanquear tu contraseña.',
+                allowOutsideClick: false,
+                confirmButtonText: 'Aceptar'
+            }, function(){
+                loading.show();
+                location.href="{{ path('inamika_frontend_homepage') }}";
+            });
+        }
+
+        $(function (){
+            
+        })
+    </script>
+{% endblock %}

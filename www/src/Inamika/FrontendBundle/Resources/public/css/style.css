@@ -85,7 +85,7 @@ h1, h2, h3, h4, h5, h6 {
 #header {
   padding: 30px 0;
   height: 92px;
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   right: 0;
@@ -1052,7 +1052,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #services .sustentable{
-  margin-top: 15rem;
+  margin-top: 10rem;
   color: #000;
 }
 #services .sustentable .text{
@@ -1421,20 +1421,20 @@ body.mobile-nav-active #mobile-nav-toggle {
   padding: 1rem 2rem;
 }
 
-.account .menu{
+.account .menuUser{
   background-color: #3874B6;
   color: white;
 }
-.account .menu .list-group-item{
+.account .menuUser .list-group-item{
   background: transparent;
   border: none;
 }
 
-.account .menu .list-group-item a{
+.account .menuUser .list-group-item a{
   border-left: #3874B6 solid 3px;
   color:white;
 }
-.account .menu .list-group-item a.active, .account .menu .list-group-item a:hover{
+.account .menuUser .list-group-item a.active, .account .menuUser .list-group-item a:hover{
   border-left: #FFF solid 3px;
 }
 .account .table{
@@ -1893,4 +1893,21 @@ button.cancel{
 }
 .cursor-pointer{
   cursor: pointer;
+}
+.scrollable-menu {
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+}
+
+.slider-cover{
+  height: 320px;
+  border-radius: 15px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+}
+
+.account li{
+  list-style: none;
 }

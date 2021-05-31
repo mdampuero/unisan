@@ -31,8 +31,6 @@ class ModelType extends AbstractType
         ->add('description',TextareaType::class,array('label'=>'DESCRIPTION','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('spec',TextareaType::class,array('label'=>'SPECS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('conditions',TextareaType::class,array('label'=>'CONDITIONS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
-        ->add('pictureRemove',HiddenType::class,array("mapped" => false))
-        ->add('pictureBase64',HiddenType::class,array("mapped" => false))
         ->add('service', EntityType::class, array(
             'label'=>'SERVICE',
             'label_attr'=>array('class'=>'control-label'),
@@ -56,6 +54,8 @@ class ModelType extends AbstractType
         ->add('forEvent', CheckboxType::class, [
             'label'    => 'FOR_EVENT'
         ])
+        ->add('pictureRemove',HiddenType::class,array("mapped" => false))
+        ->add('pictureBase64',HiddenType::class,array("mapped" => false))
         ->add('picture', FileType::class, array(
             'label'=>'PICTURE',
             'data_class' => null,
@@ -69,7 +69,21 @@ class ModelType extends AbstractType
                 )
             )
         )
-        ;
+        // ->add('model3dRemove',HiddenType::class,array("mapped" => false))
+        // ->add('model3dBase64',HiddenType::class,array("mapped" => false))
+        // ->add('model3d', FileType::class, array(
+        //     'label'=>'PICTURE',
+        //     'data_class' => null,
+        //     'label_attr'=>array('class'=>'control-label'),
+        //     'attr'=>array(
+        //         'onchange'=>'encodeImageFileAsURL(this)',
+        //         'class'=>'dropify',
+        //         'data-height'=>'200',
+        //         'data-max-file-size'=>'20M',
+        //         'data-allowed-file-extensions'=>'glb'
+        //         )
+        //     )
+        // )
         ;
     }
 

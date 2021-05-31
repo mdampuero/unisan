@@ -38,8 +38,8 @@ class PopupsController extends BaseController
         return $this->handleView($this->view($entity));
     }
     
-    public function activeAction(){
-        return $this->handleView($this->view($this->getDoctrine()->getRepository(Popup::class)->findBy(array('isDelete'=>false,'isActive'=>true)), Response::HTTP_OK));
+    public function activeAction($section){
+        return $this->handleView($this->view($this->getDoctrine()->getRepository(Popup::class)->findOneBy(array('section'=>$section,'isDelete'=>false,'isActive'=>true)), Response::HTTP_OK));
     }
 
     public function postAction(Request $request){

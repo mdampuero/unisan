@@ -29,13 +29,13 @@
 							<div class="row">
 								<div class="col-md-6">
 									<h2>{{ item.name }} </h2>
-									<button (click)="goToProduct(item.id)" class="btn btn-block btn-primary rounded-pill btn-primary mb-3 mt-4">
+									<a role="button" href="{{ path('inamika_frontend_product',{ id: item.id }) }}" class="beforeSpinner btn btn-block btn-primary rounded-pill btn-primary mb-3 mt-4">
 										Ir a la Tienda
-									</button>
+									</a>
 								</div>
 								<div class="col-sm-6">
                                     {% if item.picture %}
-                                        <img class="img" style="width:100%; background-image: url('{{ asset('bundles/inamikafrontend/') }}uploads/xs/{{ item.picture }}')" class="circle"> 
+                                        <img class="img" style="width:100%; background-image: url('{{ asset('uploads/') }}md/{{ item.picture }}')" class="circle"> 
                                     {% else %}
                                         <img class="img" style="width:100%; background-image: url('{{ asset('bundles/inamikafrontend/no-foto.png')}}');" class="circle">
                                     {% endif %}
@@ -292,7 +292,7 @@
                                     <div class="caption">
                                         <h4>{{ item.name }}</h4>
                                         <hr>
-                                        <p class="mb-0">{{ item.description }}</p>
+                                        <p class="mb-0 text-justify">{{ item.description }}</p>
                                         <div class="text-center my-4">
                                             <a role="button" href="{{ path('inamika_frontend_service',{ section:'forEvent' ,id: item.id })}}" class="btn beforeSpinner rounded-pill btn-primary btn-sm pl-3 pr-3" >Ver más</a>
                                         </div>
@@ -313,7 +313,7 @@
                                     <div class="caption">
                                         <h4>{{ item.name }}</h4>
                                         <hr>
-                                        <p class="mb-0">{{ item.description }}</p>
+                                        <p class="mb-0 text-justify">{{ item.description }}</p>
                                         <div class="text-center my-4">
                                             <a role="button" href="{{ path('inamika_frontend_service',{ section:'forIndustry' ,id: item.id })}}" class="btn beforeSpinner rounded-pill btn-primary btn-sm pl-3 pr-3" >Ver más</a>
                                         </div>
@@ -334,7 +334,7 @@
                                     <div class="caption">
                                         <h4>{{ item.name }}</h4>
                                         <hr>
-                                        <p class="mb-0">{{ item.description }}</p>
+                                        <p class="mb-0 text-justify">{{ item.description }}</p>
                                         <div class="text-center my-4">
                                             <a role="button" href="{{ path('inamika_frontend_service',{ section:'forHome' ,id: item.id })}}" class="btn beforeSpinner rounded-pill btn-primary btn-sm pl-3 pr-3" >Ver más</a>
                                         </div>
@@ -364,16 +364,41 @@ región.
                 </div>
             </div>
         </div>
-        <img class="preview-video wow fadeInRight" src="{{ asset('bundles/inamikafrontend/') }}img/services/preview_video.png">
-    </div>
-    <div class="container sustentable" >
-        <div class="row">
-            <div class="col-md-3 offset-md-1">
-                <img class="wow fadeInLeft img-fluid" src="{{ asset('bundles/inamikafrontend/') }}img/services/LogoTUV.jpg">
+        <div class="preview-video wow fadeInRight">
+            <div id="carouselService" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner" >
+                    <div class="carousel-item active">
+                        <div class="slider-cover" style="background-image: url('{{ asset('bundles/inamikafrontend/img/slider/IMG002.jpg') }}');"></div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="slider-cover" style="background-image: url('{{ asset('bundles/inamikafrontend/img/slider/IMG003.jpg') }}');"></div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="slider-cover" style="background-image: url('{{ asset('bundles/inamikafrontend/img/slider/IMG004.jpg') }}');"></div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="slider-cover" style="background-image: url('{{ asset('bundles/inamikafrontend/img/slider/IMG005.jpg') }}');"></div>
+                    </div>
+                </div>
+                {# <div class="mt-4">
+                <button class="btn-carrousel btn rounded-circle btn-outline-primary mr-2" onclick="javascript:$('#carouselService').carousel('prev')">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="btn-carrousel btn rounded-circle btn-primary" onclick="javascript:$('#carouselService').carousel('next')">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+                </div> #}
             </div>
-            <div class="col-md-7 pl-3 wow fadeInRight text">
-                <h2>Certificados por Normas Internacionales</h2>
-                <p class="mt-5">
+        </div>
+    </div>
+    <div class="container sustentable wow fadeInRight mb-5 pb-5" >
+        <h2 style="font-weight: 900;" class="mb-5">Certificados por Normas Internacionales</h2>
+        <div class="row">
+            <div class="col-md-3 ">
+                <img class="img-fluid" src="{{ asset('bundles/inamikafrontend/') }}img/services/LogoTUV.jpg">
+            </div>
+            <div class="col-md-6 pl-3 text">
+                <p class="text-justify">
                     En nuestro compromiso por ser los mejores y cumplir con nuestra política de
 gestión estamos certificados bajo normas internacionales ISO que avalan la calidad de
 nuestros servicios, el respeto y cuidado por el medio ambiente y la preocupación por la
@@ -434,7 +459,7 @@ tan solo quieres saber más mediante una asesoría escríbenos para ayudarte.
                         </div>
                         <div class="col-sm-5 ">
                             <p>
-                                <a href="https://www.instagram.com/uniboxs_unisan/" target="_blank"><i class="bi bi-instagram"></i> uniboxs_unisan/</a>
+                                <a href="https://www.instagram.com/unisan_uniboxs/" target="_blank"><i class="bi bi-instagram"></i> unisan_uniboxs/</a>
                             </p>
                         </div>
                     </div>
@@ -448,7 +473,6 @@ tan solo quieres saber más mediante una asesoría escríbenos para ayudarte.
 {{ parent()}}
     <script>
         var filters={{ filters | json_encode | raw }};
-        console.log(filters);
         function selectCategory(category){
             $(".icon-svg").removeClass('active');
             $("#btn"+category).addClass('active');
@@ -488,6 +512,11 @@ tan solo quieres saber más mediante una asesoría escríbenos para ayudarte.
         }
         $(function (){
             selectCategory('forIndustry');
+            $.ajax({
+                url: '{{ path('api_visits_post') }}',
+                type: 'POST',
+                crossDomain: true
+            });
         })
     </script>
 {% endblock %}

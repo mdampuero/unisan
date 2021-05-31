@@ -1,0 +1,115 @@
+{% set pathBase='inamika_backoffice_models' %} 
+{% extends "InamikaBackOfficeBundle::layout.html.twig" %}
+{% block javascripts_head %}
+{{ parent()}}
+<script src="{{ asset('bundles/inamikafrontend/') }}viewer/aframe-master.js"></script>
+<script src="{{ asset('bundles/inamikafrontend/') }}viewer/scripts/info-message.js"></script>
+<script src="{{ asset('bundles/inamikafrontend/') }}viewer/scripts/fullscreen-btn.js"></script>
+<script src="{{ asset('bundles/inamikafrontend/') }}viewer/scripts/threecomp.js"></script>
+<script src="{{ asset('bundles/inamikafrontend/') }}viewer/aframe-extras.min.js"></script>
+<script src="{{ asset('bundles/inamikafrontend/') }}viewer/scripts/hide-on-enter-ar.js"></script>
+<script src="{{ asset('bundles/inamikafrontend/') }}viewer/ar-shadows.js"></script>
+<script src="{{ asset('bundles/inamikafrontend/') }}viewer/ar-hit-test.js"></script>
+<script src="{{ asset('bundles/inamikafrontend/') }}viewer/model-viewer.js"></script>
+<script src="{{ asset('bundles/inamikafrontend/') }}viewer/background-gradient.js"></script>
+{% endblock %}
+{% block stylesheet %}
+{{ parent()}}
+    <link rel="stylesheet" href="{{ asset('bundles/inamikafrontend/viewer/loader.css') }}" >
+    <link rel="stylesheet" href="{{ asset('bundles/inamikafrontend/viewer/embedded.css') }}" >
+{% endblock %}
+{% block body %} 
+{{ parent()}}   
+{{ form_start(form, {'attr': {'class': 'form-material ','novalidate':'novalidate'} }) }}
+    <div class="form-body">
+        <h3 class="card-title">{{ entity.name }}</h3>
+        <hr>
+        <div class="row p-t-20">
+            <div class="col-md-6 col-lg-6">
+                <div class="form-group">
+                     {% if entity.model3d %}
+                        <button type="button" onclick="delete3d()" class="btn pull-right btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                    {% endif %}
+                    <label>
+                    Vista previa
+                    </label>
+                    {% if entity.model3d %}
+                        <div id="modelPath" data-model="{{ asset('uploads/models3d/') }}{{ entity.model3d }}"></div>
+                        <div class="embedded-example">
+                            <a-scene embedded renderer="colorManagement: true;" fullscreen-btn model-viewer>
+                                <div id="splash">
+                                    <div class="loading"></div>
+                                </div>
+                                <a-assets>
+                                    <a-asset-item id="ACON" src=""></a-asset-item>
+                                    <img id="shadow" src="{{ asset('bundles/inamikafrontend/') }}viewer/shadow.png">
+                                </a-assets>
+                            </a-scene>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">No hay ningun archivo cargado</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <div class="form-group">
+                    {{form_label(form.model3d)}}
+                    {{form_widget(form.model3d)}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> {{ 'SAVE' | trans }}</button>
+        <button type="button" class="btn btn-inverse" onclick="location.href='{{ path(pathBase) }}'">{{ 'CANCEL' | trans }}</button>
+    </div>
+{{ form_end(form) }} 
+{% endblock body %}
+{% block javascripts %} 
+{{ parent() }}
+{% include 'InamikaBackOfficeBundle:_partials:dropifyScripts.html.twig' %}
+<script>
+    $(function(){
+        $("form").submit(function( event ) {
+            loading.show();
+            return true;
+        });
+    });
+    
+    function delete3d(){
+        swal({   
+            title: "{{ 'WARNING' | trans }}",   
+            text: "¿Está seguro que desea eliminar este archivo?",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "{{ 'YES_DELETE' | trans }}",   
+            cancelButtonText: "{{ 'NO' | trans }}",   
+            closeOnConfirm: true 
+        }, function(){
+            loading.show();
+            $.ajax({
+                url: "{{ path('api_models_delete_3d',{ id:entity.id }) }}",
+                type: 'DELETE',
+                crossDomain: true,
+                success: function(data) {
+                    location.reload();
+                },  
+                complete:function(){
+                    //loading.hide();
+                },
+                error: function(data, status, error) {
+                    loading.hide();
+                }
+            });
+        });
+    }
+
+    function beforeSuccess(){
+        location.href="{{ path(pathBase) }}";
+    }
+    function cancell(){
+        location.href='{{ path(pathBase) }}';
+    }
+</script>
+{% endblock javascripts %}

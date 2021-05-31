@@ -85,6 +85,39 @@ class BaseController extends FOSRestController{
         }
 		return $fileName;
     }
+    
+    /**
+     * @return array
+     */
+    public function base64ToFile3d($string)
+    {
+        $path='uploads/models3d/';
+
+        $dataFile=explode("base64,",$string);
+
+		if(!array_key_exists(0,$dataFile))
+			throw new Exception('Formato inválido.',6);
+		$dataFileInfo=explode(":",$dataFile[0]);
+
+		if(!array_key_exists(1,$dataFileInfo))
+			throw new Exception('Formato inválido.',6);
+		$dataFileExtension=explode("/",$dataFileInfo[1]);
+
+		if(!array_key_exists(1,$dataFileExtension))
+			throw new Exception('Formato inválido.',6);
+		$extension=str_replace(";", "", $dataFileExtension[1]);
+
+		if(!array_key_exists(1,$dataFile))
+			throw new Exception('Formato inválido.',6);
+        if($dataFile[1]=='remove') return null;
+        $data = base64_decode($dataFile[1]);
+		
+
+		$fileName = md5(uniqid()).'.glb';
+		$success = file_put_contents($path.$fileName, $data);
+
+		return $fileName;
+    }
 
     
 }

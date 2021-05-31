@@ -32,3 +32,8 @@ api_models_delete:
     path:     /models/{id}
     defaults: { _controller: InamikaApiBundle:Models:delete }
     methods: [DELETE]
+
+api_models_delete_3d:
+    path:     /models3d/{id}
+    defaults: { _controller: InamikaApiBundle:Models:deleteFile }
+    methods: [DELETE]

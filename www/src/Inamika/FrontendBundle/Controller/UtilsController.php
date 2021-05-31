@@ -8,6 +8,7 @@
 namespace Inamika\FrontendBundle\Controller;
 
 use Inamika\BackEndBundle\Entity\Model;
+use Inamika\BackEndBundle\Entity\Customer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class UtilsController extends Controller{
@@ -34,6 +35,13 @@ class UtilsController extends Controller{
             }
         }  
         return $this->render('InamikaFrontendBundle:Utils:navbar.html.twig',array('data'=>$data,'home'=>$home,'route'=>$route,'class'=>$class));
+    }
+    
+    public function menuUserAction($route){
+        return $this->render('InamikaFrontendBundle:Utils:menuUser.html.twig',array(
+            'user'=>$this->getDoctrine()->getRepository(Customer::class)->find($this->get('session')->get('_security_main')['customer']->getId()),
+            'route'=>$route
+        ));
     }
     
     protected function ifExist($array,$key){

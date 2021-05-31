@@ -1,0 +1,25 @@
+<div class="text-center mt-0 mb-3">
+    <i class="bi bi-person-circle" style="font-size: 6rem;"></i>
+</div>
+<ul class="list-group list-group-flush">
+    <li class="list-group-item p-3">
+        <a href="{{ path('inamika_frontend_account_orders') }}" class="beforeSpinner my-1 p-2 pl-4 {% if 'inamika_frontend_account_order' in route %}active{% endif %}">Mis pedidos</a>
+    </li>
+    <li class="list-group-item p-3">
+        <a href="{{ path('inamika_frontend_account_convenios') }}" class="beforeSpinner my-1 p-2 pl-4 {% if 'inamika_frontend_account_convenio' in route %}active{% endif %}">Mis convenios</a>
+    </li>
+    <li class="list-group-item p-3">
+       <a href="{{ path('inamika_frontend_account_contratos') }}" class="beforeSpinner my-1 p-2 pl-4 {% if 'inamika_frontend_account_contrato' in route %}active{% endif %}">Mis contratos</a>
+    </li>
+    {% if user.role ==  'ROLE_CUSTOMER_SUPER'%}
+    <li class="list-group-item p-3">
+        <a href="{{ path('inamika_frontend_account_usuarios') }}" class="beforeSpinner my-1 p-2 pl-4 {% if 'inamika_frontend_account_usuario' in route %}active{% endif %}">Usuarios</a>
+    </li>
+    {% endif %}
+    <li class="list-group-item p-3">
+        <a href="{{ path('inamika_frontend_account_profile') }}" class="beforeSpinner my-1 p-2 pl-4 {% if 'inamika_frontend_account_profile' in route %}active{% endif %}">Mis datos</a>
+    </li>
+    <li class="list-group-item p-3">
+        <a href="{{ path('inamika_frontend_logout') }}" class="beforeSpinner my-1 p-2 pl-4" >Salir</a>
+    </li>
+</ul>

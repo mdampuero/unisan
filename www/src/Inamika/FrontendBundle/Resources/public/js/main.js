@@ -95,7 +95,6 @@ jQuery(document).ready(function( $ ) {
 
   // Porfolio filter
   $("li").click ( function() {
-    console.log("dsdsa");
     $("li").removeClass('filter-active');
     $(this).addClass('filter-active');
 

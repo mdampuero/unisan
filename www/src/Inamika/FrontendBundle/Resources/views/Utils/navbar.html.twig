@@ -7,11 +7,11 @@
         <a href="{% if home %}#hero{% else %}{{ path('inamika_frontend_homepage')}}{% endif %}"><img src="{{ asset('bundles/inamikafrontend/') }}img/MarcaUnisan.png" alt="" title="" /></a>
       </div>
       <nav id="nav-menu-container">
-        <ul class="nav-menu">
+        <ul class="nav-menu ">
             <li>
                 <a href="#services">Para el Hogar</a>
                 {% if data.forHome | length > 0 %}
-                <ul>
+                <ul >
                     {% for service in data.forHome %}
                         <li style="line-height: 50px;min-width: 300px;">
                             <a class="beforeSpinner" href="{{ path('inamika_frontend_service',{ section:'forHome' ,id: service.id })}}">
@@ -60,7 +60,7 @@
                                 {{ service.name }}
                             </a>
                             {% if service.models | length > 0 %}
-                            <ul>
+                            <ul >
                                 {% for model in service.models %}
                                     {% if model.forIndustry %}
                                         <li style="line-height: 50px;min-width: 300px;">
@@ -97,7 +97,7 @@
                                 {{ service.name }}
                             </a>
                             {% if service.models | length > 0 %}
-                            <ul>
+                            <ul >
                                 {% for model in service.models %}
                                     {% if model.forEvent %}
                                         <li style="line-height: 50px;min-width: 300px;">
@@ -119,14 +119,21 @@
                 </ul>
                 {% endif %}
             </li>
-            <li {% if 'inamika_frontend_product' in route %}class="menu-active"{% endif %}>
-                <a href="{{ path('inamika_frontend_products') }}" class="beforeSpinner">Tiendo Online</a>
+            <li {% if 'inamika_frontend_product' in route %}{% endif %}>
+                <a href="{{ path('inamika_frontend_products') }}" class="beforeSpinner">Tienda Online</a>
             </li>
-            <li class="icon">
-                <a *ngIf="!loginService.user.id" href="/pedidos" class="p-0">
-                <span class="total-badge"><i class="bi bi-box-arrow-in-right" style="font-size: inherit;"></i></span>
-                Ingresar
-                </a>
+            <li class="icon {% if 'inamika_frontend_account' in route %}menu-active{% endif %}" >
+                {% if app.session.get('_security_main')  %}
+                    <a href="{{ path('inamika_frontend_account_orders') }}" class="beforeSpinner p-0 " >
+                    <span class="total-badge"><i class="bi bi-person" style="font-size: inherit;"></i></span>
+                    Mi cuenta
+                    </a>
+                {% else %}
+                    <a href="{{ path('inamika_frontend_login') }}" class="beforeSpinner p-0">
+                    <span class="total-badge"><i class="bi bi-box-arrow-in-right" style="font-size: inherit;"></i></span>
+                    Acceso clientes
+                    </a> 
+                {% endif %}
                 {# <a *ngIf="loginService.user.id" href="/pedidos" class="p-0">
                 <span class="total-badge"><i class="bi bi-person" style="font-size: inherit;"></i></span>
                 Mi perfil

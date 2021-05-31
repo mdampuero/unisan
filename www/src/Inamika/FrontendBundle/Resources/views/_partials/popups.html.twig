@@ -1,0 +1,184 @@
+<script>
+    var listPopup=[];
+    $(function (){
+        var url='{{ path('api_popups_active',{ section:'SECTION'}) }}';
+        $.ajax({
+            url: url.replace('SECTION',translateRoute()),
+            type: 'GET',
+            crossDomain: true,
+            success: function(data) {
+                if(data)
+                    showPopup(data);
+            },  
+            complete:function(){
+                
+            },
+            error: function(data, status, error) {
+                
+            }
+        });
+    }); 
+    
+    function ifShow(data){
+        switch (data.display) {
+            case 'SHOW_FOR_ONCE':
+                loadStoragePopup();
+                if(exist(data.id)==-1){
+                    addPopup(data);
+                    return false;
+                }
+                return true;
+                break;
+            case 'SHOW_FOR_ONCE_DAY':
+                loadStoragePopup();
+                let index=exist(data.id)
+                if(index==-1){
+                    addPopup(data);
+                    return false;
+                }else{
+                    displaying=new Date(listPopup[index].showing);
+                    now = new Date();
+                    if(now.getFullYear()+'-'+now.getMonth()+'-'+now.getDate() != displaying.getFullYear()+'-'+displaying.getMonth()+'-'+displaying.getDate()){
+                        listPopup[index].showing=now;
+                        saveStoragePopup();
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+                break;
+            case 'SHOW_ALWAYS':
+                return false;
+                break;
+        }
+        return false;
+    }
+
+    function exist(popup){
+        for (let i = 0; i < listPopup.length; i++) {
+            if(listPopup[i].id == popup){
+                return i;
+            }
+        }
+        return -1;
+    }
+    function addPopup(data){
+        listPopup.push({
+            id:data.id,
+            display: data.display,
+            showing: new Date()
+        });
+        saveStoragePopup();
+    }
+
+    function loadStoragePopup() {
+        if (JSON.parse(localStorage.getItem("popup"))) {
+            listPopup = JSON.parse(localStorage.getItem("popup"));
+        }
+    }
+
+    function saveStoragePopup() {
+        localStorage.setItem("popup", JSON.stringify(listPopup));
+    }
+
+    function showPopup(data){
+        if(!ifShow(data)){
+            var html='';
+            for (let index = 0; index < data.notes.length; index++) {
+                const element = data.notes[index];
+                if(!element.isDelete){
+                    const active=(index==0)?'active':'';
+                    html+=`
+                        <div class="carousel-item ${active}">
+                            <div class="card h-100">
+                                <img src="${ element.picture }" class="card-img-top w-100 bg-dark" alt="...">
+                                <div class="card-body">
+                                <h2 class="card-title text-uppercase bold-700 my-3">${ element.name }</h2>
+                                <p class="card-text">${ element.description }</p>
+                                </div>
+                            </div>
+                        </div>`;
+                }
+            }
+            $("#carouselModal .carousel-inner").html(html);
+            $('.carousel').carousel({
+                interval: 2000
+            })
+            $("#modalPopup").modal('show');
+        }
+    }
+
+    function translateRoute(){
+        switch ('{{ route }}') {
+            case 'inamika_frontend_homepage':
+                return 'HOME';
+                break;
+            case 'inamika_frontend_account_profile':
+                return 'ACCOUNT';
+                break;
+        
+            case 'inamika_frontend_account_convenios':
+                return 'ACCOUNT-CONVENIOS';
+                break;
+        
+            case 'inamika_frontend_account_convenio':
+                return 'ACCOUNT-CONVENIOS-DETAIL';
+                break;
+        
+            case 'inamika_frontend_account_orders':
+                return 'ACCOUNT-ORDERS';
+                break;
+
+            case 'inamika_frontend_account_order':
+                return 'ACCOUNT-ORDERS-DETAIL';
+                break;
+
+            case 'inamika_frontend_cart':
+                return 'CART';
+                break;
+
+            case 'inamika_frontend_cotization':
+                return 'COTIZATION';
+                break;
+
+            case 'inamika_frontend_login':
+                return 'LOGIN';
+                break;
+
+            case 'inamika_frontend_products':
+                return 'PRODUCT';
+                break;
+
+            case 'inamika_frontend_product':
+                return 'PRODUCT-DETAIL';
+                break;
+        
+            case 'inamika_frontend_salients':
+                return 'PSALIENT';
+                break;
+        
+            case 'inamika_frontend_forgot':
+                return 'FORGOT-PASSWORD';
+                break;
+            
+            case 'inamika_frontend_resetPassword':
+                return 'RESET-PASSWORD';
+                break;
+            
+            case 'inamika_frontend_service':
+                return 'SERVICES';
+                break;
+            
+            case 'inamika_frontend_model':
+                return 'SERVICES-DETAIL';
+                break;
+            
+            case 'inamika_frontend_customer_validate':
+                return 'VALIDATE-ACCOUNT';
+                break;
+        
+            default:
+                break;
+        }
+    }           
+</script>

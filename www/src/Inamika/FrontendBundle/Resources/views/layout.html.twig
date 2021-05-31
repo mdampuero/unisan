@@ -27,6 +27,27 @@
         <div></div>
       </div>
     </div>
+    <div class="modal fade" id="modalPopup" *ngIf="popup.notes.length > 0" tabindex="-1" role="dialog" aria-labelledby="modalPopupLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div id="carouselModal" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                
+              </div>
+              <div class="p-4">
+                <button class="btn-carrousel btn rounded-circle btn-outline-primary mr-2" onclick="javascript:$('#carouselModal').carousel('prev')">
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="btn-carrousel btn rounded-circle btn-primary" onclick="javascript:$('#carouselModal').carousel('next')">
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     {% block body %}
     {% endblock %}
     {{ include('InamikaFrontendBundle::footer.html.twig') }}
@@ -44,6 +65,8 @@
     <script src="{{ asset('bundles/inamikafrontend/') }}lib/superfish/hoverIntent.js"></script>
     <script src="{{ asset('bundles/inamikafrontend/') }}lib/superfish/superfish.min.js"></script>
     <script src="{{ asset('bundles/inamikafrontend/') }}js/main.js"></script>
+    {% include 'InamikaFrontendBundle::_partials/popups.html.twig' with { route:app.request.get('_route') } %}
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script> 
     <script>
       var listCart=[];
       var totalCart=0;
@@ -55,6 +78,12 @@
             return $('#loading').hide();
         }
       }
+	  function preRequest(){ return {}}
+	  function after200(){ return; }
+	  function after401(){ return; }
+	  function after404(){ return; }
+	  function after500(){ errorGeneral() }
+
       function updateBadge(){
         totalCart=0;
         loadStorageCart();
@@ -87,7 +116,85 @@
       })
       $(function (){ 
         updateBadge(); 
+        $( "form.sendToApi" ).ajaxForm({
+            dataType:'json',
+            beforeSubmit: beforeSubmit
+        });
+        {% for message in app.session.flashBag.get('success') %}
+        $.toast({
+            heading: '{{ 'SUCCESS' | trans }}',
+            text: '{{ message }}',
+            position: 'bottom-right',
+            icon: 'success',
+            hideAfter: 3000, 
+            stack: 6
+        });
+        {% endfor %}
+        {% for message in app.session.flashBag.get('warning') %}
+        $.toast({
+            heading: '{{ 'WARNING' | trans }}',
+            text: '{{ message }}',
+            position: 'bottom-right',
+            icon: 'warning',
+            hideAfter: 3000, 
+            stack: 6
+        });
+        {% endfor %}
+        {% for message in app.session.flashBag.get('danger') %}
+        $.toast({
+            heading: '{{ 'ERROR' | trans }}',
+            text: '{{ message }}',
+            position: 'bottom-right',
+            icon: 'error',
+            hideAfter: 3000, 
+            stack: 6
+        });
+        {% endfor %}
       });
+
+      function beforeSubmit(formData, form, options) {
+        loading.show();
+        var inputs=form.closest('form').find(':input:not(.dropify)');
+        inputs.removeClass('is-invalid');
+        inputs.next('small').html('');
+        form.closest('form').find(':submit').attr('disabled',true);
+		var data=preRequest();
+		for (var i = formData.length - 1; i >= 0; i--) {
+            data[formData[i].name]=formData[i].value;
+        }
+        
+        $.ajax({
+            url: form.attr("action"),
+            type: ($('input[name="_method"]').length>0)?$('input[name="_method"]').val():form.attr("method").toUpperCase(),
+            data:JSON.stringify(data),
+            crossDomain: true,
+            success: function(data) {
+                after200(data);
+            },  
+            complete:function(){
+				loading.hide();
+                form.closest('form').find(':submit').attr('disabled',false);
+            },
+            error: function(data, status, error) {
+				if(data.status==400){
+					data.responseJSON.form=data.responseJSON.form.errors;
+					$.each( data.responseJSON.form.children, function( index, item ){ 
+						if(typeof item.errors != "undefined" && item.errors.length>0){
+							$('form [name="'+index+'"]').addClass('is-invalid');
+							$('form [name="'+index+'"]').after('<small class="text-danger">'+item.errors[0]+'</small>');
+						}
+					});
+				}else if(data.status == 404){
+					after404();
+				}else if(data.status == 403){
+					after403();
+				}else if(data.status == 500){
+					after500();
+				}
+			}
+        });
+        return false;
+    }         
     </script>
     {% endblock %}
     </body>

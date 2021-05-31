@@ -1,0 +1,54 @@
+inamika_frontend_account:
+    path:     /
+    defaults: { _controller: InamikaFrontendBundle:Account:index }
+    options:
+        breadcrumb:
+            label: Mi Datos
+inamika_frontend_account_orders:
+    path:     /MisPedidos
+    defaults: { _controller: InamikaFrontendBundle:Account:orders }
+    options:
+        breadcrumb:
+            label: Mis pedidos
+inamika_frontend_account_order:
+    path:     /MisPedidos/{id}
+    defaults: { _controller: InamikaFrontendBundle:Account:order }
+    options:
+        breadcrumb:
+            label: Mis pedidos
+inamika_frontend_account_convenios:
+    path:     /MisConvenios
+    defaults: { _controller: InamikaFrontendBundle:Account:convenios }
+    options:
+        breadcrumb:
+            label: Mis convenios
+inamika_frontend_account_convenio:
+    path:     /MisConvenios/{id}
+    defaults: { _controller: InamikaFrontendBundle:Account:convenio }
+    options:
+        breadcrumb:
+            label: Mis convenios
+inamika_frontend_account_contratos:
+    path:     /MisContratos
+    defaults: { _controller: InamikaFrontendBundle:Account:contratos }
+    options:
+        breadcrumb:
+            label: Mis contratos
+inamika_frontend_account_contrato:
+    path:     /MisContratos/{id}
+    defaults: { _controller: InamikaFrontendBundle:Account:contrato }
+    options:
+        breadcrumb:
+            label: Mis contratos
+inamika_frontend_account_usuarios:
+    path:     /Usuarios
+    defaults: { _controller: InamikaFrontendBundle:Account:usuarios }
+    options:
+        breadcrumb:
+            label: Mis usuarios
+inamika_frontend_account_profile:
+    path:     /MisDatos
+    defaults: { _controller: InamikaFrontendBundle:Account:profile }
+    options:
+        breadcrumb:
+            label: Mis datos

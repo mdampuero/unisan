@@ -108,6 +108,7 @@ AFRAME.registerComponent('fullscreen-btn', {
     this.infoButton = infoButton = document.createElement('button');
     infoButton.className = 'a-fullscreen-button';
     infoButton.setAttribute('title', 'Information about this experience');
+    infoButton.setAttribute('type', 'button');
     wrapper.appendChild(infoButton);
     infoButton.addEventListener('click', function (evt) 
     {

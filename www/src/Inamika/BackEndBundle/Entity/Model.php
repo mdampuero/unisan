@@ -97,7 +97,6 @@ class Model
      * @var string
      *
      * @ORM\Column(name="model3d", type="string", length=64, nullable=true)
-     * @Assert\File()
      * @Expose
      */
     private $model3d;

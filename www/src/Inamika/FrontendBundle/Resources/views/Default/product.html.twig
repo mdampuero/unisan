@@ -26,7 +26,7 @@
             <div class="col-md-6 description wow fadeInRight">
                 <h3>{{ data.name }}</h3>
                 <hr class="blue mt-4 mb-4">
-                <p>DESCRIPCION<br />{{ data.description}}</p>
+                <p class="text-justify" >DESCRIPCION<br />{{ data.description | nl2br}}</p>
                 <h2>{{ data.currency.symbol }} {{ data.price }}</h2>
                 <hr>
                 <div class="float-left quantity" style="width: 150px;">

@@ -12,6 +12,7 @@ use Inamika\BackEndBundle\Entity\Product;
 use Inamika\BackEndBundle\Entity\Service;
 use Inamika\BackEndBundle\Entity\Model;
 use Inamika\BackEndBundle\Entity\Filter;
+use Inamika\BackEndBundle\Entity\Customer;
 use Inamika\BackEndBundle\Entity\Category;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -110,7 +111,22 @@ class DefaultController extends Controller{
     }
     
     public function cartAction(Request $request){
-        return $this->render('InamikaFrontendBundle:Default:cart.html.twig');
+        $customer=null;
+        if($this->get('session')->get('_security_main')){
+            $dataSession=$this->get('session')->get('_security_main');
+            $customer=$this->getDoctrine()->getRepository(Customer::class)->find($dataSession['customer']->getId());
+        }
+        return $this->render('InamikaFrontendBundle:Default:cart.html.twig',array(
+            'customer'=>$customer
+        ));
+    }
+
+    public function cotizationAction(Request $request, $modelId, $section){
+        $entity=$this->getDoctrine()->getRepository(Model::class)->find($modelId);
+        return $this->render('InamikaFrontendBundle:Default:cotization.html.twig',array(
+            'section'=>$section,
+            'data'=>$entity
+        ));
     }
 
     protected function ifExist($array,$key){

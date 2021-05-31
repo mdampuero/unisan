@@ -1,0 +1,47 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false , class:'no-fixed',route: app.request.get('_route') })) }}
+<div class="container">
+    <div class="account">
+        <div class="row py-5">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="card box-login p-4">
+                    <div class="card-body">
+                        <form method="POST" action="{{ path('api_customers_postValidateConfirm') }}" novalidate="novalidate" class="form-material sendToApi">
+                            <input type="hidden" name="id" value="{{ entity.id }}">
+                            <input type="hidden" name="code" value="{{ entity.codeActive }}">
+                            <h4 class="card-title text-center text-dark">Validar cuenta</h4>
+                            <hr>
+                            <div class="row py-4">
+                                <div class="col-sm-12 form-group">
+                                    <label>Contraseña</label>
+                                    <input type="password" name="password" class="form-control rounded-pill py-4 px-4">
+                                </div>
+                                <div class="col-sm-12 form-group">
+                                    <label>Repita la contraseña</label>
+                                    <input type="password" name="passwordRepeat" class="form-control rounded-pill py-4 px-4">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn-get-started rounded-pill btn-primary px-5 py-3" >Validar cuenta</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+    <script>
+        function after200(){
+            loading.show();
+            location.href="{{ path('inamika_frontend_login') }}"
+        }
+    </script>
+{% endblock %}

@@ -4,7 +4,7 @@ api_popups:
     methods: [GET]
 
 api_popups_active:
-    path:     /popups_active
+    path:     /popups_active/{section}
     defaults: { _controller: InamikaApiBundle:Popups:active }
     methods: [GET]
 

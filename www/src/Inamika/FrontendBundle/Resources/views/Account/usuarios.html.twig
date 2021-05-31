@@ -1,0 +1,174 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false , class:'no-fixed',route: app.request.get('_route') })) }}
+<div class="container">
+    <div class="account">
+        <div class="row">
+            <div class="col-md-3 menuUser p-4 pb-5">
+                {{ render(controller('InamikaFrontendBundle:Utils:menuUser',{ route: app.request.get('_route')})) }}
+            </div>
+            <div class="col-md-9 action p-4">
+                <div class="box-detail p-3">
+                    <button type="button" onclick="toggle()" class="p-0 btn btn-clear rounded float-right btn-sm">
+                        <i id="btn-plus" class="bi bi-dash-circle-fill text-primary" style="font-size: 1.5rem; display:none"></i>
+                        <i id="btn-minus" class="bi bi-plus-circle-fill text-primary" style="font-size: 1.5rem;"></i>
+                    </button>
+                    <h4>Crear usuario</h4>
+                    <form style="display:none" method="POST" action="{{ path('api_customers_post_customersOperators', { id: app.session.get('_security_main').customer.id }) }}" novalidate="novalidate" class="form-material sendToApi">
+                    <hr>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Nombre</label>
+                                <input class="form-control rounded-pill py-4 px-4" type="text" name="name">
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Email</label>
+                                <input class="form-control rounded-pill py-4 px-4" type="email" name="email">
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Teléfono</label>
+                                <input class="form-control rounded-pill py-4 px-4" type="text" name="phone">
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="btn-get-started rounded-pill btn-primary px-5 py-3">Aceptar</button>
+                        </div>
+                    </form>
+                </div>
+                <table class="table mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col" class="text-center">Fecha de alta</th>
+                            <th scope="col" class="text-center">Validado</th>
+                            <th scope="col" class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="results">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+    <script>
+        var open=false;
+        function after200(){
+            $.toast({
+                heading: '{{ 'SUCCESS' | trans }}',
+                text: 'El usuario fue creado correctamente',
+                position: 'bottom-right',
+                icon: 'success',
+                hideAfter: 3000, 
+                stack: 6
+            });
+            $("form").trigger('reset');
+            getData();
+            toggle();
+        }
+        function toggle(){
+            open=!open;
+            if(open){
+                $("form").slideDown();
+                $("#btn-minus").hide();
+                $("#btn-plus").show();
+            }else{
+                $("form").slideUp();
+                $("#btn-plus").hide();
+                $("#btn-minus").show();
+            }
+        }
+
+        $(function (){
+            getData();
+        })
+        
+        function deleteUser(id){
+            var url="{{ path('api_customers_delete',{ id:'ENTITY'}) }}"
+            swal({   
+                title: "{{ 'WARNING' | trans }}",   
+                text: "¿Está seguro que desea eliminar este usuario?",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "{{ 'YES_DELETE' | trans }}",   
+                cancelButtonText: "{{ 'NO' | trans }}",   
+                closeOnConfirm: true 
+            }, function(){
+                loading.show();
+                $.ajax({
+                    url: url.replace('ENTITY',id),
+                    type: 'DELETE',
+                    crossDomain: true,
+                    success: function(data) {
+                        loading.hide();
+                        $("#"+id).remove();
+                        $.toast({
+                            heading: '{{ 'SUCCESS' | trans }}',
+                            text: '{{ 'DELETE_SUCCESS' | trans }}',
+                            position: 'bottom-right',
+                            icon: 'success',
+                            hideAfter: 3000, 
+                            stack: 6
+                        });
+                    },  
+                    complete:function(){
+                        loading.hide();
+                    },
+                    error: function(data, status, error) {
+                        loading.hide();
+                    }
+                });
+            });
+        }
+        
+        function getData(){
+            loading.show();
+            var html='';
+            
+            $.ajax({
+                url: '{{ path('api_customers_operators',{ id: app.session.get('_security_main').customer.id }) }}',
+                type: 'GET',
+                crossDomain: true,
+                success: function(data) {
+                    for (let i = 0; i < data.data.length; i++) {
+                        const element = data.data[i]; 
+                        var d = new Date(element.createdAt);
+                        var phone=(element.phone)?element.phone:'';
+                        var validate=(element.isValidate)?'<span class="badge badge-success">SI</span>':'<span class="badge badge-danger">NO</span>';
+                        html+=`<tr class="cursor-pointer" id="${element.id}">
+                            <th scope="row">${element.name}</th>
+                            <th scope="row">${element.email}</th>
+                            <th scope="row">${phone}</th>
+                            <th scope="row" class="text-center">${(d.getDate()<10?'0':'') + d.getDate()}/${(d.getMonth()+1)}/${d.getFullYear()} ${(d.getHours()<10?'0':'') + d.getHours()}:${(d.getMinutes()<10?'0':'') + d.getMinutes()}</th>
+                            <th scope="row" class="text-center">${validate}</th>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-clear" onclick="deleteUser('${element.id}')">
+                                    <i class="bi bi-trash text-danger" style="font-size: 1rem;"></i>
+                                </button>
+                            </td>
+                        </tr>`;
+                    }
+                    if(html)
+                        $("#results").html(html);
+                    else
+                        $("#results").html(`<tr><td colspan="6" class="text-center">No se encontraron resultados</td></tr>`);
+                    loading.hide();
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    loading.hide();
+                }
+            });
+        }
+    </script>
+{% endblock %}

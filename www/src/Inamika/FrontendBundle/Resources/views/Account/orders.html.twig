@@ -1,0 +1,79 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false , class:'no-fixed',route: app.request.get('_route') })) }}
+<div class="container">
+    <div class="account">
+        <div class="row">
+            <div class="col-md-3 menuUser p-4 pb-5">
+                {{ render(controller('InamikaFrontendBundle:Utils:menuUser',{ route: app.request.get('_route')})) }}
+            </div>
+            <div class="col-md-9 action p-4">
+                <div class="box-detail p-3">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label>ID</label>
+                            <input class="form-control rounded-pill py-4 px-4" id="id" value="{{ app.request.get('id') }}">
+                        </div>
+                        <div class="col-sm-3">
+                            <label>Estado</label>
+                            <select class="rounded-pill py-3 px-4 w-100" id="status" name="status">
+                                <option value=""></option>
+                                {% for key,item in status %}    
+                                <option {% if item.id ==  app.request.get('status')%} selected="selected" {% endif %} value="{{ item.id }}">{{ item.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <label>&nbsp;</label><br/>
+                            <button class="btn btn-block btn-primary btn-primary rounded-pill btn-primary px-5 py-3" onclick="search()">Filtrar</button>
+                        </div>
+                    </div>
+                </div>
+                <table class="table mt-4 table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col" class="text-center">Fecha</th>
+                            <th scope="col" class="text-center">Estado</th>
+                            <th scope="col" class="text-center">Items</th>
+                            <th scope="col" class="text-right">Total</th>
+                            <th scope="col" class="text-right">Actualizado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if results | length %}
+                            {% for key,item in results %}
+                                <tr class="cursor-pointer" onclick="goToItem('{{ item.id }}')">
+                                    <th scope="row">{{ item.id }}</th>
+                                    <td class="text-center">{{ item.createdAt | date('d/m/Y H:i') }}</td>
+                                    <td class="text-center"><span class="badge badge-{{ item.status.color }}">{{ item.status.name }}</span></td>
+                                    <td class="text-center">{{ item.items | length }}</td>
+                                    <td class="text-right">{{ item.totals[0].currency.symbol }} {{ (item.totals[0].total) | number_format(2, ',', '.') }}</td>
+                                    <td class="text-right">{{ item.updatedAt | date('d/m/Y H:i') }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr><td colspan="6" class="text-center">No se encontraron resultados</td></tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+    <script>
+        function search(){
+            loading.show();
+            location.href='?id='+$("#id").val()+'&status='+$("#status").val();
+        }
+        function goToItem(item){
+            loading.show();
+            var url="{{ path('inamika_frontend_account_order',{ id: 'ENTITY_ID' }) }}";
+            location.href=url.replace('ENTITY_ID',item);
+        }
+    </script>
+{% endblock %}

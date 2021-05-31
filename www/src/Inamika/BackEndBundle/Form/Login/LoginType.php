@@ -26,11 +26,11 @@ class LoginType extends AbstractType
     {
         $builder
         ->add('username',EmailType::class,array('label' => 'EMAIL',
-        'constraints' => array(new NotBlank()),
-        'attr'=>array('autocomplete'=>'new-password','class'=>'form-control','placeholder'=>'EMAIL')))
+        'constraints' => array(new NotBlank(),new Email()),
+        'attr'=>array('autocomplete'=>'new-password','class'=>'form-control')))
         ->add('password', PasswordType::class, array('label' => 'PASSWORD',
         'constraints' => array(new Length(array('min'=>6,'max'=>32)),new NotBlank()),
-        'attr'=>array('autocomplete'=>'new-password','class'=>'form-control','placeholder'=>'PASSWORD')))
+        'attr'=>array('autocomplete'=>'new-password','class'=>'form-control')))
         ;
     }
     

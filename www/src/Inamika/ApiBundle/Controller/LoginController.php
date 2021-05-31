@@ -40,6 +40,18 @@ class LoginController extends FOSRestController
 
     public function forgotPasswordAction(Request $request){
         $content=json_decode($request->getContent(), true);
+        if (!filter_var($content["email"], FILTER_VALIDATE_EMAIL)) 
+            return $this->handleView($this->view(array(
+                'form'=>array(
+                    'errors'=>array(
+                        'children'=>array(
+                            'email'=>array(
+                                'errors'=>["Este valor no es una dirección de email válida."]
+                            )
+                        )
+                    )
+                )
+            ), Response::HTTP_BAD_REQUEST));
         if(!$entity=$this->getDoctrine()->getRepository(Customer::class)->findOneBy(array(
             'email'=>$content['email'],
             'isDelete'=>false
@@ -53,30 +65,51 @@ class LoginController extends FOSRestController
         $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - '.$this->get('translator')->trans('RECOVERY_PASSWORD')))
         ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
         ->setTo($entity->getEmail())
-        ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:LoginFE/forgotPassword.html.twig', array('entity' => $entity,'resetUrl'=>$content['resetUrl'])),'text/html');
+        ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:LoginFE/forgotPassword.html.twig', array('entity' => $entity)),'text/html');
         $this->get('mailer')->send($message); 
         return $this->handleView($this->view($entity, Response::HTTP_OK));
     }
     
     public function resetPasswordAction(Request $request){
         $content=json_decode($request->getContent(), true);
-        if(!$entity=$this->getDoctrine()->getRepository(Customer::class)->findOneBy(array(
-            'id'=>$content['id'],
-            'codeActive'=>$content['code']
-            )))
-            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
-        $entity->setPassword(substr(md5($content["password"]), 0, 16));
-        $entity->setCodeActive(md5(md5(uniqid().uniqid())));
-        $entity->setIsValidate(true);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($entity);
-        $em->flush();
-        $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - '.$this->get('translator')->trans('BLANK_PASSWORD_SUCCESS')))
-        ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
-        ->setTo($entity->getEmail())
-        ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:LoginFE/resetPassword.html.twig', array('entity' => $entity)),'text/html');
-        $this->get('mailer')->send($message); 
-        return $this->handleView($this->view($entity, Response::HTTP_OK));
+        try{
+            if(empty($content["password"]) || empty($content["passwordRepeat"]))
+                throw new Exception("Complete por favor ambos campos");
+            if($content["password"]!==$content["passwordRepeat"])
+                throw new Exception("Las contraseñas no son iguales");
+            if(strlen($content["password"]) < 6)
+                throw new Exception("La contraseña debe tener al menos 6 caracteres");
+            if(!$entity=$this->getDoctrine()->getRepository(Customer::class)->findOneBy(array(
+                'id'=>$content['id'],
+                'codeActive'=>$content['code']
+                )))
+                return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+            $entity->setPassword(substr(md5($content["password"]), 0, 16));
+            $entity->setCodeActive(md5(md5(uniqid().uniqid())));
+            $entity->setIsValidate(true);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+            $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - '.$this->get('translator')->trans('BLANK_PASSWORD_SUCCESS')))
+            ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
+            ->setTo($entity->getEmail())
+            ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:LoginFE/resetPassword.html.twig', array('entity' => $entity)),'text/html');
+            $this->get('mailer')->send($message); 
+            $this->addFlash("success", $this->get('translator')->trans('La contraseña fue blanqueada correctamente.'));
+            return $this->handleView($this->view($entity, Response::HTTP_OK));
+        }catch (Exception $excepcion) {
+            return $this->handleView($this->view(array(
+                'form'=>array(
+                    'errors'=>array(
+                        'children'=>array(
+                            'password'=>array(
+                                'errors'=>[$excepcion->getMessage()]
+                            )
+                        )
+                    )
+                )
+            ), Response::HTTP_BAD_REQUEST));
+        }
     }
     
     public function checkCodeAction(Request $request){

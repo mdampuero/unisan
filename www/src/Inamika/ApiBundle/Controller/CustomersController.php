@@ -195,7 +195,7 @@ class CustomersController extends FOSRestController
         $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - '.$this->get('translator')->trans('ACTIVATE_ACCOUNT')))
         ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
         ->setTo($entity->getEmail())
-        ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:LoginFE/validate.html.twig', array('entity' => $entity,'resetUrl'=>$this->getParameter('fe_url').'validarCuenta')),'text/html');
+        ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:LoginFE/validate.html.twig', array('entity' => $entity)),'text/html');
         $this->get('mailer')->send($message); 
     }
     
@@ -217,6 +217,7 @@ class CustomersController extends FOSRestController
         ->setTo($entity->getEmail())
         ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:LoginFE/validateConfirm.html.twig', array('entity' => $entity)),'text/html');
         $this->get('mailer')->send($message); 
+        $this->addFlash("success", $this->get('translator')->trans('Su cuenta se ha activado, ya puede ingresar a nuestro sistema.'));
         return $this->handleView($this->view($entity, Response::HTTP_OK));
     }
     

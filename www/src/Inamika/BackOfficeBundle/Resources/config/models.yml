@@ -35,6 +35,23 @@ inamika_backoffice_models_import:
             label: MODEL
             parent_route: inamika_backoffice_models
 
+inamika_backoffice_models_file:
+    path:     /file3D/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Models:file }
+    methods: [GET,POST]
+    options:
+        breadcrumb:
+            label: Modelo 3D
+            parent_route: inamika_backoffice_models
+inamika_backoffice_models_file_post:
+    path:     /file3DPost/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Models:filePost }
+    methods: [POST]
+    options:
+        breadcrumb:
+            label: Modelo 3D
+            parent_route: inamika_backoffice_models
+
 inamika_backoffice_models_get:
     path:     /get/{id}
     defaults: { _controller: InamikaBackOfficeBundle:Models:get }

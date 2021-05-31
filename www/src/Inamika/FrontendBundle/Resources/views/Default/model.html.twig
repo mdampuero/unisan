@@ -51,14 +51,13 @@
                     {% else %}
                         <div id="modelPath" data-model="{{ asset('uploads/models3d/') }}{{ data.model3d }}"></div>
                         <div class="embedded-example">
-                            <a-scene embedded renderer="colorManagement: true;" info-message="htmlSrc: #messageText" fullscreen-btn model-viewer>
+                            <a-scene embedded renderer="colorManagement: true;" fullscreen-btn model-viewer>
                                 <div id="splash">
                                     <div class="loading"></div>
                                 </div>
                                 <a-assets>
                                     <a-asset-item id="ACON" src=""></a-asset-item>
                                     <img id="shadow" src="{{ asset('bundles/inamikafrontend/') }}viewer/shadow.png">
-                                    <a-asset-item id="messageText" src="{{ asset('bundles/inamikafrontend/') }}viewer/message.html"></a-asset-item>
                                 </a-assets>
                             </a-scene>
                         </div>
@@ -70,21 +69,21 @@
                     <div class="row">
                         <div class="col-md-6">
                             <h5>DESCRIPCION</h5>
-                            <p>{{ data.description}}</p>
+                            <p class="text-justify">{{ data.description  | nl2br}}</p>
                         </div>
                         <div class="col-md-6">
                             <h5>CONDICIONES</h5>
-                            <p>{{ data.conditions}}</p>
+                            <p class="text-justify">{{ data.conditions  | nl2br}}</p>
                         </div>
                         <div class="col-md-12">
                             <h5>ESPECIFICACIÓN</h5>
-                            <p>{{ data.spec}}</p>
+                            <p class="text-justify">{{ data.spec  | nl2br}}</p>
                         </div>
                     </div>
                     
                     <hr>
                     <div class="text-center my-5">
-                        <button class="btn rounded-pill btn-primary p-4" (click)="goToCotization(item.id)">
+                        <button onclick="loading.show();location.href='{{ path('inamika_frontend_cotization',{ modelId: data.id, section:section }) }}'" class="btn rounded-pill btn-primary p-4" (click)="goToCotization(item.id)">
                             <span class="text-uppercase">Solicitar cotización</span>
                         </button>
                     </div>

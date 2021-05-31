@@ -35,8 +35,7 @@ class PopupType extends AbstractType
         'choices' => array(
             Popup::SHOW_FOR_ONCE => Popup::SHOW_FOR_ONCE,
             Popup::SHOW_FOR_ONCE_DAY => Popup::SHOW_FOR_ONCE_DAY,
-            Popup::SHOW_ALWAYS => Popup::SHOW_ALWAYS,
-            Popup::SHOW_FOR_SESSION => Popup::SHOW_FOR_SESSION
+            Popup::SHOW_ALWAYS => Popup::SHOW_ALWAYS
         ),
         'placeholder' => 'SELECT_AN_OPTION',
         ))

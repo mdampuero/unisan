@@ -16,6 +16,13 @@ inamika_frontend_model:
     options:
         breadcrumb:
             label: Servicio
+            
+inamika_frontend_cotization:
+    path:     /SolicitarCotizacion/{section}/{modelId}
+    defaults: { _controller: InamikaFrontendBundle:Default:cotization }
+    options:
+        breadcrumb:
+            label: Solicitar Cotizacion
 
 inamika_frontend_products:
     path:     /Productos
@@ -29,7 +36,7 @@ inamika_frontend_salients:
     defaults: { _controller: InamikaFrontendBundle:Default:salients }
     options:
         breadcrumb:
-            label: Productos
+            label: Productos destacados
 
 inamika_frontend_product:
     path:     /Producto/{id}
@@ -43,4 +50,42 @@ inamika_frontend_cart:
     defaults: { _controller: InamikaFrontendBundle:Default:cart }
     options:
         breadcrumb:
-            label: Cart
+            label: Carrito
+inamika_frontend_login:
+    path:     /Login
+    defaults: { _controller: InamikaFrontendBundle:Login:login }
+    options:
+        breadcrumb:
+            label: Login
+
+inamika_frontend_logout:
+    path:     /Logout
+    defaults: { _controller: InamikaFrontendBundle:Login:logout }
+    options:
+        breadcrumb:
+            label: Login
+
+inamika_frontend_forgot:
+    path:     /OlvideMiContrasena
+    defaults: { _controller: InamikaFrontendBundle:Login:forgot }
+    options:
+        breadcrumb:
+            label: Olvide Mi Contrasena
+
+inamika_frontend_resetPassword:
+    path:     /BlanquearContrasena/{id}/{code}
+    defaults: { _controller: InamikaFrontendBundle:Login:reset }
+    options:
+        breadcrumb:
+            label: Blanquear Contrasena
+
+inamika_frontend_customer_validate:
+    path:     /ValidarCuenta/{id}/{code}
+    defaults: { _controller: InamikaFrontendBundle:Login:validate }
+    options:
+        breadcrumb:
+            label: Validar Cuenta
+
+inamika_frontend_account:
+    resource: "@InamikaFrontendBundle/Resources/config/account.yml"
+    prefix:   /MiCuenta

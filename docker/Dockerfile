@@ -21,7 +21,8 @@ RUN docker-php-ext-install \
     pdo_mysql \
     mysqli \
     gd \
-    mbstring 
+    mbstring \
+    soap
 
 # MSSQL
 ENV ACCEPT_EULA=Y

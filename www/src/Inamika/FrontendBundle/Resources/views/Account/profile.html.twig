@@ -1,0 +1,77 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false , class:'no-fixed',route: app.request.get('_route') })) }}
+<div class="container">
+    <div class="account">
+        <div class="row">
+            <div class="col-md-3 menuUser p-4 pb-5">
+                {{ render(controller('InamikaFrontendBundle:Utils:menuUser',{ route: app.request.get('_route')})) }}
+            </div>
+            <div class="col-md-9 action p-4">
+                <div class="breadcrumb-custom">
+                    <p>
+                        <span>Mis datos</span>
+                    </p>
+                </div>
+                <hr>
+                <div class="box-detail p-5">
+                    <form  method="PUT" action="{{ path('api_customers_put', { id: app.session.get('_security_main').customer.id }) }}" novalidate="novalidate" class="form-material sendToApi">
+                    <input type="hidden" name="document" value="{{ user.document}}">
+                    <input type="hidden" name="role" value="{{ user.role}}">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Nombre</label>
+                            <input class="form-control rounded-pill py-4 px-4" type="text" name="name" value="{{ user.name }}">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>E-Mail</label>
+                            <input class="form-control rounded-pill py-4 px-4" type="text" name="email" value="{{ user.email }}">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Fono</label>
+                            <input class="form-control rounded-pill py-4 px-4" type="text" name="phone" value="{{ user.phone }}">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Región</label>
+                            <input class="form-control rounded-pill py-4 px-4" type="text" name="provence" value="{{ user.provence }}">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Ciudad</label>
+                            <input class="form-control rounded-pill py-4 px-4" type="text" name="city" value="{{ user.city }}">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label>Dirección</label>
+                            <textarea class="form-control py-3 px-3" name="address">{{ user.address }}</textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="text-right mt-3">
+                        <button class="btn-get-started rounded-pill btn-primary px-5 py-3" >Actualizar datos</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+    <script>
+        var open=false;
+        function after200(){
+            $.toast({
+                heading: '{{ 'SUCCESS' | trans }}',
+                text: 'Los datos fueron actualizados correctamente',
+                position: 'bottom-right',
+                icon: 'success',
+                hideAfter: 3000, 
+                stack: 6
+            });
+        }
+    </script>
+{% endblock %}

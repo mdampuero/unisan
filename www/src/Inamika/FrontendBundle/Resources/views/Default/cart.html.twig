@@ -244,6 +244,10 @@
                     break;
                 case 2:
                     $("#progressbar li#personal").addClass('active');
+                    {% if customer %}
+                        $("#email").val("{{ customer.email }}");
+                        step2();
+                    {% endif %}
                     break;
                 case 3:
                     $("#progressbar li#delivery").addClass('active');
@@ -411,7 +415,7 @@
             swal({ 
                 title: '¡Pedido enviado!',
                 text: 'Nº de pedido: #'+data.id,
-                icon: 'check',
+                icon: 'success',
                 allowOutsideClick: false,
                 confirmButtonText: 'Aceptar'
             }, function(){

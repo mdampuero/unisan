@@ -1,0 +1,95 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false , class:'no-fixed',route: app.request.get('_route') })) }}
+<div class="container">
+    <div class="account">
+        <div class="row">
+            <div class="col-md-3 menuUser p-4 pb-5">
+                {{ render(controller('InamikaFrontendBundle:Utils:menuUser',{ route: app.request.get('_route')})) }}
+            </div>
+            <div class="col-md-9 action p-4">
+                <table class="table mt-4 table-hover" *ngIf="results.length > 0">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nº contrato</th>
+                            <th scope="col">Obra</th>
+                            <th scope="col">Unidades</th>
+                        </tr>
+                    </thead>
+                    <tbody id="result"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+    <script>
+        $(function (){
+            getData();
+        });
+        function getData(){
+            loading.show();
+            var html='';
+            $.ajax({
+                // url: '{{ api_contratos }}&rut=96691680-K',
+                url: '{{ api_contratos }}&rut={{ user.document }}',
+                type: 'GET',
+                dataType: "json",
+                crossDomain: true,
+                success: function(data) {
+                    try {
+                        $.each(data[0]['contrato'], function( contratoId, value ) {
+                           const contratoData=value[0];
+                           let unidades='';
+                           $.each(contratoData.unidad, function( unit,amount ) {
+                               unidades+=`<li><span class="badge badge-primary">${amount}</span> ${unit} </li>`;
+                           });
+                           html+=`<tr>
+                                <td><b>${contratoId}</b></td>
+                                <td>${contratoData.numero_contrato}</td>
+                                <td>${contratoData.obra}</td>
+                                <td>
+                                    <ul>
+                                        ${unidades}
+                                    </ul>
+                                </td>
+                            </tr>`;
+                        });
+                        if(html)
+                            $("#result").html(html);
+                        else
+                            $("#result").html(`<tr><td colspan="4" class="text-center">No se encontraron resultados</td></tr>`);
+                    } catch (error) {
+                        $.toast({
+                            heading: '{{ 'ERROR' | trans }}',
+                            text: 'El servicio no esta disponible, intente en otro momento',
+                            position: 'bottom-right',
+                            icon: 'error',
+                            hideAfter: 3000, 
+                            stack: 6
+                        });
+                    }
+                    $("#results").html(html);
+                    loading.hide();
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    $.toast({
+                        heading: '{{ 'ERROR' | trans }}',
+                        text: 'El servicio no esta disponible, intente en otro momento',
+                        position: 'bottom-right',
+                        icon: 'error',
+                        hideAfter: 3000, 
+                        stack: 6
+                    });
+                }
+            });
+        }
+    </script>
+{% endblock %}

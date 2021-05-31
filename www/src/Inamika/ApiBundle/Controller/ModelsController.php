@@ -86,6 +86,9 @@ class ModelsController extends BaseController
             /** Picture */
             if($form->get('pictureBase64')->getData())
                 $entity->setPicture($this->base64ToFile($form->get('pictureBase64')->getData(),"uploads/"));
+            /** Model 3d */
+            // if($form->get('model3dBase64')->getData())
+            //     $entity->setModel3d($this->base64ToFile3d($form->get('model3dBase64')->getData()));
             $em->persist($entity);
             $em->flush();
             return $this->handleView($this->view($entity, Response::HTTP_OK));
@@ -138,6 +141,19 @@ class ModelsController extends BaseController
         $form->submit(json_decode($request->getContent(), true));
         if ($form->isSubmitted() && $form->isValid()){
             $entity->setIsDelete(true);
+            $this->getDoctrine()->getManager()->flush();
+            return $this->handleView($this->view($entity, Response::HTTP_OK));
+        }
+        return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
+    }
+    
+    public function deleteFileAction(Request $request,$id){
+        if(!$entity=$this->getDoctrine()->getRepository(Model::class)->find($id))
+            return $this->handleView($this->view(null, Response::HTTP_NOT_FOUND));
+        $form = $this->createFormBuilder(null, array('csrf_protection' => false))->setMethod('DELETE')->getForm();
+        $form->submit(json_decode($request->getContent(), true));
+        if ($form->isSubmitted() && $form->isValid()){
+            $entity->setModel3d(null);
             $this->getDoctrine()->getManager()->flush();
             return $this->handleView($this->view($entity, Response::HTTP_OK));
         }

@@ -26,7 +26,7 @@ class CustomerType extends AbstractType
         $builder
         ->add('name',TextType::class,array('label'=>'NAME','constraints' => array(new NotBlank()),'label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('email',TextType::class,array('label'=>'EMAIL','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
-        ->add('document',TextType::class,array('label'=>'RUT','constraints' => array(new NotBlank(),new Length(array('min'=>6,'max'=>9))),'label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
+        ->add('document',TextType::class,array('label'=>'RUT','constraints' => array(new NotBlank(),new Length(array('min'=>6,'max'=>11))),'label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('phone',TextType::class,array('label'=>'PHONE','constraints' => array(new NotBlank()),'label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('address',TextType::class,array('label'=>'ADDRESS','constraints' => array(new NotBlank()),'label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('provence',TextType::class,array('label'=>'PROVENCE','constraints' => array(new NotBlank()),'label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
