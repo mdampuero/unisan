@@ -16,6 +16,7 @@ class ModelRepository extends \Doctrine\ORM\EntityRepository
         ->join('e.service','service')
         ->where('e.isDelete = :isDelete')
         ->setParameter('isDelete',false)
+        ->andWhere('service.isDelete = :isDelete')
         ->orderBy("e.id","DESC");
     }
 
