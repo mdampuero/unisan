@@ -95,9 +95,8 @@ class OrdersController extends FOSRestController
                 $em->persist($log);
                 $em->flush();
                 
-                $this->calcTotal($entity);
-
-                return $this->handleView($this->view($entity, Response::HTTP_OK));
+                $totals=$this->calcTotal($entity);
+                return $this->handleView($this->view(['order'=>$entity,'url'=>$this->get('Webpay')->getUrl($entity->getId(),$totals["$"]["total"])], Response::HTTP_OK));
             }
             return $this->handleView($this->view($form->getErrors(), Response::HTTP_BAD_REQUEST));
         }catch (Exception $excepcion) {
@@ -142,6 +141,7 @@ class OrdersController extends FOSRestController
             $em->persist($ordersTotal);
         }
         $em->flush();
+        return $totals;
     }
 
     public function getAction($id){

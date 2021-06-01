@@ -15,6 +15,7 @@ class OrdersRepository extends \Doctrine\ORM\EntityRepository
         ->select('e')
         ->where('e.isDelete = :isDelete')
         ->setParameter('isDelete',false)
+        ->andWhere('e.isPendingPayment = :isDelete')
         ->orderBy("e.id","DESC");
     }
 

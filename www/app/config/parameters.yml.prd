@@ -1,0 +1,21 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: localhost
+    database_port: 3307
+    database_name: unisancl_web2
+    database_user: unisancl_web2
+    database_password: Unisan2021
+    mssql_database_host: dbunisan.ceulayktmhse.sa-east-1.rds.amazonaws.com
+    mssql_database_port: 1433
+    mssql_database_name: DBSSII
+    mssql_database_user: UNISANWEB
+    mssql_database_password: UnW2b14qRL21l
+    mailer_transport: mail
+    mailer_host: mail.unisan.cl
+    mailer_port: 25
+    mailer_encryption: tls
+    mailer_user: web@unisan.cl
+    mailer_from: web@unisan.cl
+    mailer_password: RA~V^uvoWio&
+    fe_url: http://fe.unisan.cl/
+    api_contratos: 'http://23.19.226.69:81/include/adaptiva/reporte_inventario_xls.php?token=WfjQzG4cSnSENv6ukFQo7FiaAxbP19qwYdij'

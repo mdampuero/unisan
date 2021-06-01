@@ -48,6 +48,32 @@ class Setting
     /**
      * @var string
      *
+     * @ORM\Column(name="webpay_commerce_code", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $webpayCommerceCode;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="webpay_key_secret", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $webpayKeySecret;
+    
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="webpay_production", type="boolean")
+     * @Expose
+     */
+    private $webpayProduction=false;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="email_orders", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Email()
@@ -65,6 +91,7 @@ class Setting
      */
     private $emailCotizations;
 
+    
     /**
      * @var string
      *
@@ -145,6 +172,54 @@ class Setting
     }
     
     /**
+     * Set webpayCommerceCode.
+     *
+     * @param string $webpayCommerceCode
+     *
+     * @return Setting
+     */
+    public function setWebpayCommerceCode($webpayCommerceCode)
+    {
+        $this->webpayCommerceCode = $webpayCommerceCode;
+
+        return $this;
+    }
+
+    /**
+     * Get webpayCommerceCode.
+     *
+     * @return string
+     */
+    public function getWebpayCommerceCode()
+    {
+        return $this->webpayCommerceCode;
+    }
+    
+    /**
+     * Set webpayKeySecret.
+     *
+     * @param string $webpayKeySecret
+     *
+     * @return Setting
+     */
+    public function setWebpayKeySecret($webpayKeySecret)
+    {
+        $this->webpayKeySecret = $webpayKeySecret;
+
+        return $this;
+    }
+
+    /**
+     * Get webpayKeySecret.
+     *
+     * @return string
+     */
+    public function getWebpayKeySecret()
+    {
+        return $this->webpayKeySecret;
+    }
+    
+    /**
      * Set emailOrders.
      *
      * @param string $emailOrders
@@ -168,6 +243,30 @@ class Setting
         return $this->emailOrders;
     }
     
+    /**
+     * Set webpayProduction
+     *
+     * @param boolean $webpayProduction
+     *
+     * @return Setting
+     */
+    public function setWebpayProduction($webpayProduction)
+    {
+        $this->webpayProduction = $webpayProduction;
+
+        return $this;
+    }
+
+    /**
+     * Get webpayProduction
+     *
+     * @return bool
+     */
+    public function getWebpayProduction()
+    {
+        return $this->webpayProduction;
+    }
+
     /**
      * Set emailCotizations.
      *

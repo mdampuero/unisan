@@ -88,10 +88,23 @@ class Orders
     private $isDelete=false;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_pending_payment", type="boolean")
+     */
+    private $isPendingPayment=true;
+
+    /**
      * @ORM\OneToMany(targetEntity="OrdersItem", mappedBy="order")
      * @Assert\NotBlank()
      */
     private $items;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="OrdersPayments", mappedBy="order")
+     * @Assert\NotBlank()
+     */
+    private $payments;
     
     /**
      * @ORM\OneToMany(targetEntity="OrdersTotal", mappedBy="order")
@@ -102,6 +115,7 @@ class Orders
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->payments = new ArrayCollection();
         $this->totals = new ArrayCollection();
     }
 
@@ -308,6 +322,30 @@ class Orders
     }
 
     /**
+     * Set isPendingPayment.
+     *
+     * @param bool $isPendingPayment
+     *
+     * @return Orders
+     */
+    public function setIsPendingPayment($isPendingPayment)
+    {
+        $this->isPendingPayment = $isPendingPayment;
+
+        return $this;
+    }
+
+    /**
+     * Get isPendingPayment.
+     *
+     * @return bool
+     */
+    public function getIsPendingPayment()
+    {
+        return $this->isPendingPayment;
+    }
+    
+    /**
      * Set isDelete.
      *
      * @param bool $isDelete
@@ -366,6 +404,26 @@ class Orders
     public function setItems($items)
     {
         return $this->items=$items;
+    }
+    
+    /**
+     * Get payments.
+     *
+     * @return int
+     */
+    public function getPayments()
+    {
+        return $this->payments;
+    }
+    
+    /**
+     * Set payments.
+     *
+     * @return Orders
+     */
+    public function setPayments($payments)
+    {
+        return $this->payments=$payments;
     }
     
     /**

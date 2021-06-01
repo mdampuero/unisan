@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class SettingType extends AbstractType
 {
@@ -23,8 +24,12 @@ class SettingType extends AbstractType
         $builder
         ->add('emailOrders',TextType::class,array('label'=>'EMAIL_ORDERS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('emailCotizations',TextType::class,array('label'=>'EMAIL_COTIZATIONS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
-        // ->add('title',TextType::class,array('label'=>'TITLE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'TITLE')))
-        // ->add('copyright',TextType::class,array('label'=>'COPYRIGHT','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'TITLE')))
+        ->add('webpayCommerceCode',TextType::class,array('label'=>'Código de comercio WP','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
+        ->add('webpayKeySecret',TextType::class,array('label'=>'Llave secreta WP','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
+        ->add('webpayProduction',ChoiceType::class, array('label'=>'Modo WP','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control'),'choices' => array(
+            'YES' => true,
+            'NO' => false
+        )))
        ;
     }/**
      * {@inheritdoc}

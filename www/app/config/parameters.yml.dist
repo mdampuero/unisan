@@ -3,16 +3,22 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 # This file is auto-generated during the composer install
 parameters:
-    database_host: 127.0.0.1
-    database_port: null
-    database_name: dbname
-    database_user: root
+    database_host: 192.168.0.118
+    database_port: 3306
+    database_name: unisan
+    database_user: unisan
     database_password: Secreta007
+    mssql_database_host: dbunisan.ceulayktmhse.sa-east-1.rds.amazonaws.com
+    mssql_database_port: 1433
+    mssql_database_name: DBSSII
+    mssql_database_user: UNISANWEB
+    mssql_database_password: UnW2b14qRL21l
     mailer_transport: smtp
-    mailer_host: 'smtp.mailtrap.io'
-    mailer_port: 465
+    mailer_host: smtp.mailtrap.io
+    mailer_port: 2525
     mailer_encryption: tls
-    mailer_user: 'a4140ccebccb5f'
-    mailer_from: 'test@apachecms.com.ar'
-    mailer_password: 'ad647ff494915d'
+    mailer_user: a4140ccebccb5f
+    mailer_from: web@unisan.cl
+    mailer_password: ad647ff494915d
     secret: 99b2af404f070f6d849dea5705fd9375b130a628
+    api_contratos: 'http://23.19.226.69:81/include/adaptiva/reporte_inventario_xls.php?token=WfjQzG4cSnSENv6ukFQo7FiaAxbP19qwYdij'

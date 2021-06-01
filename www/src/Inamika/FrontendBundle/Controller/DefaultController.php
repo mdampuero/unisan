@@ -14,7 +14,10 @@ use Inamika\BackEndBundle\Entity\Model;
 use Inamika\BackEndBundle\Entity\Filter;
 use Inamika\BackEndBundle\Entity\Customer;
 use Inamika\BackEndBundle\Entity\Category;
+use Inamika\BackEndBundle\Entity\OrdersPayments;
+use Inamika\BackEndBundle\Entity\Orders;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class DefaultController extends Controller{
     
@@ -112,13 +115,70 @@ class DefaultController extends Controller{
     
     public function cartAction(Request $request){
         $customer=null;
+        $orderId=$request->query->get('orderId', null);
         if($this->get('session')->get('_security_main')){
             $dataSession=$this->get('session')->get('_security_main');
             $customer=$this->getDoctrine()->getRepository(Customer::class)->find($dataSession['customer']->getId());
         }
         return $this->render('InamikaFrontendBundle:Default:cart.html.twig',array(
-            'customer'=>$customer
+            'customer'=>$customer,
+            'orderId'=>$orderId
         ));
+    }
+    
+    public function paymentResultAction($order,Request $request){
+        try {
+            $em = $this->getDoctrine()->getManager();
+            if(!$orderEntity=$em->getRepository(Orders::class)->find($order))
+                throw new Exception('No se encontró la orden',6);
+            
+            $token=$request->query->get('token_ws', null);
+            $response=$this->get('Webpay')->getResponse($token);
+            $authorized=($response->getStatus()=='AUTHORIZED');
+            $responseComplete=[
+                'getVci'=>$response->getVci(),
+                'getAmount'=>$response->getAmount(),
+                'getStatus'=>$response->getStatus(),
+                'getBuyOrder'=>$response->getBuyOrder(),
+                'getSessionId'=>$response->getSessionId(),
+                'getCardDetail'=>$response->getCardDetail(),
+                'getCardNumber'=>$response->getCardNumber(),
+                'getAccountingDate'=>$response->getAccountingDate(),
+                'getTransactionDate'=>$response->getTransactionDate(),
+                'getAuthorizationCode'=>$response->getAuthorizationCode(),
+                'getPaymentTypeCode'=>$response->getPaymentTypeCode(),
+                'getResponseCode'=>$response->getResponseCode(),
+                'getInstallmentsAmount'=>$response->getInstallmentsAmount(),
+                'getInstallmentsNumber'=>$response->getInstallmentsNumber(),
+                'getBalance'=>$response->getBalance()
+            ];
+
+            $ordersPayments=new OrdersPayments();
+            $ordersPayments->setOrder($orderEntity);
+            $ordersPayments->setAmount($response->getAmount());
+            $ordersPayments->setStatus($response->getStatus());
+            $ordersPayments->setCardNumber($response->getCardNumber());
+            $ordersPayments->setIsAuthorized($authorized);
+            $ordersPayments->setAuthorizationCode($response->getAuthorizationCode());
+            $ordersPayments->setDescription(json_encode($responseComplete));
+
+            $em->persist($ordersPayments);
+            $em->flush();
+
+            if($ordersPayments->getIsAuthorized()){
+                $orderEntity->setIsPendingPayment(false);
+                $em->persist($orderEntity);
+                $em->flush();
+            }else{
+                throw new Exception('El pago fue rechazado, intente nuevamente con otro medio de pago.',6);
+            }
+            header('Location: '.$this->generateUrl('inamika_frontend_cart').'?orderId='.$order);
+            exit();
+        } catch (\Throwable $th) {
+            $this->addFlash("danger", $th->getMessage());
+            return $this->redirectToRoute('inamika_frontend_cart');
+        }
+        
     }
 
     public function cotizationAction(Request $request, $modelId, $section){

@@ -62,10 +62,15 @@
 					{% else %}
 						<span class="badge badge-pill badge-success">{{ data.channel | upper }}</span>
 					{% endif %}</h5>
-					<p class="card-text">
-						Observaciones:
-						{{ data.observations | nl2br }}
-					</p>
+					{% for payment in data.payments %}
+						{% if payment.isAuthorized %}
+							<p class="card-text">
+								Tarjeta: {{ payment.cardNumber }}<br/>
+								Código de autorizacion WP: {{ payment.authorizationCode }}
+							</p>
+						{% endif %}
+					{% endfor %}
+					
 				</div>
 			</div>
 		</div>

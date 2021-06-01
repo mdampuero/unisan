@@ -25,7 +25,6 @@
                     <div class="row">
                         <div class="col-md-12 mx-0">
                             <form id="msform">
-                                <!-- progressbar -->
                                 <ul id="progressbar">
                                     <li class="active" id="account" onclick="manualGoToStep(1)">
                                         <strong>Carrito</strong>
@@ -39,7 +38,7 @@
                                     <li id="payment" onclick="manualGoToStep(4)">
                                         <strong>Pago</strong>
                                     </li>
-                                </ul> <!-- fieldsets -->
+                                </ul>
                             </form>
                         </div>
                     </div>
@@ -151,47 +150,8 @@
                                 </form>
                             </fieldset>
                             <fieldset id="step4" style="display:none">
-                                <div >
-                                    <div class="col-md-8 offset-md-2">
-                                        <h3>Pago</h3>
-                                        <p>Ingrese los datos de su tarjeta de crédito</p>
-
-                                        <div class="row">
-                                            <div class="col-sm-12 form-group">
-                                                <label>Titular de la tarjeta</label>
-                                                <input type="text" placeholder="Juan Perez" class="form-control rounded-pill py-4 px-4"
-                                                    [class.is-invalid]="step4_name.invalid && step4_name.touched"
-                                                    #step4_name="ngModel" required [(ngModel)]="form.step4.name"
-                                                    name="step4_name">
-                                            </div>
-                                            <div class="col-sm-12 form-group">
-                                                <label>Número de la tarjeta</label>
-                                                <input type="text" placeholder="1234-1234-1234-1234"
-                                                    class="form-control rounded-pill py-4 px-4"
-                                                    [class.is-invalid]="step4_number.invalid && step4_number.touched"
-                                                    #step4_number="ngModel" required [(ngModel)]="form.step4.number"
-                                                    name="step4_number">
-                                            </div>
-                                            <div class="col-sm-6 form-group">
-                                                <label>Vencimiento</label>
-                                                <input type="text" placeholder="06/22" class="form-control rounded-pill py-4 px-4"
-                                                    [class.is-invalid]="step4_date.invalid && step4_date.touched"
-                                                    #step4_date="ngModel" required [(ngModel)]="form.step4.date"
-                                                    name="ste4_date">
-                                            </div>
-                                            <div class="col-sm-6 form-group">
-                                                <label>Código</label>
-                                                <input type="text" placeholder="123" class="form-control rounded-pill py-4 px-4"
-                                                    [class.is-invalid]="step4_code.invalid && step4_code.touched"
-                                                    #step4_code="ngModel" required [(ngModel)]="form.step4.code"
-                                                    name="step4_code">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="text-center py-3">
-                                        <button type="button" class="btn-get-started rounded-pill btn-primary px-5 py-3" onclick="step4()">Continuar</button>
-                                    </div>
+                                <div class="text-center mb-5 mt-3">
+                                    <a role="button" id="btnWebpay" href="" class="beforeSpinner btn-get-started rounded-pill btn-primary px-5 py-4">Pagar con Webpay Plus</a>
                                 </div>
                             </fieldset>
                         </div>
@@ -365,13 +325,12 @@
                 data:JSON.stringify(dataPostStep3),
                 crossDomain: true,
                 success: function(data) {
-                    goToStep(4);
-                    loading.hide();
+                    pushOrder();
                 },  
                 complete:function(){
-                    loading.hide();
                 },
                 error: function(data, status, error) {
+                    loading.hide();
                     data.responseJSON.form=data.responseJSON.form.errors;
                     $.each( data.responseJSON.form.children, function( index, item ){ 
                         if(typeof item.errors != "undefined" && item.errors.length>0){
@@ -384,8 +343,7 @@
             });
         }
         
-        function step4(){
-            loading.show();
+        function pushOrder(){
             $.ajax({
                 url: "{{ path('api_orders_post') }}",
                 type: 'POST',
@@ -397,7 +355,8 @@
                 }),
                 crossDomain: true,
                 success: function(data) {
-                    successOrder(data);
+                    goToStep(4);
+                    $("#btnWebpay").attr('href',data.url);
                     loading.hide();
                 },  
                 complete:function(){
@@ -414,7 +373,7 @@
             localStorage.setItem("cart", JSON.stringify([]));
             swal({ 
                 title: '¡Pedido enviado!',
-                text: 'Nº de pedido: #'+data.id,
+                text: 'Nº de pedido: #'+data,
                 icon: 'success',
                 allowOutsideClick: false,
                 confirmButtonText: 'Aceptar'
@@ -425,7 +384,10 @@
         }
 
         $(function(){
-            goToStep(1);
+            {% if  orderId %}
+                successOrder('{{ orderId }}');
+            {% endif %}
+            goToStep(currentStep);
             renderCart();
             $( "#formStep3" ).submit(function( event ) {
                 step3();

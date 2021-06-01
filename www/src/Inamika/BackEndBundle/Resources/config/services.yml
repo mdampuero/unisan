@@ -15,5 +15,11 @@ services:
         class: Inamika\BackEndBundle\Service\ApiTokko
         arguments:
                 - '@doctrine.orm.entity_manager'
+    Webpay:
+        class: Inamika\BackEndBundle\Service\Webpay
+        arguments:
+                - '@doctrine.orm.entity_manager'
+                - '@router'
+        scope: request
     ErrorStructure:
         class: Inamika\BackEndBundle\Service\ErrorStructure

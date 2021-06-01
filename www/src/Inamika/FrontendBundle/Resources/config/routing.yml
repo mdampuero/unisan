@@ -51,6 +51,14 @@ inamika_frontend_cart:
     options:
         breadcrumb:
             label: Carrito
+
+inamika_frontend_payment_result:
+    path:     /payment_result/{order}
+    defaults: { _controller: InamikaFrontendBundle:Default:paymentResult }
+    options:
+        breadcrumb:
+            label: PaymentResult
+
 inamika_frontend_login:
     path:     /Login
     defaults: { _controller: InamikaFrontendBundle:Login:login }
