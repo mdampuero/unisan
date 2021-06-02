@@ -16,6 +16,7 @@
                             <th scope="col">Nº contrato</th>
                             <th scope="col">Obra</th>
                             <th scope="col">Unidades</th>
+                            <th scope="col">Contacto</th>
                         </tr>
                     </thead>
                     <tbody id="result"></tbody>
@@ -45,6 +46,7 @@
                         $.each(data[0]['contrato'], function( contratoId, value ) {
                            const contratoData=value[0];
                            let unidades='';
+                           let contacto='';
                            $.each(contratoData.unidad, function( unit,amount ) {
                                unidades+=`<li><span class="badge badge-primary">${amount}</span> ${unit} </li>`;
                            });
@@ -55,6 +57,13 @@
                                 <td>
                                     <ul>
                                         ${unidades}
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li>${contratoData.contacto_obra}</li>
+                                        <li><a href="tel:${contratoData.contacto_telefono}">${contratoData.contacto_telefono}</a></li>
+                                        <li><a href="mailto:${contratoData.contacto_email}">${contratoData.contacto_email}</a></li>
                                     </ul>
                                 </td>
                             </tr>`;

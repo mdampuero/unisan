@@ -177,13 +177,13 @@
                     $('#contentCart').append(`
                         <tr>
                             <td>${element.name}</td>
-                            <td class="text-center">$ ${element.price}</td>
+                            <td class="text-center">$ ${ format(element.price)}</td>
                             <td class="text-center">${element.quantity}</td>
-                            <td class="text-center">$ ${ (element.quantity * element.price)}</td>
+                            <td class="text-center">$ ${ format((element.quantity * element.price))}</td>
                             <td class="text-center"><i onclick="removeItem(${i})" class="fa fa-trash-alt text-danger cursor-pointer"></i></td>
                         </tr>`);
                 }
-                $('#totalCart').html("$ "+totalCart);
+                $('#totalCart').html("$ "+format(totalCart));
             }else{
                 $("#cartNotEmpty").hide();
                 $("#cartEmpty").fadeIn();

@@ -91,7 +91,7 @@
           totalCart+=listCart[i].quantity*listCart[i].price;
         }
         $("#badgeQuantity").html(listCart.length);
-        $("#badgeTotal").html("$ "+totalCart);
+        $("#badgeTotal").html("$ "+format(totalCart));
       }
       
       function loadStorageCart() {
@@ -151,6 +151,16 @@
         });
         {% endfor %}
       });
+
+      function format(num)
+      {
+        
+        if(!isNaN(num)){
+          num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+          num = num.split('').reverse().join('').replace(/^[\.]/,'');
+          return num;
+        }
+      }
 
       function beforeSubmit(formData, form, options) {
         loading.show();
