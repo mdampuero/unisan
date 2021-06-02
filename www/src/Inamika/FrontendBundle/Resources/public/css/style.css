@@ -150,34 +150,54 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0 16px;
   text-align: center;
-  vertical-align: middle;
+  padding-top: 10%;
+  /* vertical-align: middle; */
 }
 
 #hero h1 {
   margin: 30px 0 10px 0;
-  font-size: 80px;
+  font-size: 65px;
   font-weight: 700;
-  line-height: 80px;
+  line-height: 65px;
   color: #fff;
 }
 #hero h2 {
   
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 700;
   color: #fff;
 }
 
 @media (max-width: 768px) {
   #hero h1 {
-    font-size: 28px;
-    line-height: 36px;
+    font-size: 45px;
+    line-height: 45px;
   }
+  .box-product-salient{
+    height: 380px !important;
+  }
+  #hero .hero-container {
+    padding-top: 25% !important;
+    /* vertical-align: middle; */
+  }
+  #services .section-header {
+    padding-bottom: 3rem  !important;
+  }
+}
+
+@media (max-width: 992px) {
+  #hero .hero-container {
+    padding-top: 15%;
+    /* vertical-align: middle; */
+  }
+  
+  
 }
 
 #hero h3 {
   color: #eee;
-  margin-bottom: 50px;
-  font-size: 22px;
+  /* margin-bottom: 50px; */
+  font-size: 18px;
 }
 
 @media (max-width: 768px) {
@@ -1586,6 +1606,7 @@ select.list-dt:focus {
 
 .card {
   z-index: 0;
+  background-color: #FAFAFA;
   border: none;
   border-radius: 0.5rem;
   position: relative
@@ -1910,4 +1931,10 @@ button.cancel{
 
 .account li{
   list-style: none;
+}
+@media (max-width: 768px) {
+  
+  #services .section-header {
+    padding-bottom: 3rem  !important;
+  }
 }
