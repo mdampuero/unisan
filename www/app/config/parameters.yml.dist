@@ -5,8 +5,8 @@
 parameters:
     database_host: 192.168.0.118
     database_port: 3306
-    database_name: unisan
-    database_user: unisan
+    database_name: unisan_new
+    database_user: root
     database_password: Secreta007
     mssql_database_host: dbunisan.ceulayktmhse.sa-east-1.rds.amazonaws.com
     mssql_database_port: 1433

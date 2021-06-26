@@ -4,7 +4,9 @@
   <header id="header" class="{{ class }}">
     <div class="container">
       <div id="logo" class="pull-left">
-        <a href="{% if home %}#hero{% else %}{{ path('inamika_frontend_homepage')}}{% endif %}"><img src="{{ asset('bundles/inamikafrontend/') }}img/MarcaUnisan.png" alt="" title="" /></a>
+        <a href="{% if home %}#hero{% else %}{{ path('inamika_frontend_homepage')}}{% endif %}">
+        <img style="width:280px; margin-top: -20px;" src="{{ asset('bundles/inamikafrontend/') }}img/unisan_logo.png" alt="" title="" />
+        </a>
       </div>
       <nav id="nav-menu-container" class="navbar-expand-lg">
         <ul class="nav-menu ">
@@ -25,7 +27,7 @@
                             {% if service.models | length > 0 %}
                             <ul>
                                 {% for model in service.models %}
-                                    {% if model.forHome %}
+                                    {% if not model.isDelete and model.forHome %}
                                         <li style="line-height: 50px;min-width: 300px;">
                                             <a class="beforeSpinner" href="{{ path('inamika_frontend_model',{ section:'forHome' ,id: model.id })}}"> 
                                                 {% if model.picture %}
@@ -62,7 +64,7 @@
                             {% if service.models | length > 0 %}
                             <ul >
                                 {% for model in service.models %}
-                                    {% if model.forIndustry %}
+                                    {% if not model.isDelete and model.forIndustry %}
                                         <li style="line-height: 50px;min-width: 300px;">
                                             <a class="beforeSpinner" href="{{ path('inamika_frontend_model',{ section:'forIndustry' ,id: model.id })}}"> 
                                                 {% if model.picture %}
@@ -99,7 +101,7 @@
                             {% if service.models | length > 0 %}
                             <ul >
                                 {% for model in service.models %}
-                                    {% if model.forEvent %}
+                                    {% if not model.isDelete and model.forEvent %}
                                         <li style="line-height: 50px;min-width: 300px;">
                                             <a class="beforeSpinner" href="{{ path('inamika_frontend_model',{ section:'forEvent' ,id: model.id })}}"> 
                                                 {% if model.picture %}
