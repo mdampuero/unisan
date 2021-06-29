@@ -9,15 +9,85 @@
                 {{ render(controller('InamikaFrontendBundle:Utils:menuUser',{ route: app.request.get('_route')})) }}
             </div>
             <div class="col-md-9 action p-4">
-                <div class="box-detail p-3">
+                <div class="row">
+                    <div class="col-md-6 mb-3" >
+                        <div class="p-4" style="box-shadow: 0 1px 1px 1px rgb(0 0 0 / 20%); border-radius: 10px;">
+                            <img style="width:100px" class="float-right" src="{{ asset('bundles/inamikafrontend/') }}img/icon_ejecutivo.png" alt="" title="" />
+                            <h6 class="text-dark">Contacta a tu Ejecutivo</h6>
+                            <p><small>Necesitas asesoramiento personalizado, contactá a tu ejecutivo designado desde aquí.</small></p>
+                            <div style="clear:both;"></div>
+                            <a href="javascript:ejecutiveModal()" class="btn-sm btn-get-started rounded-pill btn-primary px-5 py-1" >Conectar</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-4" style="box-shadow: 0 1px 1px 1px rgb(0 0 0 / 20%); border-radius: 10px;">
+                            <img style="width:100px" class="float-right" src="{{ asset('bundles/inamikafrontend/') }}img/icon_factura.png" alt="" title="" />
+                            <h6 class="text-dark">Facturación</h6>
+                            <p><small>Accedé a tus facturas, realizá pagos e imprime tus comprobantes de manera fácil y rápida.</small></p>
+                            <div style="clear:both;"></div>
+                            <a role="button" href="{{ path('inamika_frontend_account_facturas') }}" class="beforeSpinner btn-sm btn-get-started rounded-pill btn-primary px-5 py-1" >Mis facturas</a>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="text-dark mt-2">Última compra</h4>
+                {% if last %}
+                <div class="box-detail p-4 pb-0" >                
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Id Pedido</label>
+                            <p>#{{last.id}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Total</label>
+                            <p><b>$ {{ last.totals[0].total | number_format(2, ',', '.') }}</b></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Estado</label>
+                            <p><span class="badge badge-{{ last.status.color }}">{{ last.status.name }}</span></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Fecha</label>
+                            <p>{{ last.createdAt | date('d/m/Y H:i') }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                <table class="table mt-4 table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col" class="text-right">Precio</th>
+                            <th scope="col" class="text-center">Cantidad</th>
+                            <th scope="col" class="text-right">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i,item in last.items %}
+                            <tr>
+                            <th scope="row">{{ i + 1}}</th>
+                            <td>{{ item.product.name }}</td>
+                            <td class="text-right">{{ item.product.currency.symbol }} {{ item.price | number_format(2, ',', '.') }}</td>
+                            <td class="text-center">{{ item.quantity }}</td>
+                            <td class="text-right">{{ item.product.currency.symbol }} {{ item.subtotal | number_format(2, ',', '.') }}</td>
+                        </tr> 
+                        {% endfor %}
+                    </tbody>
+                </table> 
+                </div>
+                {% else %}
+                    <p>No posee compras anteriores</p>
+                {% endif %}
+                <h4 class="text-dark mt-5">Compras anteriores</h4>
+                {# <div class="box-detail p-3">
                     <div class="row">
                         <div class="col-sm-3">
                             <label>ID</label>
-                            <input class="form-control rounded-pill py-4 px-4" id="id" value="{{ app.request.get('id') }}">
+                            <input class="form-control rounded-pill px-4" id="id" value="{{ app.request.get('id') }}">
                         </div>
                         <div class="col-sm-3">
                             <label>Estado</label>
-                            <select class="rounded-pill py-3 px-4 w-100" id="status" name="status">
+                            <select class="rounded-pill form-control px-4 w-100" id="status" name="status">
                                 <option value=""></option>
                                 {% for key,item in status %}    
                                 <option {% if item.id ==  app.request.get('status')%} selected="selected" {% endif %} value="{{ item.id }}">{{ item.name }}</option>
@@ -26,10 +96,11 @@
                         </div>
                         <div class="col-sm-3">
                             <label>&nbsp;</label><br/>
-                            <button class="btn btn-block btn-primary btn-primary rounded-pill btn-primary px-5 py-3" onclick="search()">Filtrar</button>
+                            <button class="btn btn-block btn-primary btn-primary rounded-pill btn-primary px-5" onclick="search()">Filtrar</button>
                         </div>
                     </div>
-                </div>
+                </div> #}
+                <div class="table-responsive">
                 <table class="table mt-4 table-hover">
                     <thead>
                         <tr>
@@ -39,26 +110,100 @@
                             <th scope="col" class="text-center">Items</th>
                             <th scope="col" class="text-right">Total</th>
                             <th scope="col" class="text-right">Actualizado</th>
+                            <th scope="col" class="text-right"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% if results | length %}
                             {% for key,item in results %}
-                                <tr class="cursor-pointer" onclick="goToItem('{{ item.id }}')">
+                                <tr >
                                     <th scope="row">{{ item.id }}</th>
                                     <td class="text-center">{{ item.createdAt | date('d/m/Y H:i') }}</td>
                                     <td class="text-center"><span class="badge badge-{{ item.status.color }}">{{ item.status.name }}</span></td>
                                     <td class="text-center">{{ item.items | length }}</td>
                                     <td class="text-right">{{ item.totals[0].currency.symbol }} {{ (item.totals[0].total) | number_format(2, ',', '.') }}</td>
                                     <td class="text-right">{{ item.updatedAt | date('d/m/Y H:i') }}</td>
+                                    <td class="text-right">
+                                        <a class="beforeSpinner" href="{{ path('inamika_frontend_account_order',{ id: item.id }) }}"><i style="font-size:1.2rem;" class="bi bi-file-earmark-medical"></i></a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         {% else %}
-                            <tr><td colspan="6" class="text-center">No se encontraron resultados</td></tr>
+                            <tr><td colspan="7" class="text-center">No se encontraron resultados</td></tr>
                         {% endif %}
                     </tbody>
                 </table>
             </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ejecutiveModal" tabindex="-1" role="dialog" aria-labelledby="ejecutiveModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ejecutiveModalLabel">Contacte a su ejecutivo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="{{ path('api_ejecutives_contact') }}" class="sendToApi" novalidate>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label class="text-dark">Ejecutivo</label>
+                        <select class="rounded-pill form-control px-4 w-100" id="ejecutiveId" name="ejecutiveId" onchange="changeEjecutive(this.value);">
+                            {% for key,ejecutive in ejecutives %}
+                                <option value="{{ ejecutive.id }}">{{ ejecutive.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                {% for key,ejecutive in ejecutives %}
+                <div class="row row-ejecutive" id="ejecutive-{{ ejecutive.id }}" style="{% if key != 0 %}display:none;{% endif %}">
+                    <div class="form-group col-sm-4">
+                        <label class="text-dark">Email</label>
+                        <p class="mb-2"><a href="mailto:{{ ejecutive.email }}">{{ ejecutive.email }}</a></p>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label class="text-dark">Teléfono</label>
+                       <p class="mb-2"><a href="tel:{{ ejecutive.phone }}">{{ ejecutive.phone }}</a></p>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label class="text-dark">Celular</label>
+                        <p class="mb-2"><a href="tel:{{ ejecutive.mobile }}">{{ ejecutive.mobile }}</a></p>
+                    </div>
+                </div>
+                {% endfor %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h5 class="modal-title" id="ejecutiveModalLabel">Enviar una consulta</h5>
+                            <hr>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-3">
+                            <label>Nombre</label>
+                            <input type="text" id="my_name" name="my_name" class="rounded-pill form-control px-4" value="{{ user.name }}">
+                        </div>
+                        <div class="form-group col-md-6 col-sm-3">
+                            <label>Email</label>
+                            <input type="text" id="my_email" name="my_email" class="rounded-pill form-control px-4" value="{{ user.email }}">
+                        </div>
+                        <div class="form-group col-md-6 col-sm-3">
+                            <label>Teléfono</label>
+                            <input type="text" id="my_phone" name="my_phone" class="rounded-pill form-control px-4" value="{{ user.phone }}">
+                        </div>
+                        <div class="form-group col-md-6 col-sm-3">
+                            <label>Horario de contacto</label>
+                            <input type="text" id="my_available_hour" name="my_available_hour" class="rounded-pill form-control px-4" placeholder="ej: de 9 a 12 hs">
+                        </div>
+                    </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary" >Enviar</button>
+            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -70,10 +215,28 @@
             loading.show();
             location.href='?id='+$("#id").val()+'&status='+$("#status").val();
         }
-        function goToItem(item){
-            loading.show();
-            var url="{{ path('inamika_frontend_account_order',{ id: 'ENTITY_ID' }) }}";
-            location.href=url.replace('ENTITY_ID',item);
+
+        function ejecutiveModal(){
+            $("#ejecutiveModal").modal('show');
+        }
+
+        function changeEjecutive(ejecutiveId){
+            $(".row-ejecutive").slideUp('fats',function (){
+                $("#ejecutive-"+ejecutiveId).slideDown('fast');
+            });
+        }
+
+        function after200(){
+            swal({ 
+                title: '¡Consulta enviada!',
+                text: 'Su consulta será atendida a la brevedad por el Ejecutivo asignado.',
+                icon: 'success',
+                allowOutsideClick: false,
+                confirmButtonText: 'Aceptar'
+            }, function(){
+                $("#ejecutiveModal").modal('hide');
+                $("form.sendToApi").trigger("reset");
+            });
         }
     </script>
 {% endblock %}

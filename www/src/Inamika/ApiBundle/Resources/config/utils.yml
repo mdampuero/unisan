@@ -1,0 +1,12 @@
+api_utils:
+    path:     /utils
+    defaults: { _controller: InamikaApiBundle:Utils:retiro }
+    methods: [POST]
+api_utils_certificate:
+    path:     /utils/certificate
+    defaults: { _controller: InamikaApiBundle:Utils:certificate }
+    methods: [POST]
+api_utils_visits:
+    path:     /utils/visits
+    defaults: { _controller: InamikaApiBundle:Utils:visits }
+    methods: [POST]

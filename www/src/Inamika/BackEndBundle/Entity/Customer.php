@@ -35,6 +35,13 @@ class Customer implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="company", type="string", length=255, nullable=true)
+     */
+    private $company;
 
     /**
      * @var string|null
@@ -251,6 +258,30 @@ class Customer implements AdvancedUserInterface, \Serializable
     public function getDocument()
     {
         return $this->document;
+    }
+    
+    /**
+     * Set company.
+     *
+     * @param string|null $company
+     *
+     * @return Customer
+     */
+    public function setCompany($company = null)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get company.
+     *
+     * @return string|null
+     */
+    public function getCompany()
+    {
+        return $this->company;
     }
     
     /**

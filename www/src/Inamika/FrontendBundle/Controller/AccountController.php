@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Inamika\BackEndBundle\Form\Login\LoginType;
 use Inamika\BackEndBundle\Entity\Customer;
+use Inamika\BackEndBundle\Entity\Ejecutive;
 use Inamika\BackEndBundle\Entity\Orders;
 use Inamika\BackEndBundle\Entity\OrdersStatus;
 class AccountController extends Controller{
@@ -35,9 +36,17 @@ class AccountController extends Controller{
             $qb->andWhere('e.status=:status')->setParameter('status',$status);
         if($id)
             $qb->andWhere('e.id=:id')->setParameter('id',$id);
+        $results=$qb->getQuery()->getResult();
+        if($results){
+            $last=$results[0];
+            unset($results[0]);
+        }else $last=null;
         return $this->render('InamikaFrontendBundle:Account:orders.html.twig',array(
             'status'=>$this->getDoctrine()->getRepository(OrdersStatus::class)->findAll(),
-            'results'=>$qb->getQuery()->getResult()
+            'ejecutives'=>$this->getDoctrine()->getRepository(Ejecutive::class)->getAll()->getQuery()->getResult(),
+            'results'=>$results,
+            'last'=>$last,
+            'user'=>$this->getDoctrine()->getRepository(Customer::class)->find($this->get('session')->get('_security_main')['customer']->getId())
         ));
     }
     
@@ -74,8 +83,17 @@ class AccountController extends Controller{
     public function contratosAction(Request $request){
         if(!$this->get('session')->get('_security_main'))
             return $this->redirectToRoute($this->path);
+        $months=[];
+        for($i=1;$i<=12; $i++)
+            $months[]=str_pad($i, 2, "0", STR_PAD_LEFT);
+        $years=[];
+        for($i=(date("Y") - 4);$i<=(date("Y") + 4); $i++)
+            $years[]=$i;
+        
         return $this->render('InamikaFrontendBundle:Account:contratos.html.twig',array(
-            'user'=>$this->getDoctrine()->getRepository(Customer::class)->find($this->get('session')->get('_security_main')['customer']->getId())
+            'user'=>$this->getDoctrine()->getRepository(Customer::class)->find($this->get('session')->get('_security_main')['customer']->getId()),
+            'months'=>$months,
+            'years'=>$years
         ));
     }
     
@@ -83,6 +101,14 @@ class AccountController extends Controller{
         if(!$this->get('session')->get('_security_main'))
             return $this->redirectToRoute($this->path);
         return $this->render('InamikaFrontendBundle:Account:contratos.html.twig',array(
+            'user'=>$this->getDoctrine()->getRepository(Customer::class)->find($this->get('session')->get('_security_main')['customer']->getId())
+        ));
+    }
+    
+    public function facturasAction(Request $request){
+        if(!$this->get('session')->get('_security_main'))
+            return $this->redirectToRoute($this->path);
+        return $this->render('InamikaFrontendBundle:Account:facturas.html.twig',array(
             'user'=>$this->getDoctrine()->getRepository(Customer::class)->find($this->get('session')->get('_security_main')['customer']->getId())
         ));
     }

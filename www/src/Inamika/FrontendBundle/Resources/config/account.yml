@@ -5,38 +5,44 @@ inamika_frontend_account:
         breadcrumb:
             label: Mi Datos
 inamika_frontend_account_orders:
-    path:     /MisPedidos
+    path:     /MisCompras
     defaults: { _controller: InamikaFrontendBundle:Account:orders }
     options:
         breadcrumb:
-            label: Mis pedidos
+            label: Mis compras
 inamika_frontend_account_order:
-    path:     /MisPedidos/{id}
+    path:     /MisCompras/{id}
     defaults: { _controller: InamikaFrontendBundle:Account:order }
     options:
         breadcrumb:
-            label: Mis pedidos
+            label: Mis compras
 inamika_frontend_account_convenios:
-    path:     /MisConvenios
+    path:     /ContratosActivos/GestionResiduos
     defaults: { _controller: InamikaFrontendBundle:Account:convenios }
     options:
         breadcrumb:
             label: Mis convenios
 inamika_frontend_account_convenio:
-    path:     /MisConvenios/{id}
+    path:     /ContratosActivos/GestionResiduos/{id}
     defaults: { _controller: InamikaFrontendBundle:Account:convenio }
     options:
         breadcrumb:
             label: Mis convenios
 inamika_frontend_account_contratos:
-    path:     /MisContratos
+    path:     /ContratosActivos/UnidadesSanitarias
     defaults: { _controller: InamikaFrontendBundle:Account:contratos }
     options:
         breadcrumb:
             label: Mis contratos
 inamika_frontend_account_contrato:
-    path:     /MisContratos/{id}
+    path:     /ContratosActivos/UnidadesSanitarias/{id}
     defaults: { _controller: InamikaFrontendBundle:Account:contrato }
+    options:
+        breadcrumb:
+            label: Mis contratos
+inamika_frontend_account_facturas:
+    path:     /MisFacturas
+    defaults: { _controller: InamikaFrontendBundle:Account:facturas }
     options:
         breadcrumb:
             label: Mis contratos

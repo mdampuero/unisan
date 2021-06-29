@@ -106,3 +106,7 @@ inamika_backoffice_models:
 inamika_backoffice_filters:
     resource: "@InamikaBackOfficeBundle/Resources/config/filters.yml"
     prefix:   /filters
+
+inamika_backoffice_ejecutives:
+    resource: "@InamikaBackOfficeBundle/Resources/config/ejecutives.yml"
+    prefix:   /ejecutives

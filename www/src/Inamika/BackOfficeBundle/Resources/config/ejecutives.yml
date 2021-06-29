@@ -1,0 +1,59 @@
+inamika_backoffice_ejecutives:
+    path:     /
+    defaults: 
+        _controller: InamikaBackOfficeBundle:Ejecutives:index
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Ejecutivos
+            parent_route: inamika_backoffice_homepage
+            
+inamika_backoffice_ejecutives_add:
+    path:     /new
+    defaults: { _controller: InamikaBackOfficeBundle:Ejecutives:add }
+    options:
+        breadcrumb:
+            label: Agregar ejecutivo
+            parent_route: inamika_backoffice_ejecutives
+    methods: [GET]
+
+inamika_backoffice_ejecutives_landing:
+    path:     /landing/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Ejecutives:landing }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Ejecutivo
+            parent_route: inamika_backoffice_ejecutives
+
+inamika_backoffice_ejecutives_import:
+    path:     /import
+    defaults: { _controller: InamikaBackOfficeBundle:Customers:import }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Importar ejecutivo
+            parent_route: inamika_backoffice_ejecutives
+
+inamika_backoffice_ejecutives_get:
+    path:     /get/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Ejecutives:get }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Ejecutivo
+            parent_route: inamika_backoffice_ejecutives
+
+inamika_backoffice_ejecutives_edit:
+    path:     /edit/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Ejecutives:edit }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Editar ejecutivo
+            parent_route: inamika_backoffice_ejecutives
+
+inamika_backoffice_ejecutives_delete:
+    path:     /delete/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Ejecutives:delete }
+    methods: [POST,DELETE]

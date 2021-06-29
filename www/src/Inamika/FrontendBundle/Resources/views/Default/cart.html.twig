@@ -107,14 +107,20 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Nombre completo</label>
-                                                    <input class="form-control rounded-pill py-4 px-4" name="name">
+                                                    <label>Empresa</label>
+                                                    <input class="form-control rounded-pill py-4 px-4" name="company">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Nº Rut</label>
                                                     <input class="form-control rounded-pill py-4 px-4" name="document">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nombre completo</label>
+                                                    <input class="form-control rounded-pill py-4 px-4" name="name">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -226,6 +232,7 @@
         function setCustomer(data){
             dataCustomer=data;
             $("#formStep3 [name='name']").val(dataCustomer.name),
+            $("#formStep3 [name='company']").val(dataCustomer.company),
             $("#formStep3 [name='document']").val(dataCustomer.document),
             $("#formStep3 [name='phone']").val(dataCustomer.phone),
             $("#formStep3 [name='provence']").val(dataCustomer.provence),
@@ -313,6 +320,7 @@
                 'name':$("#formStep3 [name='name']").val(),
                 'email':$("#email").val(),
                 'document':$("#formStep3 [name='document']").val(),
+                'company':$("#formStep3 [name='company']").val(),
                 'phone':$("#formStep3 [name='phone']").val(),
                 'provence':$("#formStep3 [name='provence']").val(),
                 'city':$("#formStep3 [name='city']").val(),

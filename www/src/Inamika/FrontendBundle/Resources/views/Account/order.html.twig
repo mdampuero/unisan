@@ -11,11 +11,13 @@
             <div class="col-md-9 action p-4">
                 <div class="breadcrumb-custom">
                     <p>
-                        <span><a href="javascript:window.history.go(-1);">Mis pedidos</a> | #{{entity.id}}</span>
+                        <span><a href="javascript:window.history.go(-1);">Mis compras</a> | #{{entity.id}}</span>
                     </p>
                 </div>
                 <hr>
-                <div class="box-detail p-5" *ngIf="ready">
+                <h4 class="text-dark">Mis compras</h4>
+                <a href="javascript:window.history.go(-1);"><i class="bi bi-x-lg float-right" style="margin: 10px;font-size: 1.5rem;"></i></a>
+                <div class="box-detail p-5" >                
                     <div class="row">
                         <div class="col-md-3">
                             <label>Id Pedido</label>
@@ -34,30 +36,29 @@
                             <p>{{ entity.createdAt | date('d/m/Y H:i') }}</p>
                         </div>
                     </div>
-                    <hr>
-                    <table class="table mt-4 table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Producto</th>
-                                <th scope="col" class="text-right">Precio</th>
-                                <th scope="col" class="text-center">Cantidad</th>
-                                <th scope="col" class="text-right">Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for i,item in entity.items %}
-                              <tr>
-                                <th scope="row">{{ i + 1}}</th>
-                                <td>{{ item.product.name }}</td>
-                                <td class="text-right">{{ item.product.currency.symbol }} {{ item.price | number_format(2, ',', '.') }}</td>
-                                <td class="text-center">{{ item.quantity }}</td>
-                                <td class="text-right">{{ item.product.currency.symbol }} {{ item.subtotal | number_format(2, ',', '.') }}</td>
-                            </tr> 
-                            {% endfor %}
-                        </tbody>
-                    </table>
                 </div>
+                <table class="table mt-4 table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col" class="text-right">Precio</th>
+                            <th scope="col" class="text-center">Cantidad</th>
+                            <th scope="col" class="text-right">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i,item in entity.items %}
+                            <tr>
+                            <th scope="row">{{ i + 1}}</th>
+                            <td>{{ item.product.name }}</td>
+                            <td class="text-right">{{ item.product.currency.symbol }} {{ item.price | number_format(2, ',', '.') }}</td>
+                            <td class="text-center">{{ item.quantity }}</td>
+                            <td class="text-right">{{ item.product.currency.symbol }} {{ item.subtotal | number_format(2, ',', '.') }}</td>
+                        </tr> 
+                        {% endfor %}
+                    </tbody>
+                </table>                
             </div>
         </div>
     </div>

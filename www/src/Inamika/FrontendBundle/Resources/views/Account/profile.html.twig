@@ -9,39 +9,53 @@
                 {{ render(controller('InamikaFrontendBundle:Utils:menuUser',{ route: app.request.get('_route')})) }}
             </div>
             <div class="col-md-9 action p-4">
-                <div class="breadcrumb-custom">
-                    <p>
-                        <span>Mis datos</span>
-                    </p>
-                </div>
-                <hr>
-                <div class="box-detail p-5">
+                <h4 class="text-dark">Editar perfil</h4>
+                <div class=" p-5" style="box-shadow: 0 1px 1px 1px rgb(0 0 0 / 20%); border-radius: 10px;">
+                    <div>
+                        <div class="float-left mr-3 text-dark">
+                            <i class="bi bi-person-circle" style="font-size: 5rem;"></i>
+                        </div>
+                        <div class="text-dark">
+                            <small> <a href="{{ path('inamika_frontend_account_profile') }}" class="text-white beforeSpinner">Editar perfil <i class="bi bi-pencil"></i></a></small>
+                            <p>
+                            {% if user.company %}
+                            {{ user.company }}
+                            {% else %}
+                            {{ user.name }}
+                            {% endif %}
+                            </br>
+                            <small style="font-weight: 100;">Rut: {{ user.document }}</small><br/>
+                            <small style="font-weight: 100;">{{ user.email }}</small></p>
+                        </div>
+                    </div>
+                    <div style="clear: both;" class="mb-3"></div>
                     <form  method="PUT" action="{{ path('api_customers_put', { id: app.session.get('_security_main').customer.id }) }}" novalidate="novalidate" class="form-material sendToApi">
                     <input type="hidden" name="document" value="{{ user.document}}">
+                    <input type="hidden" name="company" value="{{ user.company}}">
                     <input type="hidden" name="role" value="{{ user.role}}">
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label>Nombre</label>
-                            <input class="form-control rounded-pill py-4 px-4" type="text" name="name" value="{{ user.name }}">
+                            <input class="form-control rounded-pill py-2 px-4" type="text" name="name" value="{{ user.name }}">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>E-Mail</label>
-                            <input class="form-control rounded-pill py-4 px-4" type="text" name="email" value="{{ user.email }}">
+                            <input class="form-control rounded-pill py-2 px-4" type="text" name="email" value="{{ user.email }}">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Fono</label>
-                            <input class="form-control rounded-pill py-4 px-4" type="text" name="phone" value="{{ user.phone }}">
+                            <input class="form-control rounded-pill py-2 px-4" type="text" name="phone" value="{{ user.phone }}">
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label>Región</label>
-                            <input class="form-control rounded-pill py-4 px-4" type="text" name="provence" value="{{ user.provence }}">
+                            <input class="form-control rounded-pill py-2 px-4" type="text" name="provence" value="{{ user.provence }}">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Ciudad</label>
-                            <input class="form-control rounded-pill py-4 px-4" type="text" name="city" value="{{ user.city }}">
+                            <input class="form-control rounded-pill py-2 px-4" type="text" name="city" value="{{ user.city }}">
                         </div>
                         <div class="col-md-12 form-group">
                             <label>Dirección</label>
@@ -49,8 +63,8 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="text-right mt-3">
-                        <button class="btn-get-started rounded-pill btn-primary px-5 py-3" >Actualizar datos</button>
+                    <div class="text-center mt-3">
+                        <button class="btn-get-started rounded-pill btn-primary px-5 py-2" >Aplicar cambios</button>
                     </div>
                     </form>
                 </div>
@@ -64,14 +78,8 @@
     <script>
         var open=false;
         function after200(){
-            $.toast({
-                heading: '{{ 'SUCCESS' | trans }}',
-                text: 'Los datos fueron actualizados correctamente',
-                position: 'bottom-right',
-                icon: 'success',
-                hideAfter: 3000, 
-                stack: 6
-            });
+            loading.show();
+            location.reload();
         }
     </script>
 {% endblock %}

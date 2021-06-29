@@ -2,7 +2,7 @@ version: "3"
 services:
     unisan_apache:
         build: .
-        image: php:7.4-apache
+        image: php:7.2-apache
         container_name: unisan_apache
         extra_hosts:
             - "dev.unisan.cl:127.0.0.1"

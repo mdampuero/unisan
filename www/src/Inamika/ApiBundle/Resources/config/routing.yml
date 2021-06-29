@@ -54,3 +54,9 @@ api_filters:
 
 api_contratos:
     resource: "@InamikaApiBundle/Resources/config/contratos.yml"
+
+api_utils:
+    resource: "@InamikaApiBundle/Resources/config/utils.yml"
+
+api_ejecutives:
+    resource: "@InamikaApiBundle/Resources/config/ejecutives.yml"

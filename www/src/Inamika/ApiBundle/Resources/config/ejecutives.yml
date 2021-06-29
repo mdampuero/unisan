@@ -1,0 +1,29 @@
+api_ejecutives:
+    path:     /ejecutives
+    defaults: { _controller: InamikaApiBundle:Ejecutives:index }
+    methods: [GET]
+
+api_ejecutives_get:
+    path:     /ejecutives/{id}
+    defaults: { _controller: InamikaApiBundle:Ejecutives:get }
+    methods: [GET]
+
+api_ejecutives_post:
+    path:     /ejecutives
+    defaults: { _controller: InamikaApiBundle:Ejecutives:post }
+    methods: [POST]
+
+api_ejecutives_contact:
+    path:     /ejecutives_contact
+    defaults: { _controller: InamikaApiBundle:Ejecutives:contact }
+    methods: [POST]
+
+api_ejecutives_put:
+    path:     /ejecutives/{id}
+    defaults: { _controller: InamikaApiBundle:Ejecutives:put }
+    methods: [PUT]
+
+api_ejecutives_delete:
+    path:     /ejecutives/{id}
+    defaults: { _controller: InamikaApiBundle:Ejecutives:delete }
+    methods: [DELETE]

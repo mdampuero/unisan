@@ -1,0 +1,22 @@
+{% extends "InamikaBackOfficeBundle::Emails/layout.html.twig" %}
+{% block body %}
+<b>Solicitud de Certificado Disposición final: </b>
+<hr>
+<p>
+    <b>Período: </b><span>{{ content.certificate_month }}/{{ content.certificate_year }}</span><br/>
+    <b>Envío de Certificado a: </b><span>{{ content.certificate_email }}</span>
+</p>
+<p>
+    <b>Nombre: </b> <span>{{ customer.name }}</span><br/>
+    <b>RUT: </b><span>{{ customer.document }}</span><br/>
+    <b>Email: </b><span>{{ customer.email }}</span><br/>
+</p>
+<p>
+    <b>Nº contrato: </b><span>{{ content.dataDetail.numero_contrato }}</span><br/>
+    <b>Obra: </b><span>{{ content.dataDetail.obra }}</span><br/>
+    <b>Contacto: </b><span>{{ content.dataDetail.contacto_obra }}</span><br/>
+    <b>Email: </b><span>{{ content.dataDetail.contacto_email }}</span><br/>
+    <b>Teléfono: </b><span>{{ content.dataDetail.contacto_telefono }}</span><br/>
+</p>
+
+{% endblock %}

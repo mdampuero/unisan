@@ -81,6 +81,7 @@
                  <li class="{% 
                 if 'inamika_backoffice_setting' in app.request.get('_route') or
                 'inamika_backoffice_users' in app.request.get('_route') or
+                'inamika_backoffice_ejecutives' in app.request.get('_route') or
                 'inamika_backoffice_popups' in app.request.get('_route') 
                 %}active{% endif %}">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" aria-expanded="false">
@@ -91,6 +92,12 @@
                             <a class="sidebar-link {% if 'inamika_backoffice_popups' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_popups')}}" aria-expanded="false">
                                 <i class="mdi mdi-minus"></i>
                                 <span >{{ 'POPUPS' | trans }}</span>
+                            </a>
+                        </li>
+                        <li class="idebar-item">
+                            <a class="sidebar-link {% if 'inamika_backoffice_ejecutives' in app.request.get('_route') %}active{% endif %}" href="{{ path('inamika_backoffice_ejecutives')}}" aria-expanded="false">
+                                <i class="mdi mdi-minus"></i>
+                                <span >{{ 'EJECUTIVES' | trans }}</span>
                             </a>
                         </li>
                         {% if is_granted('ROLE_SUPER') %}

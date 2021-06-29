@@ -84,12 +84,42 @@ class Setting
     /**
      * @var string
      *
+     * @ORM\Column(name="email_retirements", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     * @Expose
+     */
+    private $emailRetirements;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="email_cotizations", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Email()
      * @Expose
      */
     private $emailCotizations;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email_certificate", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     * @Expose
+     */
+    private $emailCertificate;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email_visits", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     * @Expose
+     */
+    private $emailVisits;
 
     
     /**
@@ -244,6 +274,30 @@ class Setting
     }
     
     /**
+     * Set emailRetirements.
+     *
+     * @param string $emailRetirements
+     *
+     * @return Setting
+     */
+    public function setEmailRetirements($emailRetirements)
+    {
+        $this->emailRetirements = $emailRetirements;
+
+        return $this;
+    }
+
+    /**
+     * Get emailRetirements.
+     *
+     * @return string
+     */
+    public function getEmailRetirements()
+    {
+        return $this->emailRetirements;
+    }
+    
+    /**
      * Set webpayProduction
      *
      * @param boolean $webpayProduction
@@ -289,6 +343,54 @@ class Setting
     public function getEmailCotizations()
     {
         return $this->emailCotizations;
+    }
+    
+    /**
+     * Set emailCertificate.
+     *
+     * @param string $emailCertificate
+     *
+     * @return Setting
+     */
+    public function setEmailCertificate($emailCertificate)
+    {
+        $this->emailCertificate = $emailCertificate;
+
+        return $this;
+    }
+
+    /**
+     * Get emailCertificate.
+     *
+     * @return string
+     */
+    public function getEmailCertificate()
+    {
+        return $this->emailCertificate;
+    }
+    
+    /**
+     * Set emailVisits.
+     *
+     * @param string $emailVisits
+     *
+     * @return Setting
+     */
+    public function setEmailVisits($emailVisits)
+    {
+        $this->emailVisits = $emailVisits;
+
+        return $this;
+    }
+
+    /**
+     * Get emailVisits.
+     *
+     * @return string
+     */
+    public function getEmailVisits()
+    {
+        return $this->emailVisits;
     }
     
     /**

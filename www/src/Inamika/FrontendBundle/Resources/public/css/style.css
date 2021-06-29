@@ -1446,6 +1446,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: white;
 }
 .account .menuUser .list-group-item{
+  font-weight: 200;
   background: transparent;
   border: none;
 }
@@ -1456,6 +1457,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 .account .menuUser .list-group-item a.active, .account .menuUser .list-group-item a:hover{
   border-left: #FFF solid 3px;
+  font-weight: 500;
 }
 .account .table{
   font-size: 0.8rem;

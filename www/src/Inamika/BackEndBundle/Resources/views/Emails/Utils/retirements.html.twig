@@ -1,0 +1,21 @@
+{% extends "InamikaBackOfficeBundle::Emails/layout.html.twig" %}
+{% block body %}
+<b>Solicitud de retiro: </b>
+<hr>
+<p>
+    <b>Nombre: </b> <span>{{ customer.name }}</span><br/>
+    <b>RUT: </b><span>{{ customer.document }}</span><br/>
+    <b>Email: </b><span>{{ customer.email }}</span><br/>
+</p>
+<p>
+    <b>Nº contrato: </b><span>{{ content.retiro_contrato.numero_contrato }}</span><br/>
+    <b>Obra: </b><span>{{ content.retiro_contrato.obra }}</span><br/>
+    <b>Contacto: </b><span>{{ content.retiro_contrato.contacto_obra }}</span><br/>
+    <b>Email: </b><span>{{ content.retiro_contrato.contacto_email }}</span><br/>
+    <b>Teléfono: </b><span>{{ content.retiro_contrato.contacto_telefono }}</span><br/>
+</p>
+<p>
+    <b>Unidad a retirar: </b><span>{{ content.retiro_unidad }}</span><br/>
+    <b>Cantidad a retirar: </b><span><b>{{ content.retiro_cantidad }}</b> de {{ content.retiro_total}}</span><br/>
+</p>
+{% endblock %}

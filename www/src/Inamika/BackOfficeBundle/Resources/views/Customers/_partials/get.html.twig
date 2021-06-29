@@ -3,14 +3,20 @@
 <div class="row">
 	<div class="col-md-6 col-lg-6">
 		<div class="form-group">
-			<h4 class="card-title">{{ 'NAME' | trans }}</h4>
-			<h5 class="card-subtitle">{{ entity.name }}</h5>
+			<h4 class="card-title">{{ 'COMPANY_NAME' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.company | default('N/A') }}</h5>
 		</div>
 	</div>
 	<div class="col-md-6 col-lg-6">
 		<div class="form-group">
 			<h4 class="card-title">{{ 'DOCUMENT' | trans }}</h4>
 			<h5 class="card-subtitle">{{ entity.document }}</h5>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-6">
+		<div class="form-group">
+			<h4 class="card-title">{{ 'NAME' | trans }}</h4>
+			<h5 class="card-subtitle">{{ entity.name }}</h5>
 		</div>
 	</div>
 	<div class="col-md-6 col-lg-6">

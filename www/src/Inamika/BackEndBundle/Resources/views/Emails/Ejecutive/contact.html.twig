@@ -1,0 +1,11 @@
+{% extends "InamikaBackOfficeBundle::Emails/layout.html.twig" %}
+{% block body %}
+<b>Solicitud de contacto: </b>
+<hr>
+<p>
+    <b>Nombre: </b><span>{{ content.my_name }}</span><br/>
+    <b>Email: </b><span>{{ content.my_email }}</span><br/>
+    <b>Teléfono: </b><span>{{ content.my_phone }}</span><br/>
+    <b>Horario de cotnacto: </b><span>{{ content.my_available_hour }}</span><br/>
+</p>
+{% endblock %}

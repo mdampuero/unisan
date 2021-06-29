@@ -9,34 +9,39 @@
                 {{ render(controller('InamikaFrontendBundle:Utils:menuUser',{ route: app.request.get('_route')})) }}
             </div>
             <div class="col-md-9 action p-4">
+                <div class="breadcrumb-custom">
+                    <p>
+                        <span><a class="beforeSpinner" href="{{ path('inamika_frontend_account_contratos')}}">Contratos activos</a> | Gestión de Residuos </span>
+                    </p>
+                </div>
+                <hr>
+                <h4 class="text-dark">Gestión de Residuos</h4>
                 <div class="box-detail p-3">
                     <div class="row">
-                        <div class="col-sm-3">
-                            <label>ID</label>
-                            <input class="form-control rounded-pill py-4 px-4" id="id" value="{{ app.request.get('id') }}">
-                        </div>
-                        <div class="col-sm-3">
-                            <label>Activo</label>
-                            <select class="rounded-pill py-3 px-4 w-100" id="activo" name="activo">
-                                <option value=""></option>
-                                <option value="1">SI</option>
-                                <option value="0">NO</option>
+                        <div class="col-sm-4">
+                            <label>Tipo de servicio</label>
+                            <select class="rounded-pill form-control px-4 w-100" id="tipoServicio" name="tipoServicio" onchange="changeTipoServicio(this.value);">
+                                <option value="0">Unidades Sanitarias</option>
+                                <option value="1" selected="selected">Gestión de Residuos</option>
                             </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Nº de Contrato</label>
+                            <input class="form-control rounded-pill px-4" id="id" value="{{ app.request.get('id') }}">
                         </div>
                         <div class="col-sm-3">
                             <label>&nbsp;</label><br/>
-                            <button class="btn btn-block btn-primary btn-primary rounded-pill btn-primary px-5 py-3" onclick="search()">Filtrar</button>
+                            <button class="btn btn-block btn-primary btn-primary rounded-pill btn-primary px-5 " onclick="search()">Buscar</button>
                         </div>
                     </div>
                 </div>
                 <table class="table mt-4 table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Convenio</th>
-                            <th scope="col" class="text-center">Activo</th>
-                            <th scope="col" class="text-center">Terminado</th>
-                            <th scope="col">Fecha</th>
+                            <th scope="col">Contrato Nº</th>
+                            <th scope="col">Vigencia</th>
+                            <th scope="col" class="text-center">Tipo de servicio</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody id="results">
@@ -51,6 +56,10 @@
 {% block javascripts %}
 {{ parent()}}
     <script>
+        var url =[
+            "{{ path('inamika_frontend_account_contratos') }}",
+            "{{ path('inamika_frontend_account_convenios') }}"
+        ];
         $(function (){
             getData();
         })
@@ -59,9 +68,12 @@
             location.href='?id='+$("#id").val()+'&status='+$("#status").val();
         }
         function getData(){
-            $("#results").html(`<tr><td colspan="5" class="text-center">No se encontraron resultados</td></tr>`);
+            $("#results").html(`<tr><td colspan="4" class="text-center">No se encontraron resultados</td></tr>`);
             return;
-            
+        }
+        function changeTipoServicio(val){
+            loading.show();
+            location.href=url[val];
         }
     </script>
 {% endblock %}

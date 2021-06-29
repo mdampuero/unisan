@@ -29,6 +29,9 @@ class SettingsFixture extends AbstractFixture implements OrderedFixtureInterface
         $setting->setTitle("Unisan");
         $setting->setEmailOrders("email@host.com");
         $setting->setEmailCotizations("email@host.com");
+        $setting->setEmailRetirements("email@host.com");
+        $setting->setEmailCertificate("email@host.com");
+        $setting->setEmailVisits("email@host.com");
         $setting->setWebpayKeySecret("xxxxxxxxxxxx-xxxxxxxxxx");
         $setting->setWebpayCommerceCode("xxxxxxxxxxxx-xxxxxxxxxx");
         $setting->setTitle("Unisan");

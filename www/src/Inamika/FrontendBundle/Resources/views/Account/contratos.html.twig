@@ -9,18 +9,211 @@
                 {{ render(controller('InamikaFrontendBundle:Utils:menuUser',{ route: app.request.get('_route')})) }}
             </div>
             <div class="col-md-9 action p-4">
-                <table class="table mt-4 table-hover" *ngIf="results.length > 0">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nº contrato</th>
-                            <th scope="col">Obra</th>
-                            <th scope="col">Unidades</th>
-                            <th scope="col">Contacto</th>
-                        </tr>
-                    </thead>
-                    <tbody id="result"></tbody>
-                </table>
+                <div class="breadcrumb-custom">
+                    <p>
+                        <span><a class="beforeSpinner" href="{{ path('inamika_frontend_account_contratos')}}">Contratos activos</a> | Unidades Sanitarias </span>
+                    </p>
+                </div>
+                <hr>
+                <h4 class="text-dark">Contratos activos</h4>
+                <div id="list">
+                    <div class="box-detail p-3">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Tipo de servicio</label>
+                                <select class="rounded-pill form-control px-4 w-100" id="tipoServicio" name="tipoServicio" onchange="changeTipoServicio(this.value);">
+                                    <option value="0" selected="selected">Unidades Sanitarias</option>
+                                    <option value="1">Gestión de Residuos</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Nº de Contrato</label>
+                                <input class="form-control rounded-pill px-4" id="search_id" value="">
+                            </div>
+                            <div class="col-sm-3">
+                                <label>&nbsp;</label><br/>
+                                <button class="btn btn-block btn-primary btn-primary rounded-pill btn-primary px-5 " onclick="getData()">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table mt-4 table-hover" *ngIf="results.length > 0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nº de Contrato</th>
+                                <th scope="col">Obra</th>
+                                <th scope="col">Tipo de servicio</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="result"></tbody>
+                    </table>
+                </div>
+                <div id="detail" style="display:none">
+                    <a href="javascript:closeDetail()"><i class="bi bi-x-lg float-right" style="margin: 10px;font-size: 1.5rem;"></i></a>
+                    <div class="box-detail p-5" *ngIf="ready">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Id Contrato</label>
+                                <p id="id_contrato"></p>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Nº Contrato</label>
+                                <p id="numero_contrato"></p>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Obra</label>
+                                <p id="obra"></p>
+                            </div>
+                            <hr>
+                            <div class="col-md-4">
+                                <label>Contacto</label>
+                                <p id="contacto_obra"></p>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Teléfono</label>
+                                <p id="contacto_telefono"></p>
+                            </div>
+                            <div class="col-md-4">
+                                <label>E-Mail</label>
+                                <p id="contacto_email"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table mt-4 table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Unidad</th>
+                                <th scope="col" class="text-center">Cantidad</th>
+                                <th scope="col" class="text-center">Solicitar retiro</th>
+                                <th scope="col" class="text-center"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="detailTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="retiroModal" tabindex="-1" role="dialog" aria-labelledby="retiroModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="retiroModalLabel">Solicitar retiro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="retiro_contrato">
+                <input type="hidden" id="retiro_total">
+                <div class="row">
+                    <div class="form-group col-sm-8">
+                        <label>Unidad</label>
+                        <input type="text" id="retiro_unidad" readonly="readonly" class="rounded-pill form-control px-4">
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>Cantidad</label>
+                        <select class="rounded-pill form-control px-4 w-100" id="retiro_cantidad"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="sendSolicitudRetiro()">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="certificateModal" tabindex="-1" role="dialog" aria-labelledby="certificateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="certificateModalLabel">Solicitar Certificado Disposición final</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="{{ path('api_utils_certificate') }}" class="sendToApi" novalidate>
+                <input type="hidden" id="customerId" name="customerId" value="{{ user.id }}">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label>Mes</label>
+                            <select class="rounded-pill form-control px-4 w-100" id="certificate_month" name="certificate_month">
+                                {% for m in months %}
+                                    <option value="{{ m }}">{{ m }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Año</label>
+                            <select class="rounded-pill form-control px-4 w-100" id="certificate_year" name="certificate_year">
+                                {% for y in years %}
+                                    <option value="{{ y }}">{{ y }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label>Envío de Certificado a:</label>
+                            <input type="text" id="certificate_email" name="certificate_email" value="{{ user.email }}" class="rounded-pill form-control px-4">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="visitModal" tabindex="-1" role="dialog" aria-labelledby="visitModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="visitModalLabel">Reporte de visitas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="hidden" id="customerId" name="customerId" value="{{ user.id }}">
+            <input type="hidden" id="visit_contrato" name="visit_contrato" value="">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>Mes</label>
+                        <select class="rounded-pill form-control px-4 w-100" id="visit_month" name="visit_month">
+                            {% for m in months %}
+                                <option value="{{ m }}">{{ m }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Año</label>
+                        <select class="rounded-pill form-control px-4 w-100" id="visit_year" name="visit_year">
+                            {% for y in years %}
+                                <option value="{{ y }}">{{ y }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label>Envío de reporte a:</label>
+                        <input type="text" id="visit_email" name="visit_email" value="{{ user.email }}" class="rounded-pill form-control px-4">
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label>¿Desea programar el envío automático de reportes digitales luego de cada visita?</label>
+                        <select class="rounded-pill form-control px-4 w-100" id="visit_auto" name="visit_auto">
+                            <option value="NO" selected="selected">NO</option>
+                            <option value="SI">SI</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="sendVisit()">Enviar</button>
             </div>
         </div>
     </div>
@@ -29,6 +222,12 @@
 {% block javascripts %}
 {{ parent()}}
     <script>
+        var url =[
+            "{{ path('inamika_frontend_account_contratos') }}",
+            "{{ path('inamika_frontend_account_convenios') }}"
+        ];
+        var dataDetail={};
+        var contratosActivos;
         $(function (){
             getData();
         });
@@ -43,30 +242,27 @@
                 crossDomain: true,
                 success: function(data) {
                     try {
+                        contratosActivos=data[0]['contrato'];
                         $.each(data[0]['contrato'], function( contratoId, value ) {
-                           const contratoData=value[0];
-                           let unidades='';
-                           let contacto='';
-                           $.each(contratoData.unidad, function( unit,amount ) {
-                               unidades+=`<li><span class="badge badge-primary">${amount}</span> ${unit} </li>`;
-                           });
-                           html+=`<tr>
-                                <td><b>${contratoId}</b></td>
-                                <td>${contratoData.numero_contrato}</td>
-                                <td>${contratoData.obra}</td>
-                                <td>
-                                    <ul>
-                                        ${unidades}
-                                    </ul>
-                                </td>
-                                <td>
-                                    <ul>
-                                        <li>${contratoData.contacto_obra}</li>
-                                        <li><a href="tel:${contratoData.contacto_telefono}">${contratoData.contacto_telefono}</a></li>
-                                        <li><a href="mailto:${contratoData.contacto_email}">${contratoData.contacto_email}</a></li>
-                                    </ul>
-                                </td>
-                            </tr>`;
+
+                            const search_id=$("#search_id").val();
+                            const contratoData=value[0];
+                            let render=false;
+                            if(search_id.length >0 ){
+                                if(contratoData.numero_contrato.includes(search_id))
+                                    render=true;
+                            }else render=true;
+                            if(render)
+                                html+=`<tr>
+                                        <td>${contratoData.numero_contrato}</td>
+                                        <td>${contratoData.obra}</td>
+                                        <td>Unidades Sanitarias</td>
+                                        <td>
+                                            <a title="Ver más" href="javascript:openDetail(${contratoId});"><i style="font-size:1.2rem;" class="bi bi-file-earmark-medical"></i></a> 
+                                            <a title="Solicitar certificado disposición final" href="javascript:openCertificate(${contratoId});"><i style="font-size:1.2rem;" class="bi bi-patch-check"></i></a> 
+                                            <a title="Reportes de visita" href="javascript:openVisits(${contratoId});"><i style="font-size:1.2rem;" class="bi bi-truck"></i></a>
+                                        </td>
+                                    </tr>`;
                         });
                         if(html)
                             $("#result").html(html);
@@ -84,6 +280,166 @@
                     }
                     $("#results").html(html);
                     loading.hide();
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    $.toast({
+                        heading: '{{ 'ERROR' | trans }}',
+                        text: 'El servicio no esta disponible, intente en otro momento',
+                        position: 'bottom-right',
+                        icon: 'error',
+                        hideAfter: 3000, 
+                        stack: 6
+                    });
+                }
+            });
+        }
+        function changeTipoServicio(val){
+            loading.show();
+            location.href=url[val];
+        }
+        function openDetail(contratoId){
+            const dataDetail=contratosActivos[contratoId][0];
+            var tableDetail='';
+            var amounts=0;
+            $("#id_contrato").html(contratoId);
+            $("#numero_contrato").html(dataDetail.numero_contrato);
+            $("#obra").html(dataDetail.obra);
+            $("#contacto_obra").html(dataDetail.contacto_obra);
+            $("#contacto_telefono").html(`<a href="tel:${dataDetail.contacto_telefono}">${dataDetail.contacto_telefono}</a>`);
+            $("#contacto_email").html(`<a href="mailto:${dataDetail.contacto_email}">${dataDetail.contacto_email}</a>`);
+            $.each(dataDetail.unidad, function( unit,amount ) {
+                amounts++;
+                tableDetail+=`<tr>
+                        <td><b>${amounts}</b></td>
+                        <td>${unit}</td>
+                        <td class="text-center"><span class="badge badge-primary">${amount}</span></td>
+                        <td class="text-center"><a title="Solicitar retiro" href="javascript:retiro('${unit}',${amount},${contratoId});"><i style="font-size:1.2rem;" class="bi bi-truck-flatbed"></i></a></td>
+                    </tr>`;
+            });
+            $("#detailTable").html(tableDetail);
+            $('#list').hide();
+            $("#detail").slideDown('fast');
+        }
+        function closeDetail(){
+            $('#detail').hide();
+            $("#list").slideDown('fast');
+        }
+        function retiro(unit,amount,contratoId){
+            $("#retiro_unidad").val(unit);
+            $("#retiro_contrato").val(contratoId);
+            $("#retiro_total").val(amount);
+            $("#retiro_cantidad").html('');
+            for (let i = 1; i <= amount; i++) {
+                $('#retiro_cantidad').append($('<option>', { 
+                    value: i,
+                    text : i 
+                }));
+            }
+            $("#retiroModal").modal('show');
+        }
+        function sendSolicitudRetiro(){
+            const dataDetail=contratosActivos[$("#retiro_contrato").val()][0];
+            loading.show();
+            $("#retiroModal").modal('hide');
+            $.ajax({
+                url: '{{ path('api_utils') }}',
+                type: 'POST',
+                dataType: "json",
+                data:JSON.stringify({
+                    customerId:'{{ user.id }}',
+                    retiro_unidad: $("#retiro_unidad").val(),
+                    retiro_cantidad: $("#retiro_cantidad").val(),
+                    retiro_total: $("#retiro_total").val(),
+                    retiro_contrato: dataDetail
+                }),
+                crossDomain: true,
+                success: function(data) {
+                    loading.hide();
+                    swal({ 
+                        title: '¡Solicitud enviada!',
+                        text: 'La solicitud de retirar "'+$("#retiro_cantidad").val()+'" unidad/es de "'+$("#retiro_unidad").val()+'" se envió correctamente',
+                        icon: 'success',
+                        allowOutsideClick: false,
+                        confirmButtonText: 'Aceptar'
+                    }, function(){
+                        
+                    });
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    $.toast({
+                        heading: '{{ 'ERROR' | trans }}',
+                        text: 'El servicio no esta disponible, intente en otro momento',
+                        position: 'bottom-right',
+                        icon: 'error',
+                        hideAfter: 3000, 
+                        stack: 6
+                    });
+                }
+            });
+        }
+
+        function preRequest(){
+            return {
+                dataDetail:dataDetail
+            }
+        }
+
+        function openCertificate(contratoId){
+            dataDetail=contratosActivos[contratoId][0];
+            $("#certificateModal").modal('show');
+        }
+        function openVisits(contratoId){
+            $("#visit_contrato").val(contratoId);
+            $("#visitModal").modal('show');
+        }
+
+        function after200(){
+            swal({ 
+                title: '¡Solicitud enviada!',
+                text: 'La solicitud fue enviada correctamente.',
+                icon: 'success',
+                allowOutsideClick: false,
+                confirmButtonText: 'Aceptar'
+            }, function(){
+                $("#certificateModal").modal('hide');
+                $("form.sendToApi").trigger("reset");
+            });
+        }
+
+        function sendVisit(){
+            const dataDetail=contratosActivos[$("#visit_contrato").val()][0];
+            loading.show();
+            
+            $.ajax({
+                url: '{{ path('api_utils_visits') }}',
+                type: 'POST',
+                dataType: "json",
+                data:JSON.stringify({
+                    customerId:'{{ user.id }}',
+                    visit_month: $("#visit_month").val(),
+                    visit_email: $("#visit_email").val(),
+                    visit_year: $("#visit_year").val(),
+                    visit_auto: $("#visit_auto").val(),
+                    dataDetail: dataDetail
+                }),
+                crossDomain: true,
+                success: function(data) {
+                    loading.hide();
+                    swal({ 
+                        title: '¡Solicitud enviada!',
+                        text: 'La solicitud de Reporte de visita se envió correctamente',
+                        icon: 'success',
+                        allowOutsideClick: false,
+                        confirmButtonText: 'Aceptar'
+                    }, function(){
+                        $("#visitModal").modal('hide');
+                    });
                 },  
                 complete:function(){
                     loading.hide();
