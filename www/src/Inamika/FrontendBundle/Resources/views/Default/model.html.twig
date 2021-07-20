@@ -1,7 +1,7 @@
 {% extends "InamikaFrontendBundle::layout.html.twig" %}
 {% block javascripts_head %}
 {{ parent()}}
-<script src="{{ asset('bundles/inamikafrontend/') }}viewer/aframe-master.js"></script>
+{# <script src="{{ asset('bundles/inamikafrontend/') }}viewer/aframe-master.js"></script>
 <script src="{{ asset('bundles/inamikafrontend/') }}viewer/scripts/info-message.js"></script>
 <script src="{{ asset('bundles/inamikafrontend/') }}viewer/scripts/fullscreen-btn.js"></script>
 <script src="{{ asset('bundles/inamikafrontend/') }}viewer/scripts/threecomp.js"></script>
@@ -10,12 +10,23 @@
 <script src="{{ asset('bundles/inamikafrontend/') }}viewer/ar-shadows.js"></script>
 <script src="{{ asset('bundles/inamikafrontend/') }}viewer/ar-hit-test.js"></script>
 <script src="{{ asset('bundles/inamikafrontend/') }}viewer/model-viewer.js"></script>
-<script src="{{ asset('bundles/inamikafrontend/') }}viewer/background-gradient.js"></script>
+<script src="{{ asset('bundles/inamikafrontend/') }}viewer/background-gradient.js"></script> #}
+
+<script src="{{ asset('') }}Viewer/dist/aframe-master.js"></script>
+<script src="{{ asset('') }}Viewer/dist/scripts/info-message.js"></script>
+<script src="{{ asset('') }}Viewer/dist/scripts/fullscreen-btn.js"></script>
+<script src="{{ asset('') }}Viewer/dist/scripts/threecomp.js"></script>
+<script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
+<script src="{{ asset('') }}Viewer/dist/scripts/hide-on-enter-ar.js"></script>
+<script src="{{ asset('') }}Viewer/ar-shadows.js"></script>
+<script src="{{ asset('') }}Viewer/ar-hit-test.js"></script>
+<script src="{{ asset('') }}Viewer/model-viewer.js"></script>
+<script src="{{ asset('') }}Viewer/background-gradient.js"></script>
 {% endblock %}
 {% block stylesheet %}
 {{ parent()}}
-    <link rel="stylesheet" href="{{ asset('bundles/inamikafrontend/viewer/loader.css') }}" >
-    <link rel="stylesheet" href="{{ asset('bundles/inamikafrontend/viewer/embedded.css') }}" >
+    <link rel="stylesheet" href="{{ asset('') }}Viewer/loader.css">
+    <link rel="stylesheet" href="{{ asset('') }}Viewer/embedded.css">
 {% endblock %}
 {% block body %}
 {{ parent()}}
@@ -58,7 +69,9 @@
                                 <a-assets>
                                     <a-asset-item id="ACON" src=""></a-asset-item>
                                     <img id="shadow" src="{{ asset('bundles/inamikafrontend/') }}viewer/shadow.png">
+                                    <a-asset-item id="messageText" src="http://dev.unisan.cl/Viewer/message.html"></a-asset-item>
                                 </a-assets>
+                                
                             </a-scene>
                         </div>
                     {% endif %}

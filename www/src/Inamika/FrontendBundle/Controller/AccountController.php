@@ -85,9 +85,9 @@ class AccountController extends Controller{
             return $this->redirectToRoute($this->path);
         $months=[];
         for($i=1;$i<=12; $i++)
-            $months[]=str_pad($i, 2, "0", STR_PAD_LEFT);
+            $months[]=$this->get('translator')->trans(strtoupper(date('F', mktime(0,0,0,$i, 1, date('Y')))));
         $years=[];
-        for($i=(date("Y") - 4);$i<=(date("Y") + 4); $i++)
+        for($i=(date("Y") - 1);$i<=(date("Y")); $i++)
             $years[]=$i;
         
         return $this->render('InamikaFrontendBundle:Account:contratos.html.twig',array(

@@ -1,0 +1,14 @@
+{% extends "InamikaBackOfficeBundle::Emails/layout.html.twig" %}
+{% block body %}
+<b>Solicitud de Trabaja con nosotros: </b>
+<hr>
+<p>
+    <b>Nombre: </b> <span>{{ content.name }}</span><br/>
+    <b>Teléfono: </b><span>{{ content.phone }}</span><br/>
+    <b>Email: </b><span>{{ content.email }}</span><br/>
+    {% if content.cv  %}
+        <b>CV: </b><span><a href="{{ content.cv }}">Descargar</a></span><br/>
+    {% endif %}
+    <b>Comentarios adicionales: </b><span>{{ content.observation }}</span><br/>
+</p>
+{% endblock %}

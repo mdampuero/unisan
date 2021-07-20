@@ -188,6 +188,10 @@ class DefaultController extends Controller{
             'data'=>$entity
         ));
     }
+    
+    public function sendCVAction(Request $request){
+        return $this->render('InamikaFrontendBundle:Default:sendCV.html.twig');
+    }
 
     protected function ifExist($array,$key){
         foreach($array as $index=>$value){

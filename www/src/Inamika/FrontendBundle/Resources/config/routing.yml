@@ -24,6 +24,13 @@ inamika_frontend_cotization:
         breadcrumb:
             label: Solicitar Cotizacion
 
+inamika_frontend_sendCV:
+    path:     /TrabajaConNosotros
+    defaults: { _controller: InamikaFrontendBundle:Default:sendCV }
+    options:
+        breadcrumb:
+            label: Solicitar Cotizacion
+
 inamika_frontend_products:
     path:     /Productos
     defaults: { _controller: InamikaFrontendBundle:Default:products }

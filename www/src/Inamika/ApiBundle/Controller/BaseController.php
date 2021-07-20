@@ -46,7 +46,7 @@ class BaseController extends FOSRestController{
     /**
      * @return array
      */
-    public function base64ToFile($string)
+    public function base64ToFile($string,$resize=true)
     {
         $path=$this->setting['uploads_directory'];
 
@@ -76,12 +76,13 @@ class BaseController extends FOSRestController{
 		$success = file_put_contents($path.$fileName, $data);
 		if(!$success)
             throw new Exception('No se pudo subir la string.',6);
-
-        $resizes=$this->setting['resize'];
-        foreach($resizes as $resize){
-            $this->get('image.handling')->open($path.$fileName)
-            ->resize($resize['width'],$resize['height'])
-            ->save($resize['path'].$fileName);
+        if($resize){
+            $resizes=$this->setting['resize'];
+            foreach($resizes as $resize){
+                $this->get('image.handling')->open($path.$fileName)
+                ->resize($resize['width'],$resize['height'])
+                ->save($resize['path'].$fileName);
+            }
         }
 		return $fileName;
     }

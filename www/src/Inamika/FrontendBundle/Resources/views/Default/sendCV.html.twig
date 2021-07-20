@@ -1,0 +1,117 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false , class:'no-fixed',route: app.request.get('_route') })) }}
+<div class="mb-5"></div>
+<section id="result" class="mt-5">
+    <div class="container">
+        <div class="breadcrumb-custom">
+            <p><a class="beforeSpinner"  href="javascript:window.history.go(-1);"> <i class="bi bi-arrow-left"></i> Volver</a></p>
+            <p>
+                <span><a class="beforeSpinner" href="{{ path('inamika_frontend_homepage')}}">Inicio</a> | </span>
+                <span>Trabaja con nostros</span>
+            </p>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" action="{{ path('api_utils_sendCV') }}" novalidate="novalidate" class="form-material sendToApi">
+                    <input type="hidden" value="" name="cv" id="cv">
+                    <h4 class="card-title text-center text-dark">Trabaja con nosotros</h4>
+                    <hr>
+                    <div class="row py-4">
+                        <div class="col-sm-4 form-group">
+                            <label>Nombre Completo *</label>
+                            <input class="form-control rounded-pill py-4 px-4" type="text" name="name">
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Email *</label>
+                            <input class="form-control rounded-pill py-4 px-4" type="text" name="email">
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Teléfono *</label>
+                            <input class="form-control rounded-pill py-4 px-4" type="text" name="phone">
+                        </div>
+                        <div class="col-sm-12 form-group">
+                            <div id="inputFile">
+                                <label>Adjuntar CV</label><br/>
+                                <input type="file" placeholder="Adjuntar CV" onchange="encodeImageFileAsURLCustom(this)">
+                            </div>
+                            <div id="previewFile" style="display:none;">
+                                <label>Adjuntar CV</label>
+                                <p><a href="" target="_blank">Archivo adjuntado</a> <i onclick="removeCV()" class="cursor-pointer fas fa-trash-alt text-danger"></i></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 form-group">
+                            <label>Comentarios adicionales</label>
+                            <textarea class="form-control rounded-pill py-4 px-4" name="observation"></textarea>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn-get-started rounded-pill btn-primary px-5 py-3" >Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+    <script>
+        function after200(data){
+            swal({ 
+                title: '¡Datos enviados!',
+                text: 'Muchas gracias, a la brevedad nos comunicaremos contigo.',
+                icon: 'success',
+                allowOutsideClick: false,
+                confirmButtonText: 'Aceptar'
+            }, function(){
+                loading.show();
+                location.href="{{ path('inamika_frontend_homepage')}}";
+            });
+        }
+
+        $(function (){
+            
+        });
+
+        function removeCV(){
+            $("#cv").val('');
+            $("#inputFile").val('').show();
+            $("#previewFile a").attr('href','javascript:void(0)');
+            $("#previewFile").hide();
+        }
+        function encodeImageFileAsURLCustom(element) {
+            loading.show();
+            var file = element.files[0];
+            file.base64="";
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                file.base64=reader.result;  
+                $.ajax({
+                    url: '{{ path('api_utils_uploadFile') }}',
+                    type: 'POST',
+                    data:JSON.stringify({base64: reader.result}),
+                    crossDomain: true,
+                    success: function(data) {
+                        $("#inputFile").hide();
+                        $("#previewFile a").attr('href',data.or);
+                        $("#previewFile").show();
+                        $("#cv").val(data.or);
+                        loading.hide();
+                    },  
+                    complete:function(){
+                        loading.hide();
+                    },
+                    error: function(data, status, error) {
+                        loading.hide();
+                    }
+                });
+            }
+
+        
+
+            reader.readAsDataURL(file);
+        }
+    </script>
+{% endblock %}

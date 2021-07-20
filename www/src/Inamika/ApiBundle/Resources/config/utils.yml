@@ -10,3 +10,15 @@ api_utils_visits:
     path:     /utils/visits
     defaults: { _controller: InamikaApiBundle:Utils:visits }
     methods: [POST]
+api_utils_uploadFile:
+    path:     /utils/uploadFile
+    defaults: { _controller: InamikaApiBundle:Utils:uploadFile }
+    methods: [POST]
+api_utils_uploadImage:
+    path:     /utils/uploadImage
+    defaults: { _controller: InamikaApiBundle:Utils:uploadImage }
+    methods: [POST]
+api_utils_sendCV:
+    path:     /utils/sendCV
+    defaults: { _controller: InamikaApiBundle:Utils:sendCV }
+    methods: [POST]

@@ -27,6 +27,7 @@ class SettingType extends AbstractType
         ->add('emailRetirements',TextType::class,array('label'=>'EMAIL_RETIREMENTS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('emailCertificate',TextType::class,array('label'=>'EMAIL_CERTIFICATE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('emailVisits',TextType::class,array('label'=>'EMAIL_VISITS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
+        ->add('emailCV',TextType::class,array('label'=>'EMAIL_CV','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('webpayCommerceCode',TextType::class,array('label'=>'Código de comercio WP','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('webpayKeySecret',TextType::class,array('label'=>'Llave secreta WP','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('webpayProduction',ChoiceType::class, array('label'=>'Modo WP','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control'),'choices' => array(

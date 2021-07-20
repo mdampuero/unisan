@@ -1100,7 +1100,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   display: table;
   width: 100%;
   height: 50vh;
-  background: url(../img/stock-photo-netted-bins-full-of-discarded-electronics-waste-waiting-to-be-transported-to-the-recycle-plant-for-330315506.jpeg) center center fixed;
+  background: url(../img/bg_home.jpeg) center center fixed;
   background-size: cover;
 }
 #header-product.whitout-search{
@@ -1939,4 +1939,47 @@ button.cancel{
   #services .section-header {
     padding-bottom: 3rem  !important;
   }
+}
+
+@media (max-width: 768px) {
+  .carousel-card .carousel-inner .carousel-item > div {
+      display: none;
+  }
+  .carousel-card .carousel-inner .carousel-item > div:first-child {
+      display: block;
+  }
+}
+
+.carousel-card .carousel-inner .carousel-item.active,
+.carousel-card .carousel-inner .carousel-item-next,
+.carousel-card .carousel-inner .carousel-item-prev {
+  display: flex;
+}
+
+/* display 3 */
+@media (min-width: 768px) {
+  
+  .carousel-card .carousel-inner .carousel-item-right.active,
+  .carousel-card .carousel-inner .carousel-item-next {
+    transform: translateX(33.333%);
+  }
+  
+  .carousel-card .carousel-inner .carousel-item-left.active, 
+  .carousel-card .carousel-inner .carousel-item-prev {
+    transform: translateX(-33.333%);
+  }
+}
+
+.carousel-card .carousel-inner .carousel-item-right,
+.carousel-card .carousel-inner .carousel-item-left{ 
+transform: translateX(0);
+}
+
+.box-cert{
+  margin-top: -2rem;
+  padding: 3rem;
+  padding-bottom: 1rem;
+  border: #EEE solid 1px;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 12px;
 }

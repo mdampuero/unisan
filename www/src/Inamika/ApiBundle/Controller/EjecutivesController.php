@@ -60,7 +60,7 @@ class EjecutivesController extends BaseController
             $settings = $this->container->get('setting');
             $ejecutive=$this->getDoctrine()->getRepository(Ejecutive::class)->find($content["ejecutiveId"]);
 
-            $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - Contacto '))
+            $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - Solicitud de contacto '))
             ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
             ->setTo($ejecutive->getEmail())
             ->setBody($this->renderView('InamikaBackEndBundle:Emails:Ejecutive/contact.html.twig', array('content'=>$content)),'text/html');

@@ -122,17 +122,21 @@
                 {% endif %}
             </li>
             <li {% if 'inamika_frontend_product' in route %}{% endif %}>
-                <a href="{{ path('inamika_frontend_products') }}" class="beforeSpinner">Tienda Online</a>
+                <a href="{{ path('inamika_frontend_products') }}" class="beforeSpinner">Tienda</a>
             </li>
-            <li class="icon {% if 'inamika_frontend_account' in route %}menu-active{% endif %}" >
+            <li {% if 'inamika_frontend_product' in route %}{% endif %}>
+                <a href="{{ path('inamika_frontend_homepage') }}#contact" >Contacto</a>
+            </li>
+             
+            <li class="icon {% if 'inamika_frontend_account' in route %}menu-active{% endif %}">
                 {% if app.session.get('_security_main')  %}
                     <a href="{{ path('inamika_frontend_account_orders') }}" class="beforeSpinner p-0 " >
-                    <span class="total-badge"><i class="bi bi-person" style="font-size: inherit;"></i></span>
+                    {# <span class="total-badge"><i class="bi bi-person" style="font-size: inherit;"></i></span> #}
                     Mi cuenta
                     </a>
                 {% else %}
                     <a href="{{ path('inamika_frontend_login') }}" class="beforeSpinner p-0">
-                    <span class="total-badge"><i class="bi bi-box-arrow-in-right" style="font-size: inherit;"></i></span>
+                    {# <span class="total-badge"><i class="bi bi-box-arrow-in-right" style="font-size: inherit;"></i></span> #}
                     Acceso clientes
                     </a> 
                 {% endif %}
@@ -141,15 +145,21 @@
                 Mi perfil
                 </a> #}
             </li>
+           
             <li class="icon">
                 <a class="beforeSpinner" href="{{ path('inamika_frontend_cart') }}" class="p-0">
                     <span class="total-badge" id="badgeQuantity">0</span>
-                    <span class="total" id="badgeTotal">
+                    <span class="total" id="badgeTotal" style="display:none;">
                         $ 0.00 
                     </span>
                     <i class="bi bi-cart2"></i>
                 </a>
             </li>
+            {# <li class="icon">
+                <a href="{{ path('inamika_frontend_homepage') }}#contact" class="p-0">
+                    <i class="bi bi-envelope"></i>
+                </a>
+            </li> #}
         </ul>
       </nav>
     </div>

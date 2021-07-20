@@ -121,7 +121,16 @@ class Setting
      */
     private $emailVisits;
 
-    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email_cv", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     * @Expose
+     */
+    private $emailCV;
+
     /**
      * @var string
      *
@@ -391,6 +400,30 @@ class Setting
     public function getEmailVisits()
     {
         return $this->emailVisits;
+    }
+    
+    /**
+     * Set emailCV.
+     *
+     * @param string $emailCV
+     *
+     * @return Setting
+     */
+    public function setEmailCV($emailCV)
+    {
+        $this->emailCV = $emailCV;
+
+        return $this;
+    }
+
+    /**
+     * Get emailCV.
+     *
+     * @return string
+     */
+    public function getEmailCV()
+    {
+        return $this->emailCV;
     }
     
     /**

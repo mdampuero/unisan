@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>UNISAN</title>
+  <meta name="description" content="Model Viewer (VR / AR) • UNISAN">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="loader.css">
+  <link rel="stylesheet" href="embedded.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet"> 
+  <script src="./dist/aframe-master.js"></script>
+  <script src="./dist/scripts/info-message.js"></script>
+  <script src="./dist/scripts/fullscreen-btn.js"></script>
+  <script src="./dist/scripts/threecomp.js"></script>
+  <script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
+  <script src="./dist/scripts/hide-on-enter-ar.js"></script>
+  <script src="ar-shadows.js"></script>
+  <script src="ar-hit-test.js"></script>
+  <script src="model-viewer.js"></script>
+  <script src="background-gradient.js"></script>
+
+  <script>
+    function loaded()
+    {
+      document.getElementById("modelPath").dataset.model = "models/unisan/C52.glb";
+    }
+  </script>
+
+</head>
+<body onload="loaded()">
+  <div>
+    <h2>EJEMPLO EMBEBIDO</h2>
+  </div>
+
+
+  <div id="modelPath" data-model=""></div>
+
+  <div class="embedded-example">
+    <a-scene
+      embedded
+      vr-mode-ui="enabled: false"
+      renderer="colorManagement: true;"
+      info-message="htmlSrc: #messageText"
+      fullscreen-btn
+      model-viewer>
+      <div id="splash">
+        <div class="loading"></div>
+      </div>
+      <a-assets>
+
+        <a-asset-item id="ACON"
+        src=""
+        >
+        </a-asset-item>
+
+        <img id="shadow" src="shadow.png"></img>
+        <a-asset-item id="messageText" src="message.html"></a-asset-item>
+      </a-assets>
+    </a-scene>
+  </div>
+</body>
+</html>
