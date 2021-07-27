@@ -130,6 +130,15 @@ class Setting
      * @Expose
      */
     private $emailCV;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="whatsapp", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $whatsapp;
 
     /**
      * @var string
@@ -424,6 +433,30 @@ class Setting
     public function getEmailCV()
     {
         return $this->emailCV;
+    }
+    
+    /**
+     * Set whatsapp.
+     *
+     * @param string $whatsapp
+     *
+     * @return Setting
+     */
+    public function setWhatsapp($whatsapp)
+    {
+        $this->whatsapp = $whatsapp;
+
+        return $this;
+    }
+
+    /**
+     * Get whatsapp.
+     *
+     * @return string
+     */
+    public function getWhatsapp()
+    {
+        return $this->whatsapp;
     }
     
     /**

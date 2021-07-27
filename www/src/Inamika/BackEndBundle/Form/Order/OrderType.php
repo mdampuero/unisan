@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Inamika\BackEndBundle\Form\OrderItem\OrderItemType;
 
@@ -38,6 +39,10 @@ class OrderType extends AbstractType
                 return $choices;
             }
         ))
+        ->add('isDelivery',ChoiceType::class, array('label'=>'IS_DELIVERY','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control'),'choices' => array(
+            'YES' => true,
+            'NO' => false
+        )))
      //     ->add('items', CollectionType::class, array(
     //         'entry_type'   => OrderItemType::class,
     //         'allow_add' => true,

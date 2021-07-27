@@ -16,7 +16,7 @@
                             <h6 class="text-dark">Contacta a tu Ejecutivo</h6>
                             <p><small>Necesitas asesoramiento personalizado, contactá a tu ejecutivo designado desde aquí.</small></p>
                             <div style="clear:both;"></div>
-                            <a href="javascript:ejecutiveModal()" class="btn-sm btn-get-started rounded-pill btn-primary px-5 py-1" >Conectar</a>
+                            <a href="javascript:void(0)" id="btnContact" class="btn-sm btn-get-started rounded-pill btn-primary px-5 py-1" >Conectar</a>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
@@ -160,7 +160,7 @@
                     </div>
                 </div>
                 {% for key,ejecutive in ejecutives %}
-                <div class="row row-ejecutive" id="ejecutive-{{ ejecutive.id }}" style="{% if key != 0 %}display:none;{% endif %}">
+                <div class="row row-ejecutive" id="ejecutive-{{ ejecutive.id }}" style="display:none;">
                     <div class="form-group col-sm-4">
                         <label class="text-dark">Email</label>
                         <p class="mb-2"><a href="mailto:{{ ejecutive.email }}">{{ ejecutive.email }}</a></p>
@@ -211,6 +211,115 @@
 {% block javascripts %}
 {{ parent()}}
     <script>
+
+        var ejecutivesDB=[];
+        var ejecutivesWS=[];
+        var ejecutivesEnabled=[];
+        {% for key,ejecutive in ejecutives %}
+            ejecutivesDB.push({ 
+                "id":'{{ ejecutive.id }}',
+                "email":'{{ ejecutive.email }}',
+                "name":'{{ ejecutive.name }}'
+            });
+        {% endfor %}
+        $(function (){
+            getEjecutives();
+        });
+        
+        function getEjecutives(){
+            $("#btnContact").html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
+            $.ajax({
+                url: '{{ api_ejecutivos_contratos }}&rut={{ user.document }}',
+                type: 'GET',
+                dataType: "json",
+                crossDomain: true,
+                success: function(data) {
+                    try {
+                        ejecutivos=data[0]['ejecutivos'];
+                        for (let index = 0; index < ejecutivos.length; index++){
+                            ejecutivesWS.push(ejecutivos[index]);
+                        }
+                        
+                    } catch (error) { }
+                    getEjecutives2();
+                },  
+                complete:function(){
+                },
+                error: function(data, status, error) {
+                    getEjecutives2();
+                }
+            });
+        }
+        function getEjecutives2(){
+            $("#btnContact").html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
+            var soapRequest=`<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                    <soap:Body>
+                        <GetCorreosCliente xmlns="http://www.retware.cl/">
+                        <r>{{ ws_convenios.user }}</r>
+                        <sP>{{ ws_convenios.password }}</sP>
+                        <sR>{{ user.document }}</sR>
+                        </GetCorreosCliente>
+                    </soap:Body>
+                </soap:Envelope>`;
+            $.ajax({
+                url: '{{ ws_convenios.url_ejecutivos }}',
+                contentType: "text/xml",
+                type: 'POST',
+                dataType: "xml",
+                data: soapRequest,
+                crossDomain: true,
+                success: function(data) {
+                    var response=$(data).find('GetCorreosClienteResult').text();
+                    if(response.length>0){
+                        results=JSON.parse(response);
+                        if(results.Email.length>0){
+                            for (let index = 0; index < results.Email.length; index++){
+                                ejecutivesWS.push(results.Email[index]);
+                            }
+                        }
+                    }
+                    filterEjecutives();
+                },  
+                complete:function(){
+                    
+                },
+                error: function(data, status, error) {
+                    filterEjecutives();
+                }
+            });
+        }
+
+        function filterEjecutives(){
+            for (let i = 0; i < ejecutivesDB.length; i++) {
+                const ejecutiveDB = ejecutivesDB[i];
+                for (let j = 0; j < ejecutivesWS.length; j++) {
+                    const ejecutiveWS = ejecutivesWS[j];
+                    if(ejecutiveWS==ejecutiveDB.email){
+                        ejecutivesEnabled.push(ejecutiveDB);
+                    }
+                }
+            }
+            if(ejecutivesEnabled.length>0){
+                $('#ejecutiveId').html('');
+                for (let i = 0; i < ejecutivesEnabled.length; i++) {
+                    const ejecutiveEnabled = ejecutivesEnabled[i];
+                    $('#ejecutiveId').append($('<option>', {
+                        value: ejecutiveEnabled.id,
+                        text: ejecutiveEnabled.name
+                    }));
+                }
+                changeEjecutive(ejecutivesEnabled[0].id);
+                $("#btnContact").attr('href','javascript:ejecutiveModal()');
+            }else{
+                $("#btnContact").addClass('beforeSpinner').attr('href','{{ path('inamika_frontend_homepage') }}#contact');
+                $("a.beforeSpinner").on("click",function (){
+                    loading.show();
+                })
+            }
+            $("#btnContact").html('Contactar');
+        }
+
         function search(){
             loading.show();
             location.href='?id='+$("#id").val()+'&status='+$("#status").val();
@@ -221,7 +330,7 @@
         }
 
         function changeEjecutive(ejecutiveId){
-            $(".row-ejecutive").slideUp('fats',function (){
+            $(".row-ejecutive").slideUp('fast',function (){
                 $("#ejecutive-"+ejecutiveId).slideDown('fast');
             });
         }

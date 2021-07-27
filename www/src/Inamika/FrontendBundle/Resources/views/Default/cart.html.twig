@@ -123,10 +123,19 @@
                                                     <input class="form-control rounded-pill py-4 px-4" name="name">
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Fono</label>
                                                     <input class="form-control rounded-pill py-4 px-4" name="phone">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Retiro</label>
+                                                    <select class="form-control rounded-pill px-4" style="height: 50px !important;" name="isDelivery" id="isDelivery">
+                                                        <option value="0">Retiro en tienda</option>
+                                                        <option value="1">Envío a domicilio</option>
+                                                    <select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -360,6 +369,7 @@
                     total: totalCart,
                     customer: dataCustomer.id,
                     items: listCart,
+                    isDelivery: $("#isDelivery").val()
                 }),
                 crossDomain: true,
                 success: function(data) {
@@ -379,6 +389,22 @@
 
         function successOrder(data){
             localStorage.setItem("cart", JSON.stringify([]));
+            var urlEmail="{{ path('api_orders_email',{ id : 'ENTITY'}) }}"
+            $.ajax({
+                url: urlEmail.replace('ENTITY',data),
+                type: 'GET',
+                crossDomain: true,
+                success: function(data) {
+                    
+                },  
+                complete:function(){
+                    
+                },
+                error: function(data, status, error) {
+                    
+                }
+            });
+
             swal({ 
                 title: '¡Pedido enviado!',
                 text: 'Nº de pedido: #'+data,

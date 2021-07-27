@@ -47,6 +47,8 @@ twig:
     globals:
         setting: "@setting"
         api_contratos: '%api_contratos%'
+        api_ejecutivos_contratos: '%api_ejecutivos_contratos%'
+        ws_convenios: '%ws_convenios%'
 
 # Doctrine Configuration
 doctrine:

@@ -78,14 +78,14 @@
                 { title:"#",data: "id" },
                 { title:"{{ 'CUSTOMER' | trans }}",data: "customer.name" },
                 { 
-                    title:"Canal",
-                    data: 'channel', 
+                    title:"Retiro",
+                    data: 'isDelivery', 
                     className: "text-center",
                     render: function (data, type, JsonResultRow, meta) {
-                        if(data=='APP'){
-                            return `<span class="badge badge-pill badge-primary">${data}</span>`;
+                        if(data=='1'){
+                            return `<span class="badge badge-pill badge-primary">Envío a domicilio</span>`;
                         }else{
-                            return `<span class="badge badge-pill badge-success">${data}</span>`;
+                            return `<span class="badge badge-pill badge-success">Retiro en Tienda</span>`;
                         }                        
                     } 
                 },

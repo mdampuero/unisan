@@ -130,12 +130,12 @@
              
             <li class="icon {% if 'inamika_frontend_account' in route %}menu-active{% endif %}">
                 {% if app.session.get('_security_main')  %}
-                    <a href="{{ path('inamika_frontend_account_orders') }}" class="beforeSpinner p-0 " >
+                    <a href="{{ path('inamika_frontend_account_orders') }}" class="beforeSpinner" >
                     {# <span class="total-badge"><i class="bi bi-person" style="font-size: inherit;"></i></span> #}
                     Mi cuenta
                     </a>
                 {% else %}
-                    <a href="{{ path('inamika_frontend_login') }}" class="beforeSpinner p-0">
+                    <a href="{{ path('inamika_frontend_login') }}" class="beforeSpinner">
                     {# <span class="total-badge"><i class="bi bi-box-arrow-in-right" style="font-size: inherit;"></i></span> #}
                     Acceso clientes
                     </a> 

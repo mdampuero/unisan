@@ -1,0 +1,122 @@
+<div class="modal fade" id="retiroModal" tabindex="-1" role="dialog" aria-labelledby="retiroModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="retiroModalLabel">Solicitar retiro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="retiro_contrato">
+                <input type="hidden" id="retiro_total">
+                <div class="row">
+                    <div class="form-group col-sm-8">
+                        <label>Unidad</label>
+                        <input type="text" id="retiro_unidad" readonly="readonly" class="rounded-pill form-control px-4">
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>Cantidad</label>
+                        <select class="rounded-pill form-control px-4 w-100" id="retiro_cantidad"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="sendSolicitudRetiro()">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="certificateModal" tabindex="-1" role="dialog" aria-labelledby="certificateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="certificateModalLabel">Solicitar Certificado Disposición final</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="{{ path('api_utils_certificate') }}" class="sendToApi" novalidate>
+                <input type="hidden" id="customerId" name="customerId" value="{{ user.id }}">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label>Mes</label>
+                            <select class="rounded-pill form-control px-4 w-100" id="certificate_month" name="certificate_month">
+                                {% for m in months %}
+                                    <option value="{{ m }}">{{ m }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Año</label>
+                            <select class="rounded-pill form-control px-4 w-100" id="certificate_year" name="certificate_year">
+                                {% for y in years %}
+                                    <option value="{{ y }}">{{ y }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label>Envío de Certificado a:</label>
+                            <input type="text" id="certificate_email" name="certificate_email" value="{{ user.email }}" class="rounded-pill form-control px-4">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="visitModal" tabindex="-1" role="dialog" aria-labelledby="visitModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="visitModalLabel">Reporte de visitas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="hidden" id="customerId" name="customerId" value="{{ user.id }}">
+            <input type="hidden" id="visit_contrato" name="visit_contrato" value="">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>Mes</label>
+                        <select class="rounded-pill form-control px-4 w-100" id="visit_month" name="visit_month">
+                            {% for m in months %}
+                                <option value="{{ m }}">{{ m }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Año</label>
+                        <select class="rounded-pill form-control px-4 w-100" id="visit_year" name="visit_year">
+                            {% for y in years %}
+                                <option value="{{ y }}">{{ y }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label>Envío de reporte a:</label>
+                        <input type="text" id="visit_email" name="visit_email" value="{{ user.email }}" class="rounded-pill form-control px-4">
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label>¿Desea programar el envío automático de reportes digitales luego de cada visita?</label>
+                        <select class="rounded-pill form-control px-4 w-100" id="visit_auto" name="visit_auto">
+                            <option value="NO" selected="selected">NO</option>
+                            <option value="SI">SI</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="sendVisit()">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>

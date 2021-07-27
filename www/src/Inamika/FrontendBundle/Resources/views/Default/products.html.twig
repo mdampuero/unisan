@@ -11,8 +11,7 @@
                         <select id="category" onchange='search()'>
                             <option value="">Categorías</option>
                             {% for key,item in categories %}
-                            <option value="{{ item.id }}" {% if item.id ==  app.request.get('category')%} selected="selected" {% endif %}>
-                            {{ item.name }}</option>
+                            <option value="{{ item.id }}" {% if item.id ==  app.request.get('category')%} selected="selected" {% endif %}>{{ item.name }}</option>
                             {% endfor %}
                         </select>
                         <span class="separator-vertical">|</span>

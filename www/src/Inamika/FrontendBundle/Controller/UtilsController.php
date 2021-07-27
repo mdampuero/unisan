@@ -37,6 +37,21 @@ class UtilsController extends Controller{
         return $this->render('InamikaFrontendBundle:Utils:navbar.html.twig',array('data'=>$data,'home'=>$home,'route'=>$route,'class'=>$class));
     }
     
+    public function modalsAction(){
+        $months=[];
+        for($i=1;$i<=12; $i++)
+            $months[]=$this->get('translator')->trans(strtoupper(date('F', mktime(0,0,0,$i, 1, date('Y')))));
+        $years=[];
+        for($i=(date("Y") - 1);$i<=(date("Y")); $i++)
+            $years[]=$i;
+        
+        return $this->render('InamikaFrontendBundle:Utils:modals.html.twig',array(
+            'user'=>$this->getDoctrine()->getRepository(Customer::class)->find($this->get('session')->get('_security_main')['customer']->getId()),
+            'months'=>$months,
+            'years'=>$years
+        ));
+    }
+    
     public function menuUserAction($route){
         return $this->render('InamikaFrontendBundle:Utils:menuUser.html.twig',array(
             'user'=>$this->getDoctrine()->getRepository(Customer::class)->find($this->get('session')->get('_security_main')['customer']->getId()),

@@ -35,14 +35,14 @@ AFRAME.registerComponent('fullscreen-btn', {
       if (document.fullscreenElement) 
       {
         this.isFullScreen = true;
-        button.style.setProperty('--backNormal', 'url(http://dev.unisan.cl/Viewer/assets/btn_normalscreen_off.png) 50% 50% no-repeat');
-        button.style.setProperty('--backHover', 'url(http://dev.unisan.cl/Viewer/assets/btn_normalscreen_on.png) 50% 50% no-repeat');
+        button.style.setProperty('--backNormal', 'url(http://be.unisan.cl/Viewer/assets/btn_normalscreen_off.png) 50% 50% no-repeat');
+        button.style.setProperty('--backHover', 'url(http://be.unisan.cl/Viewer/assets/btn_normalscreen_on.png) 50% 50% no-repeat');
       } 
       else 
       {
         this.isFullScreen = false;
-        button.style.setProperty('--backNormal', 'url(http://dev.unisan.cl/Viewer/assets/btn_fullscreen_off.png) 50% 50% no-repeat');
-        button.style.setProperty('--backHover', 'url(http://dev.unisan.cl/Viewer/assets/btn_fullscreen_on.png) 50% 50% no-repeat');
+        button.style.setProperty('--backNormal', 'url(http://be.unisan.cl/Viewer/assets/btn_fullscreen_off.png) 50% 50% no-repeat');
+        button.style.setProperty('--backHover', 'url(http://be.unisan.cl/Viewer/assets/btn_fullscreen_on.png) 50% 50% no-repeat');
       }
     });
 

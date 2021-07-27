@@ -12,12 +12,22 @@
     <b>RUT: </b><span>{{ customer.document }}</span><br/>
     <b>Email: </b><span>{{ customer.email }}</span><br/>
 </p>
+{% if content.dataDetail.numero_contrato is defined %}
 <p>
+    <b>Contrato</b><br/>
     <b>Nº contrato: </b><span>{{ content.dataDetail.numero_contrato }}</span><br/>
     <b>Obra: </b><span>{{ content.dataDetail.obra }}</span><br/>
     <b>Contacto: </b><span>{{ content.dataDetail.contacto_obra }}</span><br/>
     <b>Email: </b><span>{{ content.dataDetail.contacto_email }}</span><br/>
     <b>Teléfono: </b><span>{{ content.dataDetail.contacto_telefono }}</span><br/>
 </p>
-
+{% elseif content.dataDetail.NoPresupuesto is defined %}
+<p>
+    <b>Convenio</b><br/>
+    <b>Nº presupuesto: </b><span>{{ content.dataDetail.NoPresupuesto }}</span><br/>
+    <b>Convenio: </b><span>{{ content.dataDetail.NombreConvenio }}</span><br/>
+    <b>Email: </b><span>{{ content.dataDetail.EmailContacto }}</span><br/>
+    <b>Teléfono: </b><span>{{ content.dataDetail.TelefonoContacto }}</span><br/>
+</p>
+{% endif %}
 {% endblock %}

@@ -3,7 +3,7 @@
 <h2>¡Gracias por tu compra!</h4>
 {% if not entity.customer.isValidate %}
 <p>Te recordamos que pueden ingresar a nuestra web para ver el estado del pedido y otras opciones, validando tu dirección de Email y completando una contraseña.<p>
-<p>Haz click <a href="{{ resetUrl | raw  }}/{{ entity.customer.id }}/{{ entity.customer.codeActive }}"> aquí </a> para continuar.</p>
+<p>Haz click <a href="{{ url('inamika_frontend_customer_validate',{ id : entity.customer.id, code : entity.customer.codeActive}) }}"> aquí </a> para continuar.</p>
 {% endif %}
 <h4>Datos del pedido</h4>
 <hr>
@@ -41,14 +41,14 @@
             {% endfor %}
             {% for total in entity.totals %}		
                 <tr><td colspan="6">&nbsp;</td></tr>
-                <tr>
+                {# <tr>
                     <td colspan="5" align="right"><b>Total S/I:</b></td>
                     <td colspan="1" align="right"><b>{{ total.currency.symbol}} {{ total.gross | number_format(2, ',', '.')}}</b></td>
-                </tr>
-                <tr>
+                </tr> #}
+                {# <tr>
                     <td colspan="5" align="right"><b>IVA:</b></td>
                     <td colspan="1" align="right"><b>{{ total.currency.symbol}} {{ total.vat | number_format(2, ',', '.')}}</b></td>
-                </tr>
+                </tr> #}
                 <tr>
                     <td colspan="5" align="right"><b>Total:</b></td>
                     <td colspan="1" align="right"><b>{{ total.currency.symbol}} {{ total.total | number_format(2, ',', '.')}}</b></td>

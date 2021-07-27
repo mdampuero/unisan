@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Inamika\BackEndBundle\Entity\Popup;
@@ -27,7 +28,7 @@ class ServiceType extends AbstractType
     {
         $builder
         ->add('name',TextType::class,array('label'=>'NAME','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
-        // ->add('title',TextType::class,array('label'=>'TITLE','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
+        ->add('displayOrder',NumberType::class,array('label'=>'DISPLAY_ORDER','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control')))
         ->add('description',TextareaType::class,array('label'=>'DESCRIPTION','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('pictureRemove',HiddenType::class,array("mapped" => false))
         ->add('pictureBase64',HiddenType::class,array("mapped" => false))

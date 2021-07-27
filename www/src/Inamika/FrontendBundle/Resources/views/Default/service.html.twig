@@ -31,17 +31,22 @@
             <div class="col-lg-10">
                 <div class="box-blue mt-3 wow fadeInLeft" >
                     <div class="row">
-                        <div class="col-md-8 text-right">
+                        <div class="col-lg-8 text-center">
                             <h2>DESCRIPCIÓN</h2>
                             <p class="mt-5 text-justify">
                                 {{ data.description | nl2br}}
                             </p>
-                        </div>
+                            {% if data.picture %}
+                            <div class="d-block d-sm-none">
+                                <img class="w-100 wow fadeInRight" src='{{ asset('uploads/') }}md/{{ data.picture }}'> 
+                            </div>
+                        {% endif %}
+                        </div>                        
                     </div>
                 </div>
             </div>
             {% if data.picture %}
-                <img class="img-service wow fadeInRight" style="height: 350px; background-size: cover; background-image: url('{{ asset('uploads/') }}md/{{ data.picture }}')"> 
+                <img class="d-none d-sm-block img-service wow fadeInRight" style="height: 350px; background-size: cover; background-image: url('{{ asset('uploads/') }}md/{{ data.picture }}')"> 
             {% endif %}                
         </div>
         <br/>

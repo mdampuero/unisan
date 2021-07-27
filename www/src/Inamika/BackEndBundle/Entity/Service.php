@@ -68,6 +68,15 @@ class Service
      * @Expose
      */
     private $title;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="display_order", type="integer")
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $displayOrder=1;
 
     /**
      * @var string|null
@@ -137,6 +146,30 @@ class Service
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set displayOrder.
+     *
+     * @param float|null $displayOrder
+     *
+     * @return Service
+     */
+    public function setDisplayOrder($displayOrder = null)
+    {
+        $this->displayOrder = $displayOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get displayOrder.
+     *
+     * @return float|null
+     */
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
     }
 
     /**

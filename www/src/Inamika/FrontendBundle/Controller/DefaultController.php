@@ -22,7 +22,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class DefaultController extends Controller{
     
     public function indexAction(){
-        $results=$this->getDoctrine()->getRepository(Model::class)->getAll()->getQuery()->getResult();
+        $results=$this->getDoctrine()->getRepository(Model::class)->getAll()->orderBy("service.displayOrder","ASC")->getQuery()->getResult();
         $data=[
             'forHome'=>[],
             'forIndustry'=>[],

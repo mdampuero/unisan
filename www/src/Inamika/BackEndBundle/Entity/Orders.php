@@ -45,6 +45,13 @@ class Orders
     private $status;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_delivery", type="boolean")
+     */
+    private $isDelivery=false;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="channel", type="string", length=255)
@@ -367,6 +374,30 @@ class Orders
     public function getIsDelete()
     {
         return $this->isDelete;
+    }
+
+    /**
+     * Set isDelivery.
+     *
+     * @param bool $isDelivery
+     *
+     * @return Orders
+     */
+    public function setIsDelivery($isDelivery)
+    {
+        $this->isDelivery = $isDelivery;
+
+        return $this;
+    }
+
+    /**
+     * Get isDelivery.
+     *
+     * @return bool
+     */
+    public function getIsDelivery()
+    {
+        return $this->isDelivery;
     }
 
     /**

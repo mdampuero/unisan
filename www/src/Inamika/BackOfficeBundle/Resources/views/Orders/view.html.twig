@@ -57,10 +57,10 @@
 				<h4 class="card-header bg-primary text-white">Canal de venta</h4>
 				<div class="card-body" style="min-height:166px;">
 					<h5 class="card-title">
-					{% if data.channel == 'APP' %}
-						<span class="badge badge-pill badge-primary">{{ data.channel | upper }}</span>
+					{% if data.isDelivery == '1' %}
+						Retiro: <span class="badge badge-pill badge-primary">Envío a domicilio</span>
 					{% else %}
-						<span class="badge badge-pill badge-success">{{ data.channel | upper }}</span>
+						Retiro: <span class="badge badge-pill badge-success">Retiro en Tienda</span>
 					{% endif %}</h5>
 					{% for payment in data.payments %}
 						{% if payment.isAuthorized %}

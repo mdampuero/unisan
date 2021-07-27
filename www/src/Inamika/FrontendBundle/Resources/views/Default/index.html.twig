@@ -29,7 +29,7 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<h2>{{ item.name }} </h2>
-									<a role="button" href="{{ path('inamika_frontend_product',{ id: item.id }) }}" class="beforeSpinner btn btn-block btn-primary rounded-pill btn-primary mb-3 mt-4">
+									<a role="button" href="{{ path('inamika_frontend_products') }}" class="beforeSpinner btn btn-block btn-primary rounded-pill btn-primary mb-3 mt-4">
 										Ir a la Tienda
 									</a>
 								</div>
@@ -170,30 +170,48 @@
                     {% if filters.forEvent | length > 0 %}
                         <div class="tabs-filter forEvent" style="display:none">
                             <ul>
-                                <li onclick="selectFilter('forEvent',-1)" class="active" data-name="all">Todos</li>
+                                {# <li onclick="selectFilter('forEvent',-1)" class="active" data-name="all">Todos</li>
                                 {% for key, itemFilter in filters.forEvent %}
                                     <li onclick="selectFilter('forEvent',{{ key }})" data-name="{{ itemFilter.name}}" >{{ itemFilter.name }}</li>
-                                {% endfor %}
+                                {% endfor %} #}
+                                <select class="form-control rounded-pill p-2" onchange="selectFilter('forEvent',this.value)">
+                                    <option value="-1">Todos</option>
+                                    {% for key, itemFilter in filters.forEvent %}
+                                        <option value="{{ key }}">{{ itemFilter.name }}</option>
+                                    {% endfor %}
+                                </select>
                             </ul>
                         </div>
                     {% endif %}
                     {% if filters.forIndustry | length > 0 %}
                         <div class="tabs-filter forIndustry" style="display:none">
                             <ul>
-                                <li onclick="selectFilter('forIndustry',-1)" class="active" data-name="all">Todos</li>
+                                {# <li onclick="selectFilter('forIndustry',-1)" class="active" data-name="all">Todos</li>
                                 {% for key, itemFilter in filters.forIndustry %}
                                     <li onclick="selectFilter('forIndustry',{{ key }})" data-name="{{ itemFilter.name}}" >{{ itemFilter.name }}</li>
-                                {% endfor %}
+                                {% endfor %} #}
+                                <select class="form-control rounded-pill p-2" onchange="selectFilter('forIndustry',this.value)">
+                                    <option value="-1">Todos</option>
+                                    {% for key, itemFilter in filters.forIndustry %}
+                                        <option value="{{ key }}">{{ itemFilter.name }}</option>
+                                    {% endfor %}
+                                </select>
                             </ul>
                         </div>
                     {% endif %}
                     {% if filters.forHome | length > 0 %}
                         <div class="tabs-filter forHome" style="display:none">
                             <ul>
-                                <li onclick="selectFilter('forHome',-1)" class="active" data-name="all">Todos</li>
+                                {# <li onclick="selectFilter('forHome',-1)" class="active" data-name="all">Todos</li>
                                 {% for key, itemFilter in filters.forHome %}
                                     <li onclick="selectFilter('forHome',{{ key }})" data-name="{{ itemFilter.name}}" >{{ itemFilter.name }}</li>
-                                {% endfor %}
+                                {% endfor %} #}
+                                <select class="form-control rounded-pill p-2" onchange="selectFilter('forHome',this.value)">
+                                    <option value="-1">Todos</option>
+                                    {% for key, itemFilter in filters.forHome %}
+                                        <option value="{{ key }}">{{ itemFilter.name }}</option>
+                                    {% endfor %}
+                                </select>
                             </ul>
                         </div>
                     {% endif %}
@@ -369,6 +387,7 @@ tan solo quieres saber más mediante una asesoría escríbenos para ayudarte.
         </div>
     </section>
 </main>
+
 {% endblock %}
 {% block javascripts %}
 {{ parent()}}

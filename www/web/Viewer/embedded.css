@@ -1,7 +1,7 @@
 :root 
 {
-  --backNormal: url(http://dev.unisan.cl/Viewer/assets/btn_fullscreen_off.png) 50% 50% no-repeat;
-  --backHover: url(http://dev.unisan.cl/Viewer/assets/btn_fullscreen_on.png) 50% 50% no-repeat;
+  --backNormal: url(http://be.unisan.cl/Viewer/assets/btn_fullscreen_off.png) 50% 50% no-repeat;
+  --backHover: url(http://be.unisan.cl/Viewer/assets/btn_fullscreen_on.png) 50% 50% no-repeat;
 }
 .embedded-example 
 {

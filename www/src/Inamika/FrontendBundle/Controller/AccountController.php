@@ -71,29 +71,12 @@ class AccountController extends Controller{
         ));
     }
 
-    public function convenioAction(Request $request,$id){
-        if(!$this->get('session')->get('_security_main'))
-            return $this->redirectToRoute($this->path);
-        return $this->render('InamikaFrontendBundle:Account:convenio.html.twig',array(
-            'id'=>$id,
-            'user'=>$this->getDoctrine()->getRepository(Customer::class)->find($this->get('session')->get('_security_main')['customer']->getId())
-        ));
-    }
-
     public function contratosAction(Request $request){
         if(!$this->get('session')->get('_security_main'))
             return $this->redirectToRoute($this->path);
-        $months=[];
-        for($i=1;$i<=12; $i++)
-            $months[]=$this->get('translator')->trans(strtoupper(date('F', mktime(0,0,0,$i, 1, date('Y')))));
-        $years=[];
-        for($i=(date("Y") - 1);$i<=(date("Y")); $i++)
-            $years[]=$i;
         
         return $this->render('InamikaFrontendBundle:Account:contratos.html.twig',array(
-            'user'=>$this->getDoctrine()->getRepository(Customer::class)->find($this->get('session')->get('_security_main')['customer']->getId()),
-            'months'=>$months,
-            'years'=>$years
+            'user'=>$this->getDoctrine()->getRepository(Customer::class)->find($this->get('session')->get('_security_main')['customer']->getId())
         ));
     }
     

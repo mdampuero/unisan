@@ -30,7 +30,7 @@
 <script type="text/javascript">
     $(function () {
         $('#{{ pathBase }}_dataTable').DataTable({
-            order: [[ 1, 'desc' ]],
+            order: [[ 2, 'ASC' ]],
             
             "serverSide": true,
             columns: [
@@ -46,6 +46,7 @@
                     }
                 },
                 { title:"{{ 'NAME' | trans }}",data: "name" },
+                { title:"{{ 'DISPLAY_ORDER' | trans }}",data: "displayOrder" },
                 {
                     data: null,
                     orderable: false,

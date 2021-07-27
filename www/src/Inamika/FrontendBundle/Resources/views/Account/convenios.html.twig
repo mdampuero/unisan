@@ -16,46 +16,150 @@
                 </div>
                 <hr>
                 <h4 class="text-dark">Gestión de Residuos</h4>
-                <div class="box-detail p-3">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label>Tipo de servicio</label>
-                            <select class="rounded-pill form-control px-4 w-100" id="tipoServicio" name="tipoServicio" onchange="changeTipoServicio(this.value);">
-                                <option value="0">Unidades Sanitarias</option>
-                                <option value="1" selected="selected">Gestión de Residuos</option>
-                            </select>
+                <div id="list">
+                    <div class="box-detail p-3">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Tipo de servicio</label>
+                                <select class="rounded-pill form-control px-4 w-100" id="tipoServicio" name="tipoServicio" onchange="changeTipoServicio(this.value);">
+                                    <option value="0">Unidades Sanitarias</option>
+                                    <option value="1" selected="selected">Gestión de Residuos</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Nº de Contrato</label>
+                                <input class="form-control rounded-pill px-4" id="search_id" value="{{ app.request.get('id') }}">
+                            </div>
+                            <div class="col-sm-3">
+                                <label>&nbsp;</label><br/>
+                                <button class="btn btn-block btn-primary btn-primary rounded-pill btn-primary px-5 " onclick="getData()">Buscar</button>
+                            </div>
                         </div>
-                        <div class="col-sm-4">
-                            <label>Nº de Contrato</label>
-                            <input class="form-control rounded-pill px-4" id="id" value="{{ app.request.get('id') }}">
+                    </div>
+                    <table class="table mt-4 table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nº</th>
+                                <th scope="col">Convenio</th>
+                                <th scope="col" class="text-center">Fecha de Inicio</th>
+                                <th scope="col" class="text-center">Activo</th>
+                                <th scope="col" class="text-center">Terminado</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="results">
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div id="detail" style="display:none">
+                    <a href="javascript:closeDetail()"><i class="bi bi-x-lg float-right" style="margin: 10px;font-size: 1.5rem;"></i></a>
+                    <div class="box-detail p-5">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Nº</label>
+                                <p id="NoPresupuesto"></p>
+                            </div>
+                            <div class="col-md-8">
+                                <label>Convenio</label>
+                                <p id="NombreConvenio"></p>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Activo</label>
+                                <p id="Activo">
+                                </p>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fecha</label>
+                                <p id="FechaInicioServicio"></p>
+                            </div>
+                            <div class="col-md-8">
+                                <label>Ejecutivo</label>
+                                <p id="Ejecutivo"></p>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Terminado</label>
+                                <p id="Terminado">
+                                    <span class="badge badge-success">SI</span>
+                                    <span class="badge badge-danger">NO</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Contacto</label>
+                                <p id="Contacto"></p>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Tipo de convenio</label>
+                                <p id="TipoConvenio"></p>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Tipo de servicio</label>
+                                <p id="TipoServicio"></p>
+                            </div>
                         </div>
-                        <div class="col-sm-3">
-                            <label>&nbsp;</label><br/>
-                            <button class="btn btn-block btn-primary btn-primary rounded-pill btn-primary px-5 " onclick="search()">Buscar</button>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Razón social</label>
+                                <p id="RazonSocial"></p>
+                            </div>
+                            <div class="col-md-8">
+                                <label>Dirección</label>
+                                <p id="DireccionRetiro"></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Retiro</label>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Lun</th>
+                                            <th class="text-center">Mar</th>
+                                            <th class="text-center">Mie</th>
+                                            <th class="text-center">Jue</th>
+                                            <th class="text-center">Vie</th>
+                                            <th class="text-center">Sab</th>
+                                            <th class="text-center">Dom</th>
+                                            <th class="text-center">Fer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center" id="Ret_Lun">
+                                            </td>
+                                            <td class="text-center" id="Ret_Mar">
+                                            </td>
+                                            <td class="text-center" id="Ret_Mie">
+                                            </td>
+                                            <td class="text-center" id="Ret_Jue">
+                                            </td>
+                                            <td class="text-center" id="Ret_Vie">
+                                            </td>
+                                            <td class="text-center" id="Ret_Sab">
+                                            </td>
+                                            <td class="text-center" id="Ret_Dom">
+                                            </td>
+                                            <td class="text-center" id="Ret_Fer">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <table class="table mt-4 table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Contrato Nº</th>
-                            <th scope="col">Vigencia</th>
-                            <th scope="col" class="text-center">Tipo de servicio</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="results">
-                        
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
 </div>
+{{ render(controller('InamikaFrontendBundle:Utils:modals')) }}
 {% endblock %}
 {% block javascripts %}
 {{ parent()}}
     <script>
+        var results=[];
         var url =[
             "{{ path('inamika_frontend_account_contratos') }}",
             "{{ path('inamika_frontend_account_convenios') }}"
@@ -67,13 +171,238 @@
             loading.show();
             location.href='?id='+$("#id").val()+'&status='+$("#status").val();
         }
+        function openDetail(convenioId){
+            const item=results[convenioId];
+            $("#NoPresupuesto").html(item.NoPresupuesto);
+            $("#NombreConvenio").html(item.NombreConvenio);
+            $("#Activo").html((item.Activo==1)?`<span class="badge badge-success">SI</span>`:`<span class="badge badge-danger">NO</span>`);
+            $("#FechaInicioServicio").html(item.FechaInicioServicio);
+            $("#Ejecutivo").html(item.Ejecutivo);
+            $("#Terminado").html((item.Terminado==1)?`<span class="badge badge-success">SI</span>`:`<span class="badge badge-danger">NO</span>`);
+            $("#Contacto").html(item.Contacto);
+            $("#TipoConvenio").html(`<span class="badge badge-warning">${item.TipoConvenio}</span>`);
+            $("#TipoServicio").html(`<span class="badge badge-warning">${item.TipoServicio}</span>`);
+            $("#RazonSocial").html(item.RazonSocial);
+            $("#DireccionRetiro").html(item.DireccionRetiro+', '+item.ComunaRetiro);
+            $("#Ret_Lun").html((item.Ret_Lun==1)?`<i class="bi bi-check-circle text-success"></i>`:`<i class="bi bi-x-circle text-danger"></i>`);
+            $("#Ret_Mar").html((item.Ret_Mar==1)?`<i class="bi bi-check-circle text-success"></i>`:`<i class="bi bi-x-circle text-danger"></i>`);
+            $("#Ret_Mie").html((item.Ret_Mie==1)?`<i class="bi bi-check-circle text-success"></i>`:`<i class="bi bi-x-circle text-danger"></i>`);
+            $("#Ret_Jue").html((item.Ret_Jue==1)?`<i class="bi bi-check-circle text-success"></i>`:`<i class="bi bi-x-circle text-danger"></i>`);
+            $("#Ret_Vie").html((item.Ret_Vie==1)?`<i class="bi bi-check-circle text-success"></i>`:`<i class="bi bi-x-circle text-danger"></i>`);
+            $("#Ret_Sab").html((item.Ret_Sab==1)?`<i class="bi bi-check-circle text-success"></i>`:`<i class="bi bi-x-circle text-danger"></i>`);
+            $("#Ret_Dom").html((item.Ret_Dom==1)?`<i class="bi bi-check-circle text-success"></i>`:`<i class="bi bi-x-circle text-danger"></i>`);
+            $("#Ret_Fer").html((item.Ret_Fer==1)?`<i class="bi bi-check-circle text-success"></i>`:`<i class="bi bi-x-circle text-danger"></i>`);
+            $('#list').hide();
+            $("#detail").slideDown('fast');
+        }
+        function closeDetail(){
+            $('#detail').hide();
+            $("#list").slideDown('fast');
+        }
         function getData(){
-            $("#results").html(`<tr><td colspan="4" class="text-center">No se encontraron resultados</td></tr>`);
+            loading.show();
+            var soapRequest=`<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                    <soap:Body>
+                        <GetListaConveniosRut xmlns="http://www.retware.cl/">
+                        <r>{{ ws_convenios.user }}</r>
+                        <sP>{{ ws_convenios.password }}</sP>
+                        <sR>{{ user.document }}</sR>
+                        </GetListaConveniosRut>
+                    </soap:Body>
+                </soap:Envelope>`;
+            $.ajax({
+                url: '{{ ws_convenios.url }}',
+                contentType: "text/xml",
+                type: 'POST',
+                dataType: "xml",
+                data: soapRequest,
+                crossDomain: true,
+                success: function(data) {
+                    var response=$(data).find('GetListaConveniosRutResult').text();
+                    if(response.length>0){
+                        results=JSON.parse(response);
+                    }
+                    loading.hide();
+                    renderResult(results);
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    console.log(status);
+                }
+            });
+
+            
             return;
         }
+        
+        function renderResult(results){
+            const search_id=$("#search_id").val();
+            var html='';
+            for (let i = (results.length - 1); i >= 0; i--) {
+                const item = results[i];
+                const contacString=item.NoPresupuesto+item.NombreConvenio.toLowerCase();
+                const active = (item.Activo==1)?`<span class="badge badge-success">SI</span>`:`<span class="badge badge-danger">NO</span>`;
+                const finish = (item.Terminado==1)?`<span class="badge badge-success">SI</span>`:`<span class="badge badge-danger">NO</span>`;
+                let render=false;
+                if(search_id.length >0 ){
+                    if(contacString.includes(search_id.toLowerCase()))
+                        render=true;
+                }else render=true;
+                if(render)
+                    html+=`<tr>
+                                <td><b>${item.NoPresupuesto}</b></td>
+                                <td>${item.NombreConvenio}</td>
+                                <td class="text-center">${item.FechaInicioServicio}</td>
+                                <td class="text-center">${active}</td>
+                                <td class="text-center">${finish}</td>
+                                <td>
+                                    <a title="Ver más" href="javascript:openDetail(${i});"><i style="font-size:1.2rem;" class="bi bi-file-earmark-medical"></i></a> 
+                                    <a title="Solicitar certificado disposición final" href="javascript:openCertificate(${i});"><i style="font-size:1.2rem;" class="bi bi-patch-check"></i></a> 
+                                    <a title="Reportes de visita" href="javascript:openVisits(${i});"><i style="font-size:1.2rem;" class="bi bi-truck"></i></a>
+                                </td>
+                            </tr>`;                
+            }
+            if(!html)
+                $("#results").html(`<tr><td colspan="6" class="text-center">No se encontraron resultados</td></tr>`);
+            else
+                $("#results").html(html);
+        }
+
+        function preRequest(){
+            return {
+                dataDetail:dataDetail
+            }
+        }
+
+        function openCertificate(contratoId){
+            dataDetail=results[contratoId];
+            $("#certificateModal").modal('show');
+        }
+        function openVisits(contratoId){
+            dataDetail=results[contratoId];
+            $("#visit_contrato").val(results[contratoId].NoPresupuesto);
+            $("#visitModal").modal('show');
+        }
+
         function changeTipoServicio(val){
             loading.show();
             location.href=url[val];
+        }
+        function after200(){
+            swal({ 
+                title: '¡Solicitud enviada!',
+                text: 'La solicitud fue enviada correctamente.',
+                icon: 'success',
+                allowOutsideClick: false,
+                confirmButtonText: 'Aceptar'
+            }, function(){
+                $("#certificateModal").modal('hide');
+                $("form.sendToApi").trigger("reset");
+            });
+        }
+
+        function sendVisit(){
+            loading.show();
+            
+            $.ajax({
+                url: '{{ path('api_utils_visits') }}',
+                type: 'POST',
+                dataType: "json",
+                data:JSON.stringify({
+                    customerId:'{{ user.id }}',
+                    visit_month: $("#visit_month").val(),
+                    visit_email: $("#visit_email").val(),
+                    visit_year: $("#visit_year").val(),
+                    visit_auto: $("#visit_auto").val(),
+                    dataDetail: dataDetail
+                }),
+                crossDomain: true,
+                success: function(data) {
+                    loading.hide();
+                    swal({ 
+                        title: '¡Solicitud enviada!',
+                        text: 'La solicitud de Reporte de visita se envió correctamente',
+                        icon: 'success',
+                        allowOutsideClick: false,
+                        confirmButtonText: 'Aceptar'
+                    }, function(){
+                        $("#visitModal").modal('hide');
+                    });
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    $.toast({
+                        heading: '{{ 'ERROR' | trans }}',
+                        text: 'El servicio no esta disponible, intente en otro momento',
+                        position: 'bottom-right',
+                        icon: 'error',
+                        hideAfter: 3000, 
+                        stack: 6
+                    });
+                }
+            });
+        }
+
+        function retiro(unit,amount,contratoId){
+            $("#retiro_unidad").val(unit);
+            $("#retiro_contrato").val(contratoId);
+            $("#retiro_total").val(amount);
+            $("#retiro_cantidad").html('');
+            for (let i = 1; i <= amount; i++) {
+                $('#retiro_cantidad').append($('<option>', { 
+                    value: i,
+                    text : i 
+                }));
+            }
+            $("#retiroModal").modal('show');
+        }
+        function sendSolicitudRetiro(){
+            const dataDetail=contratosActivos[$("#retiro_contrato").val()][0];
+            loading.show();
+            $("#retiroModal").modal('hide');
+            $.ajax({
+                url: '{{ path('api_utils') }}',
+                type: 'POST',
+                dataType: "json",
+                data:JSON.stringify({
+                    customerId:'{{ user.id }}',
+                    retiro_unidad: $("#retiro_unidad").val(),
+                    retiro_cantidad: $("#retiro_cantidad").val(),
+                    retiro_total: $("#retiro_total").val(),
+                    retiro_contrato: dataDetail
+                }),
+                crossDomain: true,
+                success: function(data) {
+                    loading.hide();
+                    swal({ 
+                        title: '¡Solicitud enviada!',
+                        text: 'La solicitud de retirar "'+$("#retiro_cantidad").val()+'" unidad/es de "'+$("#retiro_unidad").val()+'" se envió correctamente',
+                        icon: 'success',
+                        allowOutsideClick: false,
+                        confirmButtonText: 'Aceptar'
+                    }, function(){
+                        
+                    });
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    $.toast({
+                        heading: '{{ 'ERROR' | trans }}',
+                        text: 'El servicio no esta disponible, intente en otro momento',
+                        position: 'bottom-right',
+                        icon: 'error',
+                        hideAfter: 3000, 
+                        stack: 6
+                    });
+                }
+            });
         }
     </script>
 {% endblock %}

@@ -5,10 +5,12 @@
 <div>
     <p>
     <b>Pedido Nº: #{{ entity.id }}</b><br/>
+    <b>Nombre:</b> {{ entity.customer.name }}<br/>
     <b>Rut:</b> {{ entity.customer.document }}<br/>
     <b>Email:</b> <a href="mailto:{{ entity.customer.email }}">{{ entity.customer.email }}</a><br/>
     <b>Teléfono:</b> {{ entity.customer.phone }}<br/>
     <b>Canal de venta:</b> {{ entity.channel }}<br/>
+    <b>Retiro:</b> {% if entity.isDelivery %} Envío a domicilio {% else %} Retiro en tienda {% endif %}<br/>
     <b>Fecha:</b> {{ entity.createdAt | date('d/m/Y H:i') }}<br/>
     {% for total in entity.totals %}
         <b>Total:</b> {{ total.currency.symbol}} {{ total.total | number_format(2, ',', '.')}}<br/>
@@ -40,14 +42,14 @@
             {% endfor %}
             {% for total in entity.totals %}		
                 <tr><td colspan="6">&nbsp;</td></tr>
-                <tr>
+                {# <tr>
                     <td colspan="5" align="right"><b>Total S/I:</b></td>
                     <td colspan="1" align="right"><b>{{ total.currency.symbol}} {{ total.gross | number_format(2, ',', '.')}}</b></td>
-                </tr>
-                <tr>
+                </tr> #}
+                {# <tr>
                     <td colspan="5" align="right"><b>IVA:</b></td>
                     <td colspan="1" align="right"><b>{{ total.currency.symbol}} {{ total.vat | number_format(2, ',', '.')}}</b></td>
-                </tr>
+                </tr> #}
                 <tr>
                     <td colspan="5" align="right"><b>Total:</b></td>
                     <td colspan="1" align="right"><b>{{ total.currency.symbol}} {{ total.total | number_format(2, ',', '.')}}</b></td>

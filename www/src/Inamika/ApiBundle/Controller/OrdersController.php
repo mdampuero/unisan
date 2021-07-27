@@ -179,7 +179,7 @@ class OrdersController extends FOSRestController
         $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - Pedido #'.$entity->getId() ))
         ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
         ->setTo($entity->getCustomer()->getEmail())
-        ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:Orders/sendingCustomer.html.twig', array('entity' => $entity,'resetUrl'=>$this->getParameter('fe_url').'validarCuenta')),'text/html');
+        ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:Orders/sendingCustomer.html.twig', array('entity' => $entity)),'text/html');
         $this->get('mailer')->send($message);
         return $this->handleView($this->view($entity));
     }
