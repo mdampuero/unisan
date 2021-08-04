@@ -150,6 +150,15 @@ class Setting
     private $copyright;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="delivery_cost", type="float")
+     * @Assert\NotBlank()
+     * @Expose
+     */
+    private $deliveryCost;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -483,6 +492,29 @@ class Setting
         return $this->copyright;
     }
 
+    /**
+     * Set deliveryCost.
+     *
+     * @param float|null $deliveryCost
+     *
+     * @return Product
+     */
+    public function setDeliveryCost($deliveryCost = null)
+    {
+        $this->deliveryCost = $deliveryCost;
+
+        return $this;
+    }
+
+    /**
+     * Get deliveryCost.
+     *
+     * @return float|null
+     */
+    public function getDeliveryCost()
+    {
+        return $this->deliveryCost;
+    }
 
     /**
      * Set createdAt.

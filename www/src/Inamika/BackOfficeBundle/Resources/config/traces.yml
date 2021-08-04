@@ -1,0 +1,59 @@
+inamika_backoffice_traces:
+    path:     /
+    defaults: 
+        _controller: InamikaBackOfficeBundle:Traces:index
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Log Webpay
+            parent_route: inamika_backoffice_homepage
+            
+inamika_backoffice_traces_add:
+    path:     /new
+    defaults: { _controller: InamikaBackOfficeBundle:Traces:add }
+    options:
+        breadcrumb:
+            label: Agregar demo
+            parent_route: inamika_backoffice_traces
+    methods: [GET]
+
+inamika_backoffice_traces_landing:
+    path:     /landing/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Traces:landing }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Log Webpay
+            parent_route: inamika_backoffice_traces
+
+inamika_backoffice_traces_import:
+    path:     /import
+    defaults: { _controller: InamikaBackOfficeBundle:Customers:import }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Importar demo
+            parent_route: inamika_backoffice_traces
+
+inamika_backoffice_traces_get:
+    path:     /get/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Traces:get }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Demo
+            parent_route: inamika_backoffice_traces
+
+inamika_backoffice_traces_edit:
+    path:     /edit/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Traces:edit }
+    methods: [GET]
+    options:
+        breadcrumb:
+            label: Editar demo
+            parent_route: inamika_backoffice_traces
+
+inamika_backoffice_traces_delete:
+    path:     /delete/{id}
+    defaults: { _controller: InamikaBackOfficeBundle:Traces:delete }
+    methods: [POST,DELETE]

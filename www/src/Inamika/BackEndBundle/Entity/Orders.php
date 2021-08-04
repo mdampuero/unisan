@@ -108,6 +108,11 @@ class Orders
     private $items;
     
     /**
+     * @ORM\OneToMany(targetEntity="OrdersTax", mappedBy="order")
+     */
+    private $taxs;
+    
+    /**
      * @ORM\OneToMany(targetEntity="OrdersPayments", mappedBy="order")
      * @Assert\NotBlank()
      */
@@ -122,6 +127,7 @@ class Orders
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->taxs = new ArrayCollection();
         $this->payments = new ArrayCollection();
         $this->totals = new ArrayCollection();
     }
@@ -435,6 +441,26 @@ class Orders
     public function setItems($items)
     {
         return $this->items=$items;
+    }
+    
+    /**
+     * Get taxs.
+     *
+     * @return int
+     */
+    public function getTaxs()
+    {
+        return $this->taxs;
+    }
+    
+    /**
+     * Set taxs.
+     *
+     * @return Orders
+     */
+    public function setTaxs($taxs)
+    {
+        return $this->taxs=$taxs;
     }
     
     /**

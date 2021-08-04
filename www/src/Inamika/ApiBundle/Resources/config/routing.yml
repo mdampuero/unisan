@@ -60,3 +60,6 @@ api_utils:
 
 api_ejecutives:
     resource: "@InamikaApiBundle/Resources/config/ejecutives.yml"
+
+api_traces:
+    resource: "@InamikaApiBundle/Resources/config/traces.yml"

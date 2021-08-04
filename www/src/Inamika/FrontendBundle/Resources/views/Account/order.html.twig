@@ -20,10 +20,6 @@
                 <div class="box-detail p-5" >                
                     <div class="row">
                         <div class="col-md-3">
-                            <label>Id Pedido</label>
-                            <p>#{{entity.id}}</p>
-                        </div>
-                        <div class="col-md-3">
                             <label>Total</label>
                             <p><b>$ {{ entity.totals[0].total | number_format(2, ',', '.') }}</b></p>
                         </div>
@@ -34,6 +30,15 @@
                         <div class="col-md-3">
                             <label>Fecha</label>
                             <p>{{ entity.createdAt | date('d/m/Y H:i') }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Retiro</label>
+                            <p>{% if entity.isDelivery == '1' %}
+                                        <span class="badge badge-pill badge-primary">Envío a domicilio</span>
+                                    {% else %}
+                                        <span class="badge badge-pill badge-success">Retiro en Tienda</span>
+                                    {% endif %}
+                                    </p>
                         </div>
                     </div>
                 </div>
@@ -56,6 +61,12 @@
                             <td class="text-center">{{ item.quantity }}</td>
                             <td class="text-right">{{ item.product.currency.symbol }} {{ item.subtotal | number_format(2, ',', '.') }}</td>
                         </tr> 
+                        {% endfor %}
+                        {% for tax in entity.taxs %}
+                            <tr>
+                                <td colspan="4" align="right"><b>{{ tax.description }}:</b></td>
+                                <td colspan="1" align="right"><b>$ {{ tax.subtotal | number_format(2, ',', '.')}}</b></td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>                

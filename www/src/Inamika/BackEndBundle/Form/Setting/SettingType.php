@@ -29,9 +29,10 @@ class SettingType extends AbstractType
         ->add('emailVisits',TextType::class,array('label'=>'EMAIL_VISITS','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('emailCV',TextType::class,array('label'=>'EMAIL_CV','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('whatsapp',TextType::class,array('label'=>'WHATSAPP','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'+56911112222')))
+        ->add('deliveryCost',TextType::class,array('label'=>'DELIVERY_COST','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'0,00')))
         ->add('webpayCommerceCode',TextType::class,array('label'=>'Código de comercio WP','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
         ->add('webpayKeySecret',TextType::class,array('label'=>'Llave secreta WP','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control','placeholder'=>'')))
-        ->add('webpayProduction',ChoiceType::class, array('label'=>'Modo WP','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control'),'choices' => array(
+        ->add('webpayProduction',ChoiceType::class, array('label'=>'Modo Producción WP','label_attr'=>array('class'=>'control-label'),'attr'=>array('class'=>'form-control'),'choices' => array(
             'YES' => true,
             'NO' => false
         )))

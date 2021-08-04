@@ -1,0 +1,24 @@
+api_traces:
+    path:     /traces
+    defaults: { _controller: InamikaApiBundle:Traces:index }
+    methods: [GET]
+
+api_traces_get:
+    path:     /traces/{id}
+    defaults: { _controller: InamikaApiBundle:Traces:get }
+    methods: [GET]
+
+api_traces_post:
+    path:     /traces
+    defaults: { _controller: InamikaApiBundle:Traces:post }
+    methods: [POST]
+
+api_traces_put:
+    path:     /traces/{id}
+    defaults: { _controller: InamikaApiBundle:Traces:put }
+    methods: [PUT]
+
+api_traces_delete:
+    path:     /traces/{id}
+    defaults: { _controller: InamikaApiBundle:Traces:delete }
+    methods: [DELETE]

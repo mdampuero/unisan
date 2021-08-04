@@ -13,6 +13,7 @@ use Inamika\BackEndBundle\Entity\OrdersStatus;
 use Inamika\BackEndBundle\Entity\Log;
 use Inamika\BackEndBundle\Entity\User;
 use Inamika\BackEndBundle\Entity\OrdersItem;
+use Inamika\BackEndBundle\Entity\OrdersTax;
 use Inamika\BackEndBundle\Entity\OrdersTotal;
 use Inamika\BackEndBundle\Entity\Product;
 use Inamika\BackEndBundle\Entity\Currency;
@@ -66,6 +67,7 @@ class OrdersController extends FOSRestController
                 if(count($items)<=0)
                     throw new Exception("Este valor no debería estar vacío.");
                 $itemsArray=[];
+                $taxsArray=[];
                 foreach ($items as $key => $item) {
                     if(!$productEntity=$em->getRepository(Product::class)->find($item["id"]))
                         throw new Exception("Este valor {$item['id']} no es válido.");
@@ -80,6 +82,18 @@ class OrdersController extends FOSRestController
                     $em->persist($ordersItem);
                     $itemsArray[]=$ordersItem;
                 }
+                if($entity->getIsDelivery()){
+                    $amountTax=1;
+                    $ordersTax=new OrdersTax();
+                    $ordersTax->setOrder($entity);
+                    $ordersTax->setQuantity($amountTax);
+                    $ordersTax->setDescription($this->get('translator')->trans('DELIVERY_COST'));
+                    $ordersTax->setPrice($this->get('setting')->getData()->getDeliveryCost());
+                    $ordersTax->setSubtotal($this->get('setting')->getData()->getDeliveryCost()*$amountTax);
+                    $em->persist($ordersTax);
+                    $taxsArray[]=$ordersTax;
+                }
+                $entity->setTaxs($taxsArray);
                 $entity->setItems($itemsArray);
                 $em->persist($entity);
                 $em->flush();
@@ -129,6 +143,10 @@ class OrdersController extends FOSRestController
                     $totals[$currency->getSymbol()]["total"]+=$item->getSubtotal();
                     $totals[$currency->getSymbol()]["totalVat"]+=0;
                 }
+            }
+            foreach ($order->getTaxs() as $key => $tax) {
+                $totals[$currency->getSymbol()]["total"]+=$tax->getSubtotal();
+                $totals[$currency->getSymbol()]["totalVat"]+=0;
             }
         }
         foreach ($totals as $key => $total) {

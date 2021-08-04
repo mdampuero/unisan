@@ -102,19 +102,20 @@
 				</table>
 			</div>
 		</div>
+		{% for tax in data.taxs %}		
+			<div class="col-md-12">
+				<div class="pull-right m-t-30 text-right">
+					<h4>
+						<b>{{ tax.description }}: </b> $ {{ tax.subtotal | number_format(0, ',', '.')}}
+					</h4>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		{% endfor %}
 		{% for total in data.totals %}			
 		<div class="col-md-12">
 			<div class="pull-right m-t-30 text-right">
-				<h4>
-					<b>Total S/I:
-					</b>{{ total.currency.symbol}}
-					{{ total.gross | number_format(2, ',', '.')}}</h4>
-				{# <h4>
-					<b>IVA :</b>{{ total.currency.symbol}}
-					{{ total.vat | number_format(2, ',', '.')}}</h4> #}
-				<h2>
-					<b>Total :</b>{{ total.currency.symbol}}
-					{{ total.total | number_format(2, ',', '.')}}</h2>
+				<h2><b>Total :</b>{{ total.currency.symbol}} {{ total.total | number_format(0, ',', '.')}}</h2>
 			</div>
 			<div class="clearfix"></div>
 		</div>

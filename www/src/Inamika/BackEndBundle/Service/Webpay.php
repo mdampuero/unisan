@@ -10,6 +10,7 @@ use Symfony\Component\HttpClient\HttpClient;
 use Doctrine\ORM\EntityManager;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Inamika\BackEndBundle\Entity\Trace;
 /**
  * Class Webpay
  *
@@ -40,6 +41,18 @@ class Webpay
      */
     public function getUrl($orderId,$amount){
         $createResponse = $this->transaction->create($orderId, uniqid(), $amount, $this->router->generate('inamika_frontend_payment_result',['order'=>$orderId],UrlGeneratorInterface::ABSOLUTE_URL));
+        $trace= new Trace();
+        $trace->setName('Transaction -> create');
+        $trace->setDescription(json_encode([
+            'orderId'=>$orderId,
+            'sessionId'=>uniqid(),
+            'amount'=>$amount,
+            'url'=>$this->router->generate('inamika_frontend_payment_result',['order'=>$orderId],UrlGeneratorInterface::ABSOLUTE_URL),
+            'urlResponse'=>$createResponse->getUrl(),
+            'token'=>$createResponse->getToken()
+        ]));
+        $this->em->persist($trace);
+        $this->em->flush();
         return $createResponse->getUrl().'?token_ws='.$createResponse->getToken();
     }
     
@@ -47,7 +60,16 @@ class Webpay
      * @return array
      */
     public function getResponse($token){
-        return $this->transaction->commit($token);
+        $response=$this->transaction->commit($token);
+        $trace= new Trace();
+        $trace->setName('Transaction -> commit');
+        $trace->setDescription(json_encode([
+            'token'=>$token,
+            'response'=>$response
+        ]));
+        $this->em->persist($trace);
+        $this->em->flush();
+        return $response;
     }
     
     

@@ -1,0 +1,59 @@
+{% set pathBase='inamika_backoffice_traces' %}
+{% set pathBaseApi='api_traces' %}
+{% extends "InamikaBackOfficeBundle::layout.html.twig" %}
+{% block body %} 
+{{ parent()}}
+<div class="table-responsive">
+    <table id="{{ pathBase }}_dataTable" class="display nowrap table table-striped table-bordered" cellspacing="0" width="100%">
+    </table>
+</div>
+
+{{ form_start(formDelete, {'attr': {'id':id|default('formDelete')}}) }}
+{{ form_widget(formDelete) }}
+{{ form_end(formDelete) }}
+
+{% include 'InamikaBackOfficeBundle:_partials:modal.html.twig' with { pathBase:pathBase} %}
+
+{% endblock body %} 
+{% block javascripts %} 
+{{ parent() }}
+{% include 'InamikaBackOfficeBundle:_partials:dataTableScripts.html.twig' with { pathBase:pathBase,loadData:pathBaseApi } %}
+<script type="text/javascript">
+    $(function () {
+        $('#{{ pathBase }}_dataTable').DataTable({
+            order: [[ 1, 'desc' ]],
+            
+            "serverSide": true,
+            columns: [
+                { title:"{{ 'NAME' | trans }}",data: "name" },
+                { 
+                    title:"Fecha",
+                    data: "createdAt",
+                    render: function (data, type, JsonResultRow, meta) {
+                        var d = new Date(JsonResultRow.createdAt);
+                        return `${(d.getDate()<10?'0':'') + d.getDate()}/${(d.getMonth()+1)}/${d.getFullYear()} ${(d.getHours()<10?'0':'') + d.getHours()}:${(d.getMinutes()<10?'0':'') + d.getMinutes()}:${d.getSeconds()}`;
+                    }
+                },
+                {
+                    data: null,
+                    orderable: false,
+                    className: "text-center",
+                    render: function (data, type, row) 
+                    {
+                        let buttons=[];
+                        let buttonsHtml='';
+                        buttons.push('<button data-toggle="tooltip" data-placement="top" title="Ver más" type="button" class="btn-view btn btn-outline-success btn-circle"><i class="fa fa-eye"></i></button> ');
+                        {% if is_granted('ROLE_ADMIN') %}
+                            buttons.push('<button data-toggle="tooltip" data-placement="top" title="Editar" type="button" class="btn-edit btn btn-outline-info btn-circle"><i class="fa fa-pencil"></i></button> ');
+                            buttons.push('<button data-toggle="tooltip" data-placement="top" title="Eliminar" type="button" class="btn-remove btn btn-outline-danger btn-circle"><i class="fa fa-trash"></i></button> ');
+                        {% endif %}
+                        for(var i=0; i<buttons.length; i++)
+                            buttonsHtml+=buttons[i];
+                        return buttonsHtml;
+                    }
+                }
+            ]
+        });
+    });
+</script>
+{% endblock %}

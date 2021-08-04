@@ -138,6 +138,13 @@
                                                     <select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-12" style="display:none;" id="alertExclamation">
+                                                <small>
+                                                <p>
+                                                <i class="fa fa-exclamation-triangle text-warning"></i> <b>IMPORTANTE:</b> Por el momento solo existe factibilidad de despacho dentro de la Región Metropolitana. 
+                                                Si usted selecciona despacho a otra región su pedido no podrá ser enviado y por lo tanto cambiará su estado a Retiro en Tienda.<br/>
+                                                Costo: <b>$ {{ setting.getData.deliveryCost | number_format(0, ',', '.') }}</b></small></p>
+                                            </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Región</label>
@@ -182,6 +189,7 @@
     <script>
         var dataCustomer={};
         var currentStep=1;
+        
         function renderCart(){
             if(listCart.length>0){
                 $("#cartNotEmpty").fadeIn();
@@ -423,6 +431,12 @@
             {% endif %}
             goToStep(currentStep);
             renderCart();
+            $("#isDelivery").on('change',function (){
+                if($(this).val()=='1')
+                    $("#alertExclamation").slideDown('fast');
+                else
+                    $("#alertExclamation").slideUp('fast');
+            });
             $( "#formStep3" ).submit(function( event ) {
                 step3();
                 return false;
