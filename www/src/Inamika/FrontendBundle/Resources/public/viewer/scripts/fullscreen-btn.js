@@ -118,6 +118,6 @@ AFRAME.registerComponent('fullscreen-btn', {
     this.el.sceneEl.appendChild(wrapper);
   },
 
-  infoMessageButtonDataURI: 'url(http://be.unisan.cl/bundles/inamikafrontend/viewer/ICON_A.png)'
+  infoMessageButtonDataURI: 'url(https://unisan.cl/bundles/inamikafrontend/viewer/ICON_A.png)'
 
 });

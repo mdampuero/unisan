@@ -8,7 +8,7 @@ AFRAME.registerComponent("threecomp", {
         let mesh = this.el.getObject3D("mesh");
         let object = this.el.object3D;
         var texture = new THREE.TextureLoader().load(
-          "http://be.unisan.cl/Viewer/models/wide_street_01.jpg",
+          "https://unisan.cl/Viewer/models/wide_street_01.jpg",
           function() 
           {
             var cubeTex = targetCube.fromEquirectangularTexture(renderer, texture);

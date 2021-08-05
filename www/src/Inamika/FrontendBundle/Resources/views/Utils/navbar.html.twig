@@ -128,23 +128,17 @@
                 <a href="{{ path('inamika_frontend_homepage') }}#contact" >Contacto</a>
             </li>
              
-            <li class="icon {% if 'inamika_frontend_account' in route %}menu-active{% endif %}">
+            {# <li class="icon {% if 'inamika_frontend_account' in route %}menu-active{% endif %}">
                 {% if app.session.get('_security_main')  %}
                     <a href="{{ path('inamika_frontend_account_orders') }}" class="beforeSpinner" >
-                    {# <span class="total-badge"><i class="bi bi-person" style="font-size: inherit;"></i></span> #}
                     Mi cuenta
                     </a>
                 {% else %}
                     <a href="{{ path('inamika_frontend_login') }}" class="beforeSpinner">
-                    {# <span class="total-badge"><i class="bi bi-box-arrow-in-right" style="font-size: inherit;"></i></span> #}
                     Acceso clientes
                     </a> 
                 {% endif %}
-                {# <a *ngIf="loginService.user.id" href="/pedidos" class="p-0">
-                <span class="total-badge"><i class="bi bi-person" style="font-size: inherit;"></i></span>
-                Mi perfil
-                </a> #}
-            </li>
+            </li> #}
            
             <li class="icon">
                 <a class="beforeSpinner" href="{{ path('inamika_frontend_cart') }}" class="p-0">

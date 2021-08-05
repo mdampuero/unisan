@@ -108,6 +108,6 @@ AFRAME.registerComponent('info-message', {
     this.el.sceneEl.appendChild(wrapper);
   },
 
-  infoMessageButtonDataURI: 'url(http://be.unisan.cl/bundles/inamikafrontend/viewer/ICON_B.png)'
+  infoMessageButtonDataURI: 'url(https://unisan.cl/bundles/inamikafrontend/viewer/ICON_B.png)'
 
 });
