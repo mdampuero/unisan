@@ -255,7 +255,7 @@ class OrdersController extends FOSRestController
             $message = (new \Swift_Message($this->get('setting')->getData()->getTitle().' - Cambios en tu pedido #'.$entity->getId()))
             ->setFrom(array($this->getParameter('mailer_from')=>$this->get('setting')->getData()->getTitle()))
             ->setTo($entity->getCustomer()->getEmail())
-            ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:Orders/changeStatus.html.twig', array('entity' => $entity,'status'=>$oldStatusName)),'text/html');
+            ->setBody($this->renderView('InamikaBackOfficeBundle:Emails:Orders/changeStatus.html.twig', array('entity' => $entity,'status'=>$oldStatusName,'comment'=>$content["comment"])),'text/html');
             $this->get('mailer')->send($message);
             /** Fin enviar email */
         }
