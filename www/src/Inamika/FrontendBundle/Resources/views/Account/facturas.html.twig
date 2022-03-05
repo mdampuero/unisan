@@ -10,29 +10,19 @@
             </div>
             <div class="col-md-9 action p-4">
                 <h4 class="text-dark">Mis Facturas</h4>
-                <div class="box-detail p-3">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <label>Nº Factura</label>
-                            <input class="form-control rounded-pill px-4" id="id" value="{{ app.request.get('id') }}">
-                        </div>
-                        <div class="col-sm-3">
-                            <label>&nbsp;</label><br/>
-                            <button class="btn btn-block btn-primary btn-primary rounded-pill btn-primary px-5" onclick="search()">Buscar</button>
-                        </div>
-                    </div>
-                </div>
-                <table class="table mt-4 table-hover">
+                <table class="table mt-4 table-hover" id="table">
                     <thead>
                         <tr>
-                            <th scope="col">Nº Factura</th>
+                            <th scope="col">ID</th>
+                            <th scope="col" class="text-center">Tipo</th>
+                            <th scope="col" class="text-center">Folio</th>
                             <th scope="col" class="text-center">Fecha</th>
-                            <th scope="col" class="text-center">Estado</th>
                             <th scope="col" class="text-right">Monto</th>
+                            <th scope="col" class="text-center"></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr><td colspan="4" class="text-center">No se encontraron resultados</td></tr>
+                    <tbody id="results">
+                        
                     </tbody>
                 </table>
             </div>
@@ -43,14 +33,96 @@
 {% block javascripts %}
 {{ parent()}}
     <script>
+        $(function(){
+            getData();
+        })
+        var bills=[];
         function search(){
-            loading.show();
-            location.href='?id='+$("#id").val()+'&status='+$("#status").val();
+            getData();
         }
-        function goToItem(item){
+        
+        function renderBills(){
+            var html='';
+            for(let i=0; i < bills.length; i++ ){
+                const item = bills[i];
+                html+=`<tr>
+                        <td><b>${item.IdDTE}</b></td>
+                        <td class="text-center">${item.TipoDTE}</td>
+                        <td class="text-center">${item.Folio}</td>
+                        <td class="text-center">${item.FechaEmision}</td>
+                        <td class="text-right">$ ${item.MontoDTE}</td>
+                        <td>
+                            <a title="Descargar PDF" href="javascript:getPdf(${i});"><i style="font-size:1.2rem;" class="bi bi-download"></i></a>
+                        </td>
+                    </tr>`;
+                console.log(bills[i].IdDTE);
+            }
+            if(!html)
+                $("#results").html(`<tr><td colspan="6" class="text-center">No se encontraron resultados</td></tr>`);
+            else{
+                $("#results").html(html);
+                $('#table').DataTable();
+            }
+        }
+
+        function parseResponse(xmlString){
+            var xmlDocument = $.parseXML(xmlString);
+            var $xml = $(xmlDocument);
+            $xml.find('Documento').each(function() {
+                var cid = $(this).find('IdDTE').text();
+                var bill={
+                    'IdDTE':$(this).find('IdDTE').text(),
+                    'TipoDTE':$(this).find('TipoDTE').text(),
+                    'Folio':$(this).find('Folio').text(),
+                    'FechaEmision':$(this).find('FechaEmision').text(),
+                    'MontoDTE':$(this).find('MontoDTE').text()
+                };
+                bills.push(bill);
+            });
+            renderBills();
+        }
+
+        function getData(){
+             var data='<Data><Documento><IdDTE>217071</IdDTE><TipoDTE>52</TipoDTE><Folio>16509</Folio><FechaEmision>2021-01-22</FechaEmision><MontoDTE>705.670</MontoDTE></Documento><Documento><IdDTE>217223</IdDTE><TipoDTE>52</TipoDTE><Folio>16546</Folio><FechaEmision>2021-01-25</FechaEmision><MontoDTE>705.670</MontoDTE></Documento><Documento><IdDTE>217308</IdDTE><TipoDTE>52</TipoDTE><Folio>16708</Folio><FechaEmision>2021-01-26</FechaEmision><MontoDTE>232.050</MontoDTE></Documento><Documento><IdDTE>217309</IdDTE><TipoDTE>52</TipoDTE><Folio>16709</Folio><FechaEmision>2021-01-26</FechaEmision><MontoDTE>232.050</MontoDTE></Documento><Documento><IdDTE>217310</IdDTE><TipoDTE>52</TipoDTE><Folio>16707</Folio><FechaEmision>2021-01-26</FechaEmision><MontoDTE>464.100</MontoDTE></Documento><Documento><IdDTE>217311</IdDTE><TipoDTE>52</TipoDTE><Folio>16710</Folio><FechaEmision>2021-01-26</FechaEmision><MontoDTE>232.050</MontoDTE></Documento><Documento><IdDTE>217312</IdDTE><TipoDTE>52</TipoDTE><Folio>16711</Folio><FechaEmision>2021-01-26</FechaEmision><MontoDTE>232.050</MontoDTE></Documento><Documento><IdDTE>218956</IdDTE><TipoDTE>52</TipoDTE><Folio>17177</Folio><FechaEmision>2021-02-03</FechaEmision><MontoDTE>228.480</MontoDTE></Documento><Documento><IdDTE>218993</IdDTE><TipoDTE>52</TipoDTE><Folio>17193</Folio><FechaEmision>2021-02-04</FechaEmision><MontoDTE>232.050</MontoDTE></Documento><Documento><IdDTE>219010</IdDTE><TipoDTE>33</TipoDTE><Folio>329883</Folio><FechaEmision>2021-01-31</FechaEmision><MontoDTE>2.571.590</MontoDTE></Documento><Documento><IdDTE>219620</IdDTE><TipoDTE>33</TipoDTE><Folio>330166</Folio><FechaEmision>2021-02-09</FechaEmision><MontoDTE>228.480</MontoDTE></Documento><Documento><IdDTE>219715</IdDTE><TipoDTE>52</TipoDTE><Folio>17509</Folio><FechaEmision>2021-02-10</FechaEmision><MontoDTE>297.500</MontoDTE></Documento><Documento><IdDTE>220699</IdDTE><TipoDTE>52</TipoDTE><Folio>18165</Folio><FechaEmision>2021-02-23</FechaEmision><MontoDTE>3.570.000</MontoDTE></Documento><Documento><IdDTE>220700</IdDTE><TipoDTE>52</TipoDTE><Folio>18166</Folio><FechaEmision>2021-02-23</FechaEmision><MontoDTE>1.190.000</MontoDTE></Documento><Documento><IdDTE>220701</IdDTE><TipoDTE>52</TipoDTE><Folio>18167</Folio><FechaEmision>2021-02-23</FechaEmision><MontoDTE>1.190.000</MontoDTE></Documento><Documento><IdDTE>220704</IdDTE><TipoDTE>52</TipoDTE><Folio>18169</Folio><FechaEmision>2021-02-23</FechaEmision><MontoDTE>1.190.000</MontoDTE></Documento><Documento><IdDTE>220705</IdDTE><TipoDTE>52</TipoDTE><Folio>18170</Folio><FechaEmision>2021-02-23</FechaEmision><MontoDTE>1.190.000</MontoDTE></Documento><Documento><IdDTE>220707</IdDTE><TipoDTE>52</TipoDTE><Folio>18171</Folio><FechaEmision>2021-02-23</FechaEmision><MontoDTE>1.190.000</MontoDTE></Documento><Documento><IdDTE>220708</IdDTE><TipoDTE>52</TipoDTE><Folio>18168</Folio><FechaEmision>2021-02-23</FechaEmision><MontoDTE>1.190.000</MontoDTE></Documento><Documento><IdDTE>220714</IdDTE><TipoDTE>52</TipoDTE><Folio>18172</Folio><FechaEmision>2021-02-23</FechaEmision><MontoDTE>8.449.000</MontoDTE></Documento><Documento><IdDTE>220885</IdDTE><TipoDTE>52</TipoDTE><Folio>18291</Folio><FechaEmision>2021-02-25</FechaEmision><MontoDTE>0</MontoDTE></Documento><Documento><IdDTE>220946</IdDTE><TipoDTE>33</TipoDTE><Folio>330472</Folio><FechaEmision>2021-02-25</FechaEmision><MontoDTE>19.159.000</MontoDTE></Documento><Documento><IdDTE>221923</IdDTE><TipoDTE>52</TipoDTE><Folio>18587</Folio><FechaEmision>2021-03-03</FechaEmision><MontoDTE>214.200</MontoDTE></Documento><Documento><IdDTE>222232</IdDTE><TipoDTE>52</TipoDTE><Folio>18636</Folio><FechaEmision>2021-03-04</FechaEmision><MontoDTE>0</MontoDTE></Documento><Documento><IdDTE>222257</IdDTE><TipoDTE>52</TipoDTE><Folio>18653</Folio><FechaEmision>2021-03-04</FechaEmision><MontoDTE>214.200</MontoDTE></Documento><Documento><IdDTE>222296</IdDTE><TipoDTE>52</TipoDTE><Folio>18654</Folio><FechaEmision>2021-03-04</FechaEmision><MontoDTE>0</MontoDTE></Documento><Documento><IdDTE>222744</IdDTE><TipoDTE>33</TipoDTE><Folio>331707</Folio><FechaEmision>2021-03-08</FechaEmision><MontoDTE>214.200</MontoDTE></Documento><Documento><IdDTE>222819</IdDTE><TipoDTE>52</TipoDTE><Folio>18861</Folio><FechaEmision>2021-03-09</FechaEmision><MontoDTE>232.050</MontoDTE></Documento><Documento><IdDTE>222820</IdDTE><TipoDTE>52</TipoDTE><Folio>18862</Folio><FechaEmision>2021-03-09</FechaEmision><MontoDTE>297.500</MontoDTE></Documento><Documento><IdDTE>223657</IdDTE><TipoDTE>52</TipoDTE><Folio>19460</Folio><FechaEmision>2021-03-19</FechaEmision><MontoDTE>1.249.500</MontoDTE></Documento><Documento><IdDTE>223938</IdDTE><TipoDTE>33</TipoDTE><Folio>331953</Folio><FechaEmision>2021-03-23</FechaEmision><MontoDTE>1.249.500</MontoDTE></Documento><Documento><IdDTE>224013</IdDTE><TipoDTE>61</TipoDTE><Folio>312760</Folio><FechaEmision>2021-03-23</FechaEmision><MontoDTE>19.159.000</MontoDTE></Documento><Documento><IdDTE>224014</IdDTE><TipoDTE>33</TipoDTE><Folio>331973</Folio><FechaEmision>2021-03-23</FechaEmision><MontoDTE>19.159.000</MontoDTE></Documento><Documento><IdDTE>224062</IdDTE><TipoDTE>61</TipoDTE><Folio>312768</Folio><FechaEmision>2021-03-24</FechaEmision><MontoDTE>214.200</MontoDTE></Documento><Documento><IdDTE>224063</IdDTE><TipoDTE>61</TipoDTE><Folio>312769</Folio><FechaEmision>2021-03-24</FechaEmision><MontoDTE>1.249.500</MontoDTE></Documento><Documento><IdDTE>224064</IdDTE><TipoDTE>33</TipoDTE><Folio>331986</Folio><FechaEmision>2021-03-24</FechaEmision><MontoDTE>1.463.700</MontoDTE></Documento><Documento><IdDTE>225375</IdDTE><TipoDTE>33</TipoDTE><Folio>332845</Folio><FechaEmision>2021-03-31</FechaEmision><MontoDTE>232.050</MontoDTE></Documento><Documento><IdDTE>227323</IdDTE><TipoDTE>52</TipoDTE><Folio>21197</Folio><FechaEmision>2021-04-22</FechaEmision><MontoDTE>59.500</MontoDTE></Documento><Documento><IdDTE>227536</IdDTE><TipoDTE>33</TipoDTE><Folio>333554</Folio><FechaEmision>2021-04-26</FechaEmision><MontoDTE>19.159.000</MontoDTE></Documento><Documento><IdDTE>227537</IdDTE><TipoDTE>33</TipoDTE><Folio>333555</Folio><FechaEmision>2021-04-26</FechaEmision><MontoDTE>1.463.700</MontoDTE></Documento><Documento><IdDTE>229132</IdDTE><TipoDTE>33</TipoDTE><Folio>334548</Folio><FechaEmision>2021-04-30</FechaEmision><MontoDTE>59.500</MontoDTE></Documento><Documento><IdDTE>229133</IdDTE><TipoDTE>33</TipoDTE><Folio>334549</Folio><FechaEmision>2021-04-30</FechaEmision><MontoDTE>19.159.000</MontoDTE></Documento><Documento><IdDTE>229208</IdDTE><TipoDTE>52</TipoDTE><Folio>21942</Folio><FechaEmision>2021-05-06</FechaEmision><MontoDTE>1.190.000</MontoDTE></Documento><Documento><IdDTE>229733</IdDTE><TipoDTE>33</TipoDTE><Folio>334877</Folio><FechaEmision>2021-05-10</FechaEmision><MontoDTE>1.190.000</MontoDTE></Documento><Documento><IdDTE>230157</IdDTE><TipoDTE>61</TipoDTE><Folio>313108</Folio><FechaEmision>2021-05-14</FechaEmision><MontoDTE>19.159.000</MontoDTE></Documento><Documento><IdDTE>230158</IdDTE><TipoDTE>33</TipoDTE><Folio>334975</Folio><FechaEmision>2021-05-14</FechaEmision><MontoDTE>18.504.500</MontoDTE></Documento><Documento><IdDTE>230159</IdDTE><TipoDTE>33</TipoDTE><Folio>334976</Folio><FechaEmision>2021-05-14</FechaEmision><MontoDTE>1.463.700</MontoDTE></Documento><Documento><IdDTE>230341</IdDTE><TipoDTE>61</TipoDTE><Folio>313111</Folio><FechaEmision>2021-05-18</FechaEmision><MontoDTE>59.500</MontoDTE></Documento><Documento><IdDTE>230342</IdDTE><TipoDTE>61</TipoDTE><Folio>313112</Folio><FechaEmision>2021-05-18</FechaEmision><MontoDTE>1.190.000</MontoDTE></Documento><Documento><IdDTE>230343</IdDTE><TipoDTE>33</TipoDTE><Folio>335013</Folio><FechaEmision>2021-05-18</FechaEmision><MontoDTE>1.249.500</MontoDTE></Documento><Documento><IdDTE>233117</IdDTE><TipoDTE>33</TipoDTE><Folio>336447</Folio><FechaEmision>2021-06-08</FechaEmision><MontoDTE>1.463.700</MontoDTE></Documento><Documento><IdDTE>233129</IdDTE><TipoDTE>33</TipoDTE><Folio>336457</Folio><FechaEmision>2021-06-09</FechaEmision><MontoDTE>17.754.800</MontoDTE></Documento><Documento><IdDTE>233130</IdDTE><TipoDTE>33</TipoDTE><Folio>336458</Folio><FechaEmision>2021-06-09</FechaEmision><MontoDTE>1.249.500</MontoDTE></Documento><Documento><IdDTE>233276</IdDTE><TipoDTE>61</TipoDTE><Folio>313252</Folio><FechaEmision>2021-06-10</FechaEmision><MontoDTE>146.370</MontoDTE></Documento><Documento><IdDTE>233277</IdDTE><TipoDTE>61</TipoDTE><Folio>313253</Folio><FechaEmision>2021-06-10</FechaEmision><MontoDTE>1.775.480</MontoDTE></Documento><Documento><IdDTE>233278</IdDTE><TipoDTE>61</TipoDTE><Folio>313254</Folio><FechaEmision>2021-06-10</FechaEmision><MontoDTE>124.950</MontoDTE></Documento><Documento><IdDTE>235784</IdDTE><TipoDTE>61</TipoDTE><Folio>313390</Folio><FechaEmision>2021-06-30</FechaEmision><MontoDTE>232.050</MontoDTE></Documento><Documento><IdDTE>235785</IdDTE><TipoDTE>33</TipoDTE><Folio>337699</Folio><FechaEmision>2021-06-30</FechaEmision><MontoDTE>232.050</MontoDTE></Documento><Documento><IdDTE>235961</IdDTE><TipoDTE>33</TipoDTE><Folio>337762</Folio><FechaEmision>2021-06-30</FechaEmision><MontoDTE>17.754.800</MontoDTE></Documento><Documento><IdDTE>235962</IdDTE><TipoDTE>33</TipoDTE><Folio>337763</Folio><FechaEmision>2021-06-30</FechaEmision><MontoDTE>1.249.500</MontoDTE></Documento><Documento><IdDTE>236013</IdDTE><TipoDTE>61</TipoDTE><Folio>313421</Folio><FechaEmision>2021-06-30</FechaEmision><MontoDTE>1.775.480</MontoDTE></Documento><Documento><IdDTE>236014</IdDTE><TipoDTE>61</TipoDTE><Folio>313422</Folio><FechaEmision>2021-06-30</FechaEmision><MontoDTE>124.950</MontoDTE></Documento><Documento><IdDTE>236449</IdDTE><TipoDTE>33</TipoDTE><Folio>338035</Folio><FechaEmision>2021-07-08</FechaEmision><MontoDTE>1.463.700</MontoDTE></Documento><Documento><IdDTE>236476</IdDTE><TipoDTE>61</TipoDTE><Folio>313430</Folio><FechaEmision>2021-07-09</FechaEmision><MontoDTE>146.370</MontoDTE></Documento></Data>';
+            parseResponse(data);          
+            return false;
             loading.show();
-            var url="{{ path('inamika_frontend_account_order',{ id: 'ENTITY_ID' }) }}";
-            location.href=url.replace('ENTITY_ID',item);
+            var soapRequest=`<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                    <soap:Body>
+                       <xtem:get_hist_dte2>
+                            <!--Optional:-->
+                            <xtem:rut>77044975-8</xtem:rut>
+                            <!--Optional:-->
+                            <xtem:anio>2021</xtem:anio>
+                            <!--Optional:-->
+                            <xtem:documentos>Todos</xtem:documentos>
+                        </xtem:get_hist_dte2>
+                    </soap:Body>
+                </soap:Envelope>`; 
+            $.ajax({
+                url: '{{ ws_bills.url }}',
+                contentType: "text/xml",
+                type: 'POST',
+                dataType: "xml",
+                data: soapRequest,
+                crossDomain: true,
+                success: function(data) {
+                    parseResponse(data);
+                    loading.hide();
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    console.log(status);
+                }
+            });            
+            return;
+        }
+
+        function getPdf(){
+            
         }
     </script>
 {% endblock %}

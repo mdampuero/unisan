@@ -49,6 +49,7 @@ twig:
         api_contratos: '%api_contratos%'
         api_ejecutivos_contratos: '%api_ejecutivos_contratos%'
         ws_convenios: '%ws_convenios%'
+        ws_bills: '%ws_bills%'
 
 # Doctrine Configuration
 doctrine:

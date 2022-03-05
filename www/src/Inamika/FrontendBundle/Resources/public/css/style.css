@@ -1983,3 +1983,41 @@ transform: translateX(0);
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 12px;
 }
+
+@media (max-width: 768px) {
+  
+  .box-search {
+    height: auto;
+    border-radius: 20px;
+  }
+  .box-search input{
+    width: 100%;
+  }
+  .box-salient {
+    margin-top: -4rem;
+  }
+}
+a.float:hover, a.float:active,a.float:focus, a.float:focus-visible, a.float:visited, a.float:target {
+  color: white !important;
+}
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#25d366;
+	color: white;
+	border-radius:50px;
+	text-align:center;
+  font-size:30px;
+	box-shadow: 2px 2px 3px #999;
+  z-index:100;
+}
+.float:hover, .float:active{
+	color: white;
+}
+
+.my-float{
+	margin-top:16px;
+}

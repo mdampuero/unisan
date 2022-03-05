@@ -211,6 +211,7 @@
                         </GetListaConveniosRut>
                     </soap:Body>
                 </soap:Envelope>`;
+                console.log(soapRequest);
             $.ajax({
                 url: '{{ ws_convenios.url }}',
                 contentType: "text/xml",

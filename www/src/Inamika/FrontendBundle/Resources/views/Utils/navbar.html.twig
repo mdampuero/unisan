@@ -128,7 +128,7 @@
                 <a href="{{ path('inamika_frontend_homepage') }}#contact" >Contacto</a>
             </li>
              
-            {# <li class="icon {% if 'inamika_frontend_account' in route %}menu-active{% endif %}">
+            <li class="icon {% if 'inamika_frontend_account' in route %}menu-active{% endif %}">
                 {% if app.session.get('_security_main')  %}
                     <a href="{{ path('inamika_frontend_account_orders') }}" class="beforeSpinner" >
                     Mi cuenta
@@ -138,7 +138,7 @@
                     Acceso clientes
                     </a> 
                 {% endif %}
-            </li> #}
+            </li>
            
             <li class="icon">
                 <a class="beforeSpinner" href="{{ path('inamika_frontend_cart') }}" class="p-0">

@@ -1,0 +1,121 @@
+{% extends "InamikaFrontendBundle::layout.html.twig" %}
+{% block body %}
+{{ parent()}}
+{{ render(controller('InamikaFrontendBundle:Utils:navbar',{ home:false , class:'no-fixed',route: app.request.get('_route') })) }}
+<div class="container">
+    <div class="account">
+        <div class="row py-5">
+            <div class="col-lg-6">
+                <div class="card box-login p-4">
+                    <div class="card-body">
+                        <h4 class="card-title text-center text-dark">Servicio de Convenio</h4>
+                        <hr>
+                        <div class="text-center p-4">
+                            <button class="btn btn-primary" onclick="getConvenios()">Test service</button>
+                        </div> 
+                        <h4 id="convenioStatus" class="test-center"></h4>
+                        <div class="bg-white" id="convenioResult">
+                        </div>                
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card box-login p-4">
+                    <div class="card-body">
+                        <h4 class="card-title text-center text-dark">Servicio de Factura</h4>
+                        <hr>
+                        <div class="text-center p-4">
+                            <button class="btn btn-primary" onclick="getFacturas()">Test service</button>
+                        </div> 
+                        <h4 id="facturaStatus" class="test-center"></h4>
+                        <div class="bg-white" id="facturaResult">
+                        </div>                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+    <script>
+        function getConvenios(){
+            loading.show();
+            $("#convenioResult").html('');
+            $("#convenioStatus").html('');
+            var soapRequest=`<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                    <soap:Body>
+                        <GetListaConveniosRut xmlns="http://www.retware.cl/">
+                        <r>{{ ws_convenios.user }}</r>
+                        <sP>{{ ws_convenios.password }}</sP>
+                        <sR>96702560-7</sR>
+                        </GetListaConveniosRut>
+                    </soap:Body>
+                </soap:Envelope>`;
+            $.ajax({
+                url: '{{ ws_convenios.url }}',
+                contentType: "text/xml",
+                type: 'POST',
+                dataType: "xml",
+                data: soapRequest,
+                crossDomain: true,
+                success: function(data) {
+                    var response=$(data).find('GetListaConveniosRutResult').text();
+                    $("#convenioResult").html(response);
+                    $("#convenioStatus").html('<span class="text-success">Result: OK</span>');
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    $("#convenioResult").html(data.statusText);
+                    $("#convenioStatus").html('<span class="text-danger">Result: FAIL</span>');
+                }
+            });
+            return;
+        }
+        function getFacturas(){
+            loading.show();
+            $("#facturaResult").html('');
+            $("#facturaStatus").html('');
+            var soapRequest=`<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                    <soap:Body>
+                       <xtem:get_hist_dte2>
+                            <!--Optional:-->
+                            <xtem:rut>77044975-8</xtem:rut>
+                            <!--Optional:-->
+                            <xtem:anio>2021</xtem:anio>
+                            <!--Optional:-->
+                            <xtem:documentos>Todos</xtem:documentos>
+                        </xtem:get_hist_dte2>
+                    </soap:Body>
+                </soap:Envelope>`; 
+            $.ajax({
+                url: '{{ ws_bills.url }}',
+                contentType: "text/xml",
+                type: 'POST',
+                dataType: "xml",
+                data: soapRequest,
+                crossDomain: true,
+                success: function(data) {
+                    $("#facturaResult").html(data);
+                    $("#facturaStatus").html('<span class="text-success">Result: OK</span>');
+                },  
+                complete:function(){
+                    loading.hide();
+                },
+                error: function(data, status, error) {
+                    $("#facturaResult").html(data.statusText);
+                    $("#facturaStatus").html('<span class="text-danger">Result: FAIL</span>');
+                }
+            });
+            return;
+        }
+        $(function (){
+            
+        })
+    </script>
+{% endblock %}

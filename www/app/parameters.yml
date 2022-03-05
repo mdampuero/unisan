@@ -20,6 +20,8 @@ parameters:
     secret: 99b2af404f070f6d849dea5705fd9375b130a628
     api_contratos: 'http://23.19.226.69:81/include/adaptiva/reporte_inventario_xls.php?token=WfjQzG4cSnSENv6ukFQo7FiaAxbP19qwYdij'
     api_ejecutivos_contratos: 'http://23.19.226.69:81/include/adaptiva/reporte_ejecutivo_xls.php?token=WfjQzG4cSnSENv6ukFQo7FiaAxbP19qwYdij'
+    ws_bills:
+        url: 'http://190.82.102.235:8091/Service1.asmx?op=get_hist_dte2'
     ws_convenios: 
         url: 'https://wlogisticvot.azurewebsites.net/wLogisticVOT.asmx?op=GetListaConveniosRut'
         url_ejecutivos: 'https://wlogisticvot.azurewebsites.net/wLogisticVOT.asmx?op=GetCorreosCliente'

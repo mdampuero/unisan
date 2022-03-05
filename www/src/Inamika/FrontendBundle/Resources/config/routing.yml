@@ -101,6 +101,13 @@ inamika_frontend_customer_validate:
         breadcrumb:
             label: Validar Cuenta
 
+inamika_frontend_test:
+    path:     /test
+    defaults: { _controller: InamikaFrontendBundle:Test:index }
+    options:
+        breadcrumb:
+            label: Validar Cuenta
+
 inamika_frontend_account:
     resource: "@InamikaFrontendBundle/Resources/config/account.yml"
     prefix:   /MiCuenta
