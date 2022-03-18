@@ -80,21 +80,23 @@
             loading.show();
             $("#facturaResult").html('');
             $("#facturaStatus").html('');
-            var soapRequest=`<?xml version="1.0" encoding="utf-8"?>
-                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-                    <soap:Body>
-                       <xtem:get_hist_dte2>
-                            <!--Optional:-->
-                            <xtem:rut>77044975-8</xtem:rut>
-                            <!--Optional:-->
-                            <xtem:anio>2021</xtem:anio>
-                            <!--Optional:-->
-                            <xtem:documentos>Todos</xtem:documentos>
-                        </xtem:get_hist_dte2>
-                    </soap:Body>
-                </soap:Envelope>`; 
+            var soapRequest=`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xtem="http://xtempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xtem:get_hist_dte2>
+         <!--Optional:-->
+         <xtem:rut>77044975-8</xtem:rut>
+         <!--Optional:-->
+         <xtem:anio>2022</xtem:anio>
+         <!--Optional:-->
+         <xtem:documentos>Todos</xtem:documentos>
+         <!--Optional:-->
+         <xtem:clave>15408995040440614</xtem:clave>
+      </xtem:get_hist_dte2>
+   </soapenv:Body>
+</soapenv:Envelope>`; 
             $.ajax({
-                url: '{{ ws_bills.url }}',
+                url: 'http://190.82.102.235:8091/Service1.asmx',
                 contentType: "text/xml",
                 type: 'POST',
                 dataType: "xml",
