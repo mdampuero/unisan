@@ -35,7 +35,7 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = 3,
@@ -48,7 +48,7 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="webpay_commerce_code", type="string", length=255)
+     * @ORM\Column(name="webpay_commerce_code", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Expose
      */
@@ -57,7 +57,7 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="webpay_key_secret", type="string", length=255)
+     * @ORM\Column(name="webpay_key_secret", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Expose
      */
@@ -74,7 +74,7 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="email_orders", type="string", length=255)
+     * @ORM\Column(name="email_orders", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      * @Expose
@@ -84,7 +84,7 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="email_retirements", type="string", length=255)
+     * @ORM\Column(name="email_retirements", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      * @Expose
@@ -94,7 +94,7 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="email_cotizations", type="string", length=255)
+     * @ORM\Column(name="email_cotizations", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      * @Expose
@@ -104,7 +104,7 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="email_certificate", type="string", length=255)
+     * @ORM\Column(name="email_certificate", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      * @Expose
@@ -114,7 +114,7 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="email_visits", type="string", length=255)
+     * @ORM\Column(name="email_visits", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      * @Expose
@@ -124,7 +124,7 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="email_cv", type="string", length=255)
+     * @ORM\Column(name="email_cv", type="string", length=255,nullable=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      * @Expose
@@ -134,7 +134,7 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="whatsapp", type="string", length=255)
+     * @ORM\Column(name="whatsapp", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Expose
      */
@@ -143,7 +143,7 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="copyright", type="string", length=255)
+     * @ORM\Column(name="copyright", type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Expose
      */
@@ -152,7 +152,7 @@ class Setting
     /**
      * @var float
      *
-     * @ORM\Column(name="delivery_cost", type="float")
+     * @ORM\Column(name="delivery_cost", type="float", nullable=true)
      * @Assert\NotBlank()
      * @Expose
      */
